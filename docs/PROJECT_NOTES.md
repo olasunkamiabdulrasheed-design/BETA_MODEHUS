@@ -30,6 +30,32 @@ done and what remains.
 
 ## Change log
 
+### 2026-09-04 — Phase 2: backend foundation delivered (server running)
+
+**What:** Django project boots, custom user model works, health check returns 200.
+
+**Files added/changed:**
+- `backend/requirements.txt` — pinned deps (Django 6.1.1, DRF 3.18.0, SimpleJWT
+  5.5.1, django-filter 26.1, django-cors-headers 4.9.0, Pillow, psycopg 3,
+  cloudinary, django-cloudinary-storage, python-dotenv).
+- `backend/config/` — settings split `base/dev/prod`, `urls.py` w/ health check,
+  `manage.py`/`wsgi` default to dev settings.
+- `backend/accounts/` — custom `User` (email login, no username), `UserManager`,
+  full `Address` model (all checkout delivery fields, default flag), admin.
+- `backend/common/` — `StandardPagination`, `IsAdminUser`/`IsOwnerOrReadOnly`.
+- `backend/catalog/` — `Category`, `Brand`, `Product`, `ProductVariant`
+  (size+color+attrs, own SKU/stock/price, unique per size/color), `ProductImage`
+  (variant-linked for color preview). SearchVector removed to stay SQLite-safe.
+- `backend/.env.example` — full secret template (OPay/Gmail/Cloudinary/Postgres/JWT).
+- Migrations applied for accounts + catalog; `manage.py check` clean.
+
+**Verified:** `python manage.py check` → no issues; `GET /health/` → 200.
+
+**Notes:** pip on this machine could not reach `files.pythonhosted.org`; the
+Tencent PyPI mirror (`https://mirrors.cloud.tencent.com/pypi/simple`) is used for
+installs. Django 6.1 uses the new `MAILERS` email setting (console in dev, SMTP
+in prod).
+
 ### 2026-09-04 — Phase 1: project scaffolding + documentation (initial commit)
 
 **What:** Created the repository skeleton and master documentation so that every
