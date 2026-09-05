@@ -1,10 +1,10 @@
-from django.db.models import Count, Q
+from django.db.models import Avg, Count, OuterRef, Prefetch, Q, Subquery
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 
 from common.permissions import IsAdminUser
 from .filters import ProductFilter, apply_sorting
-from .models import Brand, Category, Product
+from .models import Brand, Category, Product, ProductImage, ProductVariant
 from .serializers import (
     BrandSerializer,
     CategorySerializer,
@@ -60,6 +60,29 @@ class ProductViewSet(viewsets.ModelViewSet):
             qs = Product.objects.filter(status=Product.Status.PUBLISHED, is_active=True)
         qs = ProductFilter(self.request.query_params, queryset=qs).qs.distinct()
         sort = self.request.query_params.get("sort")
+
+        # Avoid N+1: prefetch images + active variants, and annotate review
+        # aggregates (catalog->reviews import kept lazy to avoid circulars).
+        from reviews.models import Review
+
+        approved = Review.objects.filter(product=OuterRef("pk"), status="approved")
+        qs = qs.select_related("category", "brand").prefetch_related(
+            Prefetch(
+                "images",
+                queryset=ProductImage.objects.order_by("-is_primary", "sort_order", "id"),
+            ),
+            Prefetch(
+                "variants",
+                queryset=ProductVariant.objects.filter(is_active=True).order_by("price", "id"),
+            ),
+        ).annotate(
+            rating_value=Subquery(
+                approved.values("product").annotate(v=Avg("rating")).values("v")
+            ),
+            rating_count=Subquery(
+                approved.values("product").annotate(c=Count("id")).values("c")
+            ),
+        )
         return apply_sorting(qs, sort)
 
     def get_serializer_class(self):

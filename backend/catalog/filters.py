@@ -13,11 +13,12 @@ class ProductFilter(filters.FilterSet):
     max_price = filters.NumberFilter(method="filter_max_price")
     min_rating = filters.NumberFilter(method="filter_min_rating")
     availability = filters.BooleanFilter(method="filter_availability")
+    is_featured = filters.BooleanFilter(field_name="is_featured")
     search = filters.CharFilter(method="filter_search")
 
     class Meta:
         model = Product
-        fields = ["category", "brand", "size", "color", "min_price", "max_price", "min_rating", "availability"]
+        fields = ["category", "brand", "size", "color", "min_price", "max_price", "min_rating", "availability", "is_featured"]
 
     @staticmethod
     def published(qs):
