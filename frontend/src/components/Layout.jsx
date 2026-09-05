@@ -1,5 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import { useCart } from "../context/CartContext.jsx";
 
 const navLink = ({ isActive }) =>
   `px-3 py-2 text-sm font-medium transition ${
@@ -8,6 +9,7 @@ const navLink = ({ isActive }) =>
 
 export default function Layout({ children }) {
   const { user, logout } = useAuth();
+  const { itemCount } = useCart();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -40,6 +42,16 @@ export default function Layout({ children }) {
             </NavLink>
             <NavLink to="/products" className={navLink}>
               Shop
+            </NavLink>
+            <NavLink to="/cart" className={navLink}>
+              <span className="relative">
+                Cart
+                {itemCount > 0 && (
+                  <span className="absolute -right-4 -top-2 flex h-5 min-w-5 items-center justify-center rounded-full bg-gold-500 px-1 text-[10px] font-bold text-midnight-950">
+                    {itemCount}
+                  </span>
+                )}
+              </span>
             </NavLink>
             {user?.is_staff && (
               <NavLink to="/admin" className={navLink}>
