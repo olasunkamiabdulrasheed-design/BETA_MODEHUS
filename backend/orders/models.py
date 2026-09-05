@@ -113,7 +113,13 @@ class ShippingSetting(models.Model):
 
     @classmethod
     def get(cls):
-        obj, _ = cls.objects.get_or_create(pk=1)
+        from django.conf import settings
+
+        obj, created = cls.objects.get_or_create(pk=1)
+        if created:
+            obj.delivery_fee = settings.DEFAULT_SHIPPING_FEE
+            obj.low_stock_threshold = settings.DEFAULT_LOW_STOCK_THRESHOLD
+            obj.save(update_fields=["delivery_fee", "low_stock_threshold"])
         return obj
 
     def __str__(self):

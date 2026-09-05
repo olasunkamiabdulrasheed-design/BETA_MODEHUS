@@ -8,17 +8,17 @@ done and what remains.
 
 | Phase | Status |
 | --- | --- |
-| 1 Init / git / docs | In progress |
-| 2 Backend foundation | Not started |
-| 3 Catalog + seed | Not started |
-| 4 Auth / profiles / addresses | Not started |
-| 5 Cart | Not started |
-| 6 Checkout / orders | Not started |
-| 7 OPay payment | Not started |
+| 1 Init / git / docs | Done |
+| 2 Backend foundation | Done |
+| 3 Catalog + seed | Done |
+| 4 Auth / profiles / addresses | Done |
+| 5 Cart | Done |
+| 6 Checkout / orders | Done |
+| 7 OPay payment | Done |
 | 8 Admin orders | Not started |
 | 9 Email notifications | Not started |
 | 10 Reviews | Not started |
-| 11 Search / filtering | Not started |
+| 11 Search / filtering | Done |
 | 12 Admin dashboard / reports | Not started |
 | 13 Frontend foundation | Not started |
 | 14 Storefront | Not started |
@@ -73,3 +73,60 @@ subsequent phase has a clear reference and a living record of changes.
 confirmed decisions before any code so the implementation does not invent
 business rules. Git was initialized on branch `main` (user will provide a remote
 so we can push continuously).
+
+### 2026-09-05 — Phases 5-7: cart, checkout, OPay payment — full verified flow
+
+**What:** Built the complete purchase flow end-to-end: authenticated cart
+management, checkout order creation, OPay Cashier integration, and graceful
+payment-error handling. Smoke tested: signup → add-to-cart → checkout → order
+created (with shipping fee) → payment initiation → correct error when OPay not
+configured.
+
+**Files added/changed:**
+- `backend/cart/serializers.py`, `cart/services.py`, `cart/views.py`, `cart/urls.py`
+  — authenticated CartView (GET/POST), CartItemUpdateView (PATCH qty), CartItemRemoveView
+  (DELETE), MergeGuestCartView (POST), ClearCartView (POST); services handle stock
+  validation, caps at available stock; merge_guest_items caps at stock.
+- `backend/orders/services.py` — `create_order_from_cart()`: transactional, uses
+  `select_for_update` on variants to prevent race conditions, validates availability,
+  snapshots address, applies `ShippingSetting.get()` delivery fee (free if subtotal
+  meets `free_shipping_threshold`); stock NOT decremented here (deferred to verified
+  payment only).
+- `backend/orders/serializers.py`, `orders/views.py`, `orders/urls.py` —
+  `CheckoutSerializer` (nested AddressSerializer → saves/uses address, calls service),
+  `OrderSerializer` (list/detail with nested items + address), `OrderListCreateView`,
+  `OrderDetailView`, `ShippingSettingView` (admin-only singleton).
+- `backend/payments/client.py` — `OpayClient` against OPay Cashier OpenAPI v1:
+  `create_cashier()` (bearer = public key), `query_status()` (bearer = HMAC-SHA512
+  of sorted-JSON payload signed with private key). Full spec followed: amounts in kobo,
+  responses parsed, errors raised as `OpayError`.
+- `backend/payments/services.py` — `create_payment_for_order()` (creates/queries OPay,
+  stores `cashierUrl`), `mark_payment_success()` (idempotent: flips payment + order,
+  decrements variant stock via `select_for_update`; on stock shortfall clamps to 0 and
+  logs flag in `raw_response["stock_shortfall"]` — pragmatic admin-alert choice),
+  `reconcile_payment()` (calls OPay status, applies result).
+- `backend/payments/views.py` — `InitiatePaymentView` (POST, auth), `PaymentStatusView`
+  (GET, auth, reconciles live), `opay_webhook()` (POST AllowAny, optional HMAC
+  signature verification, idempotent status mapping).
+- `backend/payments/urls.py` — `/payments/initiate/`, `/payments/status/`, `/payments/webhook/opay/`
+- `backend/config/urls.py` — wired `cart.urls`, `orders.urls`, `payments.urls` under `/api/v1/`.
+- `backend/config/settings/base.py` — added `OPAY_PRIVATE_KEY` env var.
+- `backend/.env.example` — added `OPAY_PRIVATE_KEY` line, clarified public vs private key.
+- `backend/orders/models.py` — `ShippingSetting.get()` now seeds `delivery_fee` from
+  `settings.DEFAULT_SHIPPING_FEE` on first creation (singleton).
+- `docs/PROJECT_NOTES.md` — updated phase status table; this entry.
+
+**Verified (smoke test against live runserver):**
+- `POST /api/v1/auth/signup/` → 201 with tokens
+- `GET  /api/v1/products/` → 200 list; `GET /api/v1/products/{slug}/` → 200 with variants
+- `POST /api/v1/cart/` (variant_id, qty) → 200 cart with 2 items, subtotal 36000
+- `POST /api/v1/orders/` (nested address) → 201 order BM-*, shipping ₦3,000, total ₦39,000, pending_payment
+- `GET  /api/v1/orders/{number}/` → 200
+- `GET  /api/v1/cart/` → 200 empty (0 items) after checkout
+- `POST /api/v1/payments/initiate/` → 502 graceful error when OPay creds absent (expected)
+
+**Notes:** OPay credentials (merchant ID, public key, private key, webhook secret) must
+be added to `.env` before live testing. Amounts are in kobo for OPay (`total * 100`).
+Stock decrement only happens inside `mark_payment_success` after successful reconciliation.
+`DEFAULT_SHIPPING_FEE` env value (₦3,000) is used as the initial delivery fee for
+the `ShippingSetting` singleton; admin can override from admin UI.

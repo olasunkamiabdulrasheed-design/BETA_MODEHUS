@@ -208,6 +208,7 @@ CLOUDINARY_STORAGE = {
 # ---------------------------------------------------------------------------
 OPAY_MERCHANT_ID = env("OPAY_MERCHANT_ID", "")
 OPAY_PUBLIC_KEY = env("OPAY_PUBLIC_KEY", "")
+OPAY_PRIVATE_KEY = env("OPAY_PRIVATE_KEY", "")
 OPAY_BASE_URL = env(
     "OPAY_BASE_URL",
     "https://testapi.opaycheckout.com" if DEBUG else "https://liveapi.opaycheckout.com",
