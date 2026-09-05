@@ -21,7 +21,9 @@ class ReviewListCreateView(generics.ListCreateAPIView):
         )
         product = self.request.query_params.get("product")
         if product:
-            return qs.filter(product_id=product)
+            if product.isdigit():
+                return qs.filter(product_id=product)
+            return qs.filter(product__slug=product)
         return qs
 
     def get_serializer_class(self):
