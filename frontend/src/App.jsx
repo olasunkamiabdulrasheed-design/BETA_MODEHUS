@@ -9,6 +9,7 @@ import Account from "./pages/Account.jsx";
 import Orders from "./pages/Orders.jsx";
 import OrderDetail from "./pages/OrderDetail.jsx";
 import PaymentCallback from "./pages/PaymentCallback.jsx";
+import Admin from "./pages/Admin.jsx";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import NotFound from "./pages/NotFound.jsx";
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/orders/:number" element={<OrderDetail />} />
         <Route path="/payment/callback" element={<PaymentCallback />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<NotFound />} />

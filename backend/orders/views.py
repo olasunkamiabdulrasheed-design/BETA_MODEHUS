@@ -1,6 +1,7 @@
-from rest_framework import generics, permissions, status
+from rest_framework import generics, permissions, status, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from django.db.models import Q
 
 from common.permissions import IsAdminUser
 from .models import Order
@@ -13,8 +14,22 @@ class OrderListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         if self.request.user.is_staff:
-            return Order.objects.all()
-        return Order.objects.filter(user=self.request.user)
+            qs = Order.objects.all()
+        else:
+            qs = Order.objects.filter(user=self.request.user)
+
+        status_q = self.request.query_params.get("status")
+        if status_q and status_q in Order.Status.values:
+            qs = qs.filter(status=status_q)
+
+        query = self.request.query_params.get("q")
+        if query:
+            qs = qs.filter(
+                Q(number__icontains=query)
+                | Q(phone__icontains=query)
+                | Q(full_name__icontains=query)
+            )
+        return qs
 
     def get_serializer_class(self):
         if self.request.method == "POST":
@@ -55,6 +70,87 @@ class ShippingSettingView(generics.RetrieveUpdateAPIView):
         from .models import ShippingSetting
 
         return ShippingSetting.get()
+
+
+class AdminStatsView(views.APIView):
+    """Dashboard numbers for the admin frontend: revenue, order counts,
+    pending fulfillment, low-stock items and bestsellers."""
+
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        from datetime import timedelta
+
+        from django.db.models import Min, Sum
+        from django.utils import timezone
+
+        from accounts.models import User
+        from catalog.models import Product
+
+        settings = Order.objects
+        counts = {c: settings.filter(status=c).count() for c, _ in Order.Status.choices}
+
+        paid = Order.objects.filter(
+            payment_status=Order.PaymentStatus.PAID,
+            status__in=[
+                Order.Status.PROCESSING, Order.Status.SHIPPED, Order.Status.DELIVERED,
+                Order.Status.PENDING_PAYMENT,
+            ],
+        )
+        rev_total = paid.aggregate(t=Sum("total"))["t"] or 0
+        today = timezone.localdate()
+        rev_today = paid.filter(created_at__date=today).aggregate(t=Sum("total"))["t"] or 0
+
+        low_threshold = ShippingSetting.get().low_stock_threshold
+        low_stock = (
+            Product.objects.filter(is_active=True)
+            .annotate(remaining=Min("variants__stock"))
+            .filter(remaining__lte=low_threshold)
+            .order_by("remaining")[:12]
+        )
+        low = [
+            {
+                "id": p.id, "name": p.name, "slug": p.slug,
+                "remaining_stock": p.remaining or 0, "thumbnail": p.primary_image,
+            }
+            for p in low_stock
+        ]
+
+        bestsellers = (
+            OrderItem.objects.filter(order__payment_status="paid")
+            .values("product_id", "product_name")
+            .annotate(units=Sum("quantity"), revenue=Sum("line_total"))
+            .order_by("-units")[:8]
+        )
+
+        recent = list(
+            Order.objects.order_by("-created_at")[:8].values(
+                "number", "full_name", "total", "status", "payment_status", "created_at"
+            )
+        )
+
+        month_ago = timezone.now() - timedelta(days=30)
+        return Response(
+            {
+                "order_counts": counts,
+                "revenue": {
+                    "total": str(rev_total),
+                    "today": str(rev_today),
+                    "paid_orders": paid.count(),
+                },
+                "pending_fulfillment": Order.objects.filter(
+                    payment_status="paid",
+                    status__in=[Order.Status.PROCESSING, Order.Status.SHIPPED],
+                ).count(),
+                "new_customers_30d": User.objects.filter(date_joined__gte=month_ago).count(),
+                "recent_orders": recent,
+                "low_stock": low,
+                "bestsellers": [
+                    {"product_name": b["product_name"], "units_sold": b["units"], "revenue": str(b["revenue"])}
+                    for b in bestsellers
+                ],
+            }
+        )
 
 
 class AdminOrderActionView(generics.RetrieveUpdateAPIView):

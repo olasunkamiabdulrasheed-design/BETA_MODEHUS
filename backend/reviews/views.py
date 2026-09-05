@@ -16,9 +16,13 @@ class ReviewListCreateView(generics.ListCreateAPIView):
         return [AllowAny()]
 
     def get_queryset(self):
-        qs = Review.objects.select_related("user", "product").filter(
-            status=Review.Status.APPROVED
-        )
+        qs = Review.objects.select_related("user", "product")
+        if self.request.user.is_staff:
+            status_q = self.request.query_params.get("status")
+            if status_q in (s for s, _ in Review.Status.choices):
+                qs = qs.filter(status=status_q)
+            return qs.order_by("status", "-created_at")
+        qs = qs.filter(status=Review.Status.APPROVED)
         product = self.request.query_params.get("product")
         if product:
             if product.isdigit():
