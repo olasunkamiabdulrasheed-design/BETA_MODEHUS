@@ -20,7 +20,7 @@ done and what remains.
 | 10 Reviews | Done |
 | 11 Search / filtering | Done |
 | 12 Admin dashboard / reports | Not started |
-| 13 Frontend foundation | Not started |
+| 13 Frontend foundation | Done (storefront pages continue in Phase 14) |
 | 14 Storefront | Not started |
 | 15 Admin UI | Not started |
 | 16 Testing | Not started |
@@ -175,3 +175,48 @@ admin moderation.
 **Notes:** Create a `smokeadmin` staff user before testing admin endpoints. OPay webhook
 verification uses a signature header when present; in debug mode unsigned callbacks are
 accepted so local testing works.
+
+### 2026-09-05 — Phase 13: frontend foundation (Vite + React + Tailwind) + catalog performance
+
+**What:** Scaffolded the storefront web app with full BETA_MODEHUS branding and
+fixed a major products-API performance problem (32 SQL queries per page → 4).
+
+**Files added/changed (frontend):**
+- `frontend/package.json`, `package-lock.json`, `vite.config.js` (dev proxy /api →
+  127.0.0.1:8000), `index.html` (SEO title/description), `public/logo.svg`
+  (replaceable placeholder logo).
+- `frontend/src/index.css` — Tailwind v4 `@theme` with brand tokens (gold/midnight
+  palette, display serif), utility classes (`.btn-gold`, `.input-bm`, `.container-bm`).
+- `frontend/src/main.jsx` — mounts app inside `BrowserRouter` + `AuthProvider`.
+- `frontend/src/api/client.js` — axios instance, JWT request header, silent token
+  refresh on 401 (`/auth/refresh/`), `currency()` NGN formatter.
+- `frontend/src/context/AuthContext.jsx` — login/signup/logout + session restore.
+- `frontend/src/App.jsx`, `components/Layout.jsx` — header (logo, nav, auth links,
+  admin link for staff), footer (contact/social/location), gold accent bar.
+- `frontend/src/pages/Home.jsx` — hero, USP strip, featured grid, category cards.
+- `frontend/src/pages/Catalog.jsx` — search box, category dropdown, sort dropdown.
+- `frontend/src/pages/ProductDetail.jsx` — size/color selection (variant-aware color
+  chips + gallery image swap), quantity, add-to-cart, WhatsApp order, reviews list.
+- `frontend/src/pages/Login.jsx`, `Signup.jsx`, `NotFound.jsx`.
+
+**Backend performance (files: `catalog/views.py`, `catalog/serializers.py`, `catalog/filters.py`):**
+- `select_related("category","brand")` — removes 2 FK queries per product.
+- `Prefetch("images", ...ordered)` + `Prefetch("variants", is_active sorted by price)`
+  — removes image + variants queries per product (was hitting `is_available`,
+  `min_price` properties which each re-queried).
+- Review rating/rating_count now annotated via `Subquery(Avg/Count)` instead of a
+  per-product aggregate.
+- Added `is_featured` filter (was being silently ignored by the Home page).
+- Verified: products list went from **32 queries to 4**, `min_price`/`is_available`
+  fixed (seed variants have NULL price that inherits product price via
+  `effective_price`).
+- `reviews/views.py` — list filter accepts product slug or id.
+
+**Verified:** `npm build` clean; combined stack runs (backend :8000, Vite :5173,
+proxy works); `/health/` ok; products through proxy ~1.1s first-hit (Vite prebundles
+deps on first request — subsequent loads are cached and fast).
+
+**Notes:** Dev servers run `python manage.py runserver :8000` and `npm run dev`
+(Frontend must be reached via `http://localhost:5173`, not `127.0.0.1`, because
+Vite binds `::1`). Vite first-request latency is a dev-only cost; the production
+build (`npm run build`) serves the prebuilt 242 kB JS bundle.
