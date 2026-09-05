@@ -220,3 +220,22 @@ deps on first request — subsequent loads are cached and fast).
 (Frontend must be reached via `http://localhost:5173`, not `127.0.0.1`, because
 Vite binds `::1`). Vite first-request latency is a dev-only cost; the production
 build (`npm run build`) serves the prebuilt 242 kB JS bundle.
+
+### 2026-09-05 — Fix: product images broken on the frontend
+
+**What:** Django's dev server was not serving `/media/...` uploads (missing
+`static()` URL patterns), so every product image 404'd; the Vite SPA fallback
+then returned HTML for image URLs, rendering broken images throughout the store.
+
+**Files changed:**
+- `backend/config/urls.py` — append `static(settings.MEDIA_URL, ...)` +
+  `static(settings.STATIC_URL, ...)` patterns when `settings.DEBUG`.
+- `frontend/vite.config.js` — proxy `/media` → `http://127.0.0.1:8000`.
+
+**Verified:** `GET /media/products/14/*.png` → 200 (`image/png`) both directly and
+through Vite (`http://localhost:5173/media/...` → 200, 20 KB real bytes). Page,
+products API, and categories all return 200 through the Vite origin.
+
+**Troubleshooting note:** if images still 404 after pulling, restart both dev
+servers (Django does not auto-reload URL config, and Vite does not reload
+`vite.config.js` — it needs a restart).
