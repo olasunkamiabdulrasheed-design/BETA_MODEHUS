@@ -64,6 +64,14 @@ class Order(models.Model):
     def __str__(self):
         return self.number
 
+    @property
+    def is_finalized(self):
+        return self.status in (
+            self.Status.DELIVERED,
+            self.Status.CANCELLED,
+            self.Status.REFUNDED,
+        )
+
     def recalc_totals(self):
         subtotal = sum((i.line_total for i in self.items.all()))
         self.subtotal = subtotal

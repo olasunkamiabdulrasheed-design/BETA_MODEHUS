@@ -92,3 +92,12 @@ def create_order_from_cart(user, address, shipping_method="nationwide"):
 
     cart.clear()
     return order
+
+
+def notify_new_order(order):
+    """Send customer + admin emails outside the checkout transaction so a mail
+    failure never rolls back a completed order."""
+    from notifications.service import send_admin_new_order, send_new_order
+
+    send_new_order(order)
+    send_admin_new_order(order)

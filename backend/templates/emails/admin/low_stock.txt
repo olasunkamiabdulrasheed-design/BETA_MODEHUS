@@ -1,0 +1,10 @@
+Low stock alert!
+
+The following products are at or below the low-stock threshold:
+{% for p in products %}
+- {{ p.name }} (SKU {{ p.sku }}) — {{ p.total_stock }} unit(s) left
+{% endfor %}
+
+Restock soon to avoid missing sales.
+
+Manage products: {{ absolute_url }}

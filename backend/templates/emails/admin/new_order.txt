@@ -1,0 +1,19 @@
+New order received!
+
+Order number: {{ order.number }}
+Customer:     {{ order.full_name }}
+Phone:        {{ order.phone }}{% if order.whatsapp %} (WhatsApp {{ order.whatsapp }}){% endif %}
+
+Items:
+{% for item in order.items.all %}
+- {{ item.product_name }}{% if item.variant_label %} ({{ item.variant_label }}){% endif %} x{{ item.quantity }} — NGN {{ item.line_total }}
+{% endfor %}
+Subtotal: NGN {{ order.subtotal }}
+Shipping: NGN {{ order.shipping_fee }}
+TOTAL:    NGN {{ order.total }}
+Payment:  {{ order.get_payment_status_display }}
+
+Delivery: {{ order.house_number }} {{ order.street }}, {{ order.area }}, {{ order.city }}, {{ order.state }}{% if order.landmark %} (near {{ order.landmark }}){% endif %}{% if order.delivery_instructions %}
+Instructions: {{ order.delivery_instructions }}{% endif %}
+
+Manage: {{ absolute_url }}

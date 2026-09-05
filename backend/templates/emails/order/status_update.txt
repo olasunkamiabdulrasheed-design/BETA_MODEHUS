@@ -1,0 +1,15 @@
+Hi {{ order.user.full_name|default:"there" }},
+
+An update on your BETA_MODEHUS order {{ order.number }}:
+Status: {{ order.get_status_display }}{% if order.tracking_number %}
+Tracking number: {{ order.tracking_number }}{% endif %}
+
+TOTAL: NGN {{ order.total }}
+
+You can view full order details at {{ store_url }}/orders/{{ order.number }}.
+
+Thank you for shopping with BETA_MODEHUS — For Better Elegance and Luxury.
+
+Warm regards,
+BETA_MODEHUS
+Hotline: 08077063971 | WhatsApp: 07012124050

@@ -18,5 +18,6 @@ urlpatterns = [
     path("api/v1/cart/", include("cart.urls")),
     path("api/v1/orders/", include("orders.urls")),
     path("api/v1/payments/", include("payments.urls")),
+    path("api/v1/reviews/", include("reviews.urls")),
     path("health/", health_check, name="health"),
 ]

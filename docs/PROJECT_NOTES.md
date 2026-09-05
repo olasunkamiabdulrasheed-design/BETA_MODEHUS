@@ -15,9 +15,9 @@ done and what remains.
 | 5 Cart | Done |
 | 6 Checkout / orders | Done |
 | 7 OPay payment | Done |
-| 8 Admin orders | Not started |
-| 9 Email notifications | Not started |
-| 10 Reviews | Not started |
+| 8 Admin orders | Done |
+| 9 Email notifications | Done |
+| 10 Reviews | Done |
 | 11 Search / filtering | Done |
 | 12 Admin dashboard / reports | Not started |
 | 13 Frontend foundation | Not started |
@@ -130,3 +130,48 @@ be added to `.env` before live testing. Amounts are in kobo for OPay (`total * 1
 Stock decrement only happens inside `mark_payment_success` after successful reconciliation.
 `DEFAULT_SHIPPING_FEE` env value (₦3,000) is used as the initial delivery fee for
 the `ShippingSetting` singleton; admin can override from admin UI.
+
+### 2026-09-05 — Phases 8-10: admin order actions, email notifications, reviews
+
+**What:** Added the remaining commerce back-office pieces: admin order status
+transitions with email alerts, customer + admin email templates via the Django
+MAILERS console/SMTP backends, and a verified-purchase-only reviews API with
+admin moderation.
+
+**Files added/changed:**
+- `backend/orders/models.py` — added `Order.is_finalized` property (delivered/cancelled/refunded).
+- `backend/orders/admin_api.py` — `AdminOrderActionSerializer` (validates action,
+  requires tracking number for shipping, blocks finalized orders).
+- `backend/orders/views.py` — `AdminOrderActionView` (PATCH by order number, applies
+  status + tracking, sends status email). Fixed a broken import line from an earlier edit.
+- `backend/orders/urls.py` — `admin/<str:number>/` route.
+- `backend/orders/services.py` — `notify_new_order()` (customer + admin emails, called
+  outside the checkout transaction so mail failure never rolls back an order).
+- `backend/orders/serializers.py` — `CheckoutSerializer.create` calls `notify_new_order()`.
+- `backend/notifications/service.py` — mail helpers with try/except (email failures logged,
+  never break order/payment flow); customer: order placed, payment confirmed, status update,
+  payment failed; admin: new order, low stock alert.
+- `backend/templates/emails/order/*.txt` — 4 customer plain-text templates.
+- `backend/templates/emails/admin/*.txt` — 2 admin plain-text templates.
+- `backend/payments/services.py` — `mark_payment_success` now sends payment-confirmed email,
+  checks low stock (per `ShippingSetting.low_stock_threshold`) and alerts admin.
+- `backend/reviews/serializers.py`, `reviews/views.py`, `reviews/urls.py` — public
+  approved-reviews list (filter by product), create restricted to verified purchasers
+  (paid + processing/shipped/delivered), `get_or_create` duplicate guard, `PATCH
+  /<pk>/moderate/` for admin (approve/reject).
+- `backend/config/urls.py` — wired `reviews.urls` under `/api/v1/reviews/`.
+- `docs/PROJECT_NOTES.md` — updated phase status table; this entry.
+
+**Verified (live server):**
+- Admin login 200; admin orders list 200 (3 orders); `PATCH /orders/admin/{n}/`
+  `{"action":"shipped","tracking_number":"TRACK-123"}` → 200 status shipped; shipping
+  without tracking → 400 (enforced); repeated on final states → blocked.
+- `GET /reviews/?product=1` → 200; `GET /orders/shipping-setting/` → 200 ₦3,000.
+- Checkout emails fire: customer "Order received" + admin "New order" rendered by the
+  console backend (dev) with correct order items/totals/address.
+- Full customer flow re-verified end-to-end (signup → cart → checkout → payment
+  graceful 502 without OPay keys).
+
+**Notes:** Create a `smokeadmin` staff user before testing admin endpoints. OPay webhook
+verification uses a signature header when present; in debug mode unsigned callbacks are
+accepted so local testing works.

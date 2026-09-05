@@ -49,3 +49,30 @@ class ShippingSettingView(generics.RetrieveUpdateAPIView):
         from .models import ShippingSetting
 
         return ShippingSetting.get()
+
+
+class AdminOrderActionView(generics.RetrieveUpdateAPIView):
+    """Admin single-order management: view any order and advance its status."""
+
+    permission_classes = [IsAdminUser]
+    serializer_class = OrderSerializer
+    lookup_field = "number"
+
+    def get_queryset(self):
+        return Order.objects.all()
+
+    def update(self, request, *args, **kwargs):
+        from .admin_api import AdminOrderActionSerializer
+        from notifications.service import send_order_status
+
+        order = self.get_object()
+        serializer = AdminOrderActionSerializer(
+            data=request.data, context={"order": order}
+        )
+        serializer.is_valid(raise_exception=True)
+        action = serializer.validated_data["action"]
+        order.status = action
+        order.tracking_number = serializer.validated_data.get("tracking_number", "")
+        order.save(update_fields=["status", "tracking_number", "updated_at"])
+        send_order_status(order)
+        return Response(self.get_serializer(order).data)

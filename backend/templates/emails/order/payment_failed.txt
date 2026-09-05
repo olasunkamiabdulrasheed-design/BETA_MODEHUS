@@ -1,0 +1,12 @@
+Hi {{ order.user.full_name|default:"there" }},
+
+We were unable to confirm payment for your order {{ order.number }}.
+
+Order total: NGN {{ order.total }}
+
+You can retry payment at {{ store_url }}/orders/{{ order.number }}. If you paid
+already, please contact us and we will resolve it right away.
+
+Warm regards,
+BETA_MODEHUS
+Hotline: 08077063971 | WhatsApp: 07012124050

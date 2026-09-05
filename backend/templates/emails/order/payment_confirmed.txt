@@ -1,0 +1,15 @@
+Hi {{ order.user.full_name|default:"there" }},
+
+Great news — your payment for order {{ order.number }} has been confirmed.
+
+Order total: NGN {{ order.total }}
+
+We are now processing your order and will notify you when it is shipped.
+
+Track your order anytime at {{ store_url }}/orders/{{ order.number }}.
+
+Thank you for shopping with BETA_MODEHUS — For Better Elegance and Luxury.
+
+Warm regards,
+BETA_MODEHUS
+Hotline: 08077063971 | WhatsApp: 07012124050

@@ -37,7 +37,7 @@ class CheckoutSerializer(serializers.Serializer):
     shipping_method = serializers.CharField(default="nationwide")
 
     def create(self, validated_data):
-        from .services import CheckoutError, create_order_from_cart
+        from .services import CheckoutError, create_order_from_cart, notify_new_order
 
         user = self.context["request"].user
         address_data = validated_data["address"]
@@ -48,11 +48,13 @@ class CheckoutSerializer(serializers.Serializer):
         address_serializer.is_valid(raise_exception=True)
         address = address_serializer.save()
         try:
-            return create_order_from_cart(
+            order = create_order_from_cart(
                 user, address, validated_data.get("shipping_method", "nationwide")
             )
         except CheckoutError as exc:
             raise serializers.ValidationError({"cart": str(exc)})
+        notify_new_order(order)
+        return order
 
 
 class ShippingSettingSerializer(serializers.ModelSerializer):

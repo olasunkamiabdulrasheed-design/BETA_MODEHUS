@@ -97,7 +97,40 @@ def mark_payment_success(payment, raw=None):
             payment.save(update_fields=["raw_response"])
 
     order.recalc_totals()
+    _low_stock_check()
+    _notification_after_paid(order)
     return order
+
+
+def _notification_after_paid(order):
+    from notifications.service import send_payment_confirmed
+
+    send_payment_confirmed(order)
+
+
+def _low_stock_check():
+    from catalog.models import ProductVariant
+    from orders.models import ShippingSetting
+
+    threshold = ShippingSetting.get().low_stock_threshold
+    low = [
+        v
+        for v in ProductVariant.objects.filter(
+            is_active=True, stock__lte=threshold
+        )
+        .select_related("product")
+        .all()
+    ]
+    if not low:
+        return
+    products = []
+    for v in low:
+        products.append(
+            {"name": v.product.name, "sku": v.sku, "total_stock": v.stock}
+        )
+    from notifications.service import send_admin_low_stock
+
+    send_admin_low_stock(products)
 
 
 def reconcile_payment(payment):
