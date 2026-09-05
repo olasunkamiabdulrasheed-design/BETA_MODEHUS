@@ -42,8 +42,14 @@ class OrderDetailView(generics.RetrieveAPIView):
 
 
 class ShippingSettingView(generics.RetrieveUpdateAPIView):
-    permission_classes = [IsAdminUser]
+    """Customers may read the delivery fee/preview totals; only staff may change it."""
+
     serializer_class = ShippingSettingSerializer
+
+    def get_permissions(self):
+        if self.request.method in ("PUT", "PATCH"):
+            return [IsAdminUser()]
+        return [permissions.AllowAny()]
 
     def get_object(self):
         from .models import ShippingSetting
