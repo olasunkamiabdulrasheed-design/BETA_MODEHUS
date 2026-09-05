@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { api, currency } from "../api/client.js";
+import { useCart } from "../context/CartContext.jsx";
 
 export default function ProductDetail() {
   const { slug } = useParams();
-  const navigate = useNavigate();
+  const { addItem } = useCart();
   const [product, setProduct] = useState(null);
   const [selected, setSelected] = useState(null);
   const [quantity, setQuantity] = useState(1);
@@ -63,15 +64,10 @@ export default function ProductDetail() {
   const addToCart = async () => {
     if (!selected) return;
     try {
-      await api.post("/cart/", { variant_id: selected.id, quantity });
-      setNotice(`${product.name} added to cart.`);
+      await addItem(product, selected, quantity);
+      setNotice(`${product.name} (${selected.color || ""} ${selected.size || ""}) added to cart.`);
     } catch (err) {
-      const msg = err.response?.data?.detail || err.response?.data?.quantity || "Could not add to cart.";
-      if (err.response?.status === 401) {
-        navigate("/login");
-        return;
-      }
-      setNotice(String(msg));
+      setNotice(err.response?.data?.detail || err.message || "Could not add to cart.");
     }
   };
 
