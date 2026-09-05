@@ -239,3 +239,22 @@ products API, and categories all return 200 through the Vite origin.
 **Troubleshooting note:** if images still 404 after pulling, restart both dev
 servers (Django does not auto-reload URL config, and Vite does not reload
 `vite.config.js` — it needs a restart).
+## Phase 14 - Storefront cart/checkout/account/payment pages (DONE)
+
+- CartContext (frontend/src/context/CartContext.jsx): guest cart persisted in localStorage
+  (bm_cart) that automatically merges into the backend cart on login via /cart/merge/;
+  exposes addItem/updateQty/remove/clear, itemCount and subtotal.
+- Pages (frontend/src/pages): Cart.jsx (qty steppers, remove, summary, login-to-checkout gate),
+  Checkout.jsx (saved-address picker + full delivery form, live delivery-fee/free-shipping preview
+  from /orders/shipping-setting/, POST /orders/ then jump to /orders/<number>?new=1),
+  Account.jsx (profile, addresses CRUD, recent orders + totals), Orders.jsx (history),
+  OrderDetail.jsx (items, address snapshot, Pay-now -> POST /payments/initiate/ then redirect to
+  OPay cashier; polls when ?paid=1), PaymentCallback.jsx (polls /payments/status/?reference=
+  every 2s until terminal state, then links to the order).
+- ShippingSettingView now lets ANY user GET the delivery fee (for honest cart/checkout totals)
+  while writes stay admin-only.
+- Layout nav gained a Cart link with live item-count badge; ProductDetail add-to-cart now feeds the
+  cart context (guest-safe).
+- Build clean; 11 commits pushed (main @ 9ec6977).
+
+## Backlog
