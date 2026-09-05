@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from django.db.models import Q
 
 from common.permissions import IsAdminUser
-from .models import Order
+from .models import Order, OrderItem, ShippingSetting
 from .serializers import CheckoutSerializer, OrderSerializer, ShippingSettingSerializer
 
 
@@ -67,8 +67,6 @@ class ShippingSettingView(generics.RetrieveUpdateAPIView):
         return [permissions.AllowAny()]
 
     def get_object(self):
-        from .models import ShippingSetting
-
         return ShippingSetting.get()
 
 

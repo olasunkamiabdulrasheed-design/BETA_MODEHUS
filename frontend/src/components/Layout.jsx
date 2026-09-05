@@ -25,7 +25,7 @@ export default function Layout({ children }) {
         </div>
         <div className="container-bm flex items-center justify-between py-3">
           <Link to="/" className="flex items-center gap-3">
-            <img src="/logo.svg" alt="BETA_MODEHUS logo" className="h-10 w-10" />
+            <img src="/img/logo.png" alt="BETA_MODEHUS logo" className="h-12 w-12 rounded-full object-cover" />
             <div className="leading-tight">
               <div className="font-display text-xl font-bold tracking-wide text-white">
                 BETA<span className="text-gold-500">MODEHUS</span>

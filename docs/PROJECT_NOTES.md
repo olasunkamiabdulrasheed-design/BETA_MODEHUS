@@ -258,3 +258,30 @@ servers (Django does not auto-reload URL config, and Vite does not reload
 - Build clean; 11 commits pushed (main @ 9ec6977).
 
 ## Backlog
+
+## Phase 12 + 15 - Admin reports API and dashboard (DONE)
+
+- AdminStatsView at /api/v1/orders/admin/stats/ (staff only): order counts by status,
+  revenue (total + today + paid order count), pending fulfilment, new customers (30d),
+  low-stock lines (from ShippingSetting.low_stock_threshold), bestsellers (paid OrderItem
+  aggregation), and the 8 most recent orders. Fixed a NameError (OrderItem/ShippingSetting
+  now module-imported in orders/views.py).
+- Staff order list filters: ?status=<value> and ?q=<number|phone|name>.
+- Reviews list now returns ALL statuses to staff (order: pending first) with ?status= filter.
+- Admin frontend (frontend/src/pages/Admin.jsx) behind /admin (staff-only guard) with tabs:
+  Dashboard (stat cards, order-status chips, bestsellers, low stock, recent orders),
+  Orders (filter chips + search, expandable detail, actions processing/shipped (tracking
+  prompt)/delivered/cancelled/refunded via PUT /orders/admin/<number>/),
+  Reviews (pending-first moderation via PATCH /reviews/<pk>/moderate/),
+  Settings (delivery fee, free-shipping threshold, low-stock threshold via
+  PATCH /orders/shipping-setting/).
+- Phase 16 tests: cart (add/update/remove/merge/stock-cap/auth), orders (checkout totals
+  BM- numbers + no stock decrement pre-payment, order scoping, shipped-requires-tracking,
+  stats authz), payments (mark_payment_success idempotency + stock decrement + amount
+  mismatch guard, reconcile SUCCESS/FAIL via mocked OpayClient), reviews
+  (verified-purchase gate, duplicate guard, public-list moderation, staff moderate).
+- requirements.txt: added gunicorn==23.0.0 for production.
+- Branding: real BETA_MODEHUS logo added as frontend/img/logo.png (renamed from
+  "beta modehs logo.png"), used in the header and as the favicon.
+
+## Backlog
