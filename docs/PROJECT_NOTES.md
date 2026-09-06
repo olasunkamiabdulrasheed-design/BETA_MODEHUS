@@ -285,3 +285,22 @@ servers (Django does not auto-reload URL config, and Vite does not reload
   "beta modehs logo.png"), used in the header and as the favicon.
 
 ## Backlog
+
+## Phase 17 - Production hardening + deployment runbook (DONE)
+
+- prod.py hardening: SECRET_KEY required (fails fast), env-driven ALLOWED_HOSTS /
+  CORS_ALLOWED_ORIGINS / CSRF_TRUSTED_ORIGINS, SECURE_PROXY_SSL_HEADER for nginx.
+  Verified it imports with DEBUG=False, Postgres + SMTP mailer configured.
+- frontend/src/api/client.js now honours VITE_API_URL (build-time) for split-domain
+  deployments; refresh URL follows it too. frontend/.env.example documents it.
+- deploy/betamodehus.service: gunicorn systemd unit (3 workers, unix socket, logs).
+- deploy/nginx.conf: serves frontend/dist, proxies /api /admin /health to gunicorn,
+  /static + /media fallback, SPA fallback, gzip/long cache for assets.
+- docs/DEPLOYMENT.md: full launch runbook (server setup, Postgres, .env, migrate/
+  collectstatic, systemd, frontend build, certbot HTTPS, launch checklist, backups,
+  day-to-day ops, creditcard-free cost notes).
+- All tests still pass; build clean.
+
+ALL PHASES (1-17) COMPLETE. Remaining go-live items need user credentials only:
+OPay LIVE keys + OPAY_CB_URL, Gmail SMTP app password, real DJANGO_SECRET_KEY,
+Cloudinary URL. See deploy/nginx.conf + docs/DEPLOYMENT.md.
