@@ -58,3 +58,4 @@ coverage/
 .docker/
 docker-compose.override.yml
 backend/test_out.txt
+/backend/staticfiles/
