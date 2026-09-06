@@ -51,9 +51,13 @@ Start with [`docs/START_HERE.md`](docs/START_HERE.md), then:
 - **How features work** — [`docs/HOW_IT_WORKS.md`](docs/HOW_IT_WORKS.md)
 - **Feature list** — [`docs/FEATURES.md`](docs/FEATURES.md)
 - **API reference** — [`docs/API_REFERENCE.md`](docs/API_REFERENCE.md)
+- **Database models** — [`docs/DB_MODELS.md`](docs/DB_MODELS.md)
 - **Owner's guide** — [`docs/OWNER_GUIDE.md`](docs/OWNER_GUIDE.md)
 - **FAQ** — [`docs/FAQ.md`](docs/FAQ.md)
+- **Security model** — [`docs/SECURITY.md`](docs/SECURITY.md)
 - **Go-live runbook** — [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
+- **Verification checklist** — [`docs/CHECKS.md`](docs/CHECKS.md)
+- **Roadmap & backlog** — [`docs/ROADMAP.md`](docs/ROADMAP.md)
 - **Changelog** — [`docs/PROJECT_NOTES.md`](docs/PROJECT_NOTES.md)
 
 ## Tests
