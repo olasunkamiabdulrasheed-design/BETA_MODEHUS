@@ -304,3 +304,21 @@ servers (Django does not auto-reload URL config, and Vite does not reload
 ALL PHASES (1-17) COMPLETE. Remaining go-live items need user credentials only:
 OPay LIVE keys + OPAY_CB_URL, Gmail SMTP app password, real DJANGO_SECRET_KEY,
 Cloudinary URL. See deploy/nginx.conf + docs/DEPLOYMENT.md.
+
+---
+
+# Phase 18 — Documentation suite
+
+Complete owner-facing and developer-facing documentation was added:
+
+- `docs/START_HERE.md` — index of everything.
+- `docs/PROJECT_STRUCTURE.md` — backend apps + frontend + deploy layout.
+- `docs/API_REFERENCE.md` — full endpoint reference with curl samples.
+- `docs/HOW_IT_WORKS.md` — auth, cart/merge, checkout, OPay engine, emails.
+- `docs/FEATURES.md` — customer + owner feature list.
+- `docs/OWNER_GUIDE.md` — daily routine, dashboard walkthrough, catalog admin.
+- `docs/FAQ.md`, `docs/ROADMAP.md`, `docs/SECURITY.md`, `docs/CHECKS.md`,
+  `docs/DB_MODELS.md`.
+- `README.md` rewritten as the single entry point.
+
+Everything remains verified: 18 automated tests pass; both servers run locally.
