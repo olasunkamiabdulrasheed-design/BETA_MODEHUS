@@ -1,4 +1,4 @@
-﻿import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api/client.js";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -23,7 +23,7 @@ const STATUS_LABEL = {
   refunded: "Refunded",
 };
 
-const naira = (c) => "â‚¦" + Number(c || 0).toLocaleString("en-NG", { minimumFractionDigits: 2 });
+const naira = (c) => "₦" + Number(c || 0).toLocaleString("en-NG", { minimumFractionDigits: 2 });
 
 const NAV = [
   ["dashboard", "Dashboard"],
@@ -66,7 +66,7 @@ export default function Admin() {
   const { user, loading: authLoading } = useAuth();
   const [tab, setTab] = useState("dashboard");
 
-  if (authLoading) return <div className="container-bm py-16 text-center">Loadingâ€¦</div>;
+  if (authLoading) return <div className="container-bm py-16 text-center">Loading…</div>;
 
   if (!user?.is_staff) {
     return (
@@ -126,7 +126,7 @@ export default function Admin() {
                 {tab === "settings" && "Delivery fees and store rules"}
               </p>
             </div>
-            <Link to="/" className="btn-outline text-xs">View storefront â†’</Link>
+            <Link to="/" className="btn-outline text-xs">View storefront →</Link>
           </div>
 
           {tab === "dashboard" && <Dashboard onOrders={() => setTab("orders")} />}
@@ -151,14 +151,14 @@ const load = useCallback(() => {
 
   useEffect(load, [load]);
 
-  if (!stats) return <p className="text-midnight-700">Loading statsâ€¦</p>;
+  if (!stats) return <p className="text-midnight-700">Loading stats…</p>;
 
   const totalOrders = Object.values(stats.order_counts).reduce((a, b) => a + b, 0);
 
   const cards = [
     { label: "Revenue (paid)", value: naira(stats.revenue.total), hint: "Confirmed income", accent: "bg-gold-400", tone: "text-midnight-900" },
     { label: "Paid today", value: naira(stats.revenue.today), hint: "Confirmed today", accent: "bg-emerald-400", tone: "text-emerald-700" },
-    { label: "Awaiting fulfilment", value: String(stats.pending_fulfillment), hint: "Paid â€” need dispatch", accent: "bg-sky-400", tone: "text-sky-700" },
+    { label: "Awaiting fulfilment", value: String(stats.pending_fulfillment), hint: "Paid — need dispatch", accent: "bg-sky-400", tone: "text-sky-700" },
     { label: "New customers (30d)", value: String(stats.new_customers_30d), hint: "Accounts this month", accent: "bg-purple-400", tone: "text-purple-700" },
     { label: "All orders", value: String(totalOrders), hint: "Every order placed", accent: "bg-midnight-400", tone: "text-midnight-700" },
     { label: "Paid orders", value: String(stats.revenue.paid_orders), hint: "Confirmed payment", accent: "bg-rose-400", tone: "text-rose-700" },
@@ -204,7 +204,7 @@ const load = useCallback(() => {
               <div key={b.product_name} className="flex items-center gap-3 text-sm">
                 <span className="w-5 text-center font-display text-xs font-bold text-midnight-300">{i + 1}</span>
                 <span className="min-w-0 flex-1 truncate text-midnight-900">{b.product_name}</span>
-                <span className="shrink-0 font-medium text-midnight-700">{b.units_sold} sold Â· {naira(b.revenue)}</span>
+                <span className="shrink-0 font-medium text-midnight-700">{b.units_sold} sold · {naira(b.revenue)}</span>
               </div>
             ))}
           </div>
@@ -213,7 +213,7 @@ const load = useCallback(() => {
         <section className="rounded-xl border border-midnight-100 bg-white p-5 shadow-sm">
           <h2 className="font-display text-lg font-bold text-midnight-900">Low stock</h2>
           <div className="mt-3 space-y-3">
-            {stats.low_stock.length === 0 && <p className="text-sm text-emerald-600">All good â€” nothing low.</p>}
+            {stats.low_stock.length === 0 && <p className="text-sm text-emerald-600">All good — nothing low.</p>}
             {stats.low_stock.map((p) => (
               <div key={p.id} className="flex items-center justify-between gap-2 text-sm">
                 <span className="truncate text-midnight-900">{p.name}</span>
@@ -227,7 +227,7 @@ const load = useCallback(() => {
           <div className="mt-2 space-y-2">
             {stats.recent_orders.map((o) => (
               <Link key={o.number} to={`/orders/${o.number}`} className="flex justify-between text-sm hover:text-gold-600">
-                <span className="truncate pr-2 text-midnight-900">#{o.number} Â· {o.full_name || "Customer"}</span>
+                <span className="truncate pr-2 text-midnight-900">#{o.number} · {o.full_name || "Customer"}</span>
                 <span className="shrink-0 font-medium text-midnight-700">{naira(o.total)}</span>
               </Link>
             ))}
@@ -332,7 +332,7 @@ function OrdersTab() {
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search number / name / phoneâ€¦"
+            placeholder="Search number / name / phone…"
             className="input-bm w-64"
           />
           <button type="submit" onClick={() => load("", query)} className="btn-outline">Search</button>
@@ -343,7 +343,7 @@ function OrdersTab() {
 
       <div className="mt-4 space-y-3">
         {loading ? (
-          <p className="text-midnight-700">Loading ordersâ€¦</p>
+          <p className="text-midnight-700">Loading orders…</p>
         ) : orders.length === 0 ? (
           <p className="text-midnight-700">No orders match.</p>
         ) : (
@@ -353,7 +353,7 @@ function OrdersTab() {
                 <div>
                   <button onClick={() => openDetail(o.number)} className="font-semibold text-midnight-900 hover:text-gold-600">#{o.number}</button>
                   <div className="text-xs text-midnight-700">
-                    {o.full_name || "Customer"} Â· {new Date(o.created_at).toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short" })}
+                    {o.full_name || "Customer"} · {new Date(o.created_at).toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short" })}
                   </div>
                   {o.tracking_number && <div className="text-xs text-midnight-700">Tracking: {o.tracking_number}</div>}
                 </div>
@@ -371,7 +371,7 @@ function OrdersTab() {
                       <ul className="mt-2 space-y-1 text-sm">
                         {detail.items.map((it) => (
                           <li key={it.id} className="flex justify-between">
-                            <span>{it.product_name} Ã—{it.quantity}</span>
+                            <span>{it.product_name} ×{it.quantity}</span>
                             <span className="font-medium">{naira(it.line_total)}</span>
                           </li>
                         ))}
@@ -379,7 +379,7 @@ function OrdersTab() {
                       <dl className="mt-3 space-y-1 text-sm">
                         {[
                           ["Phone", detail.phone],
-                          ["WhatsApp", detail.whatsapp || "â€”"],
+                          ["WhatsApp", detail.whatsapp || "—"],
                           ["Address", `${detail.house_number ? detail.house_number + ", " : ""}${detail.street}, ${detail.city}, ${detail.state}`],
                           ["Payment", detail.payment_status_display],
                         ].map(([k, v]) => (
@@ -479,7 +479,7 @@ function ProductsTab() {
             <input
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search productsâ€¦"
+              placeholder="Search products…"
               className="input-bm w-56"
             />
             {search && (
@@ -488,7 +488,7 @@ function ProductsTab() {
                 className="absolute right-2 top-1/2 -translate-y-1/2 text-midnight-500 hover:text-midnight-900"
                 aria-label="Clear search"
               >
-                Ã—
+                ×
               </button>
             )}
           </div>
@@ -507,7 +507,7 @@ function ProductsTab() {
 
       <div className="mt-4 overflow-hidden rounded-xl border border-midnight-100 bg-white shadow-sm">
         {loading ? (
-          <p className="p-5 text-sm text-midnight-700">Loading productsâ€¦</p>
+          <p className="p-5 text-sm text-midnight-700">Loading products…</p>
         ) : products.length === 0 ? (
           <p className="p-5 text-sm text-midnight-700">No products match.</p>
         ) : (
@@ -659,7 +659,7 @@ function ProductEditor({ product, onClose, onSaved }) {
       await api.delete(`/admin/products/${product.id}/`);
       onSaved({ message: "Product deleted." });
     } catch {
-      setError("Could not delete product â€” it may have orders attached.");
+      setError("Could not delete product — it may have orders attached.");
       setBusy(false);
     }
   };
@@ -678,9 +678,9 @@ function ProductEditor({ product, onClose, onSaved }) {
     <div className="mt-4 rounded-xl border border-midnight-100 bg-white p-5 shadow-sm">
       <div className="flex items-center justify-between">
         <h2 className="font-display text-lg font-bold text-midnight-900">
-          {isNew ? "Add product" : `Edit â€” ${product.name}`}
+          {isNew ? "Add product" : `Edit — ${product.name}`}
         </h2>
-        <button onClick={onClose} className="text-midnight-500 hover:text-midnight-900" aria-label="Close">Ã—</button>
+        <button onClick={onClose} className="text-midnight-500 hover:text-midnight-900" aria-label="Close">×</button>
       </div>
 
       {error && <div className="mt-3 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
@@ -695,7 +695,7 @@ function ProductEditor({ product, onClose, onSaved }) {
             <div>
               <label className="label-bm">Category *</label>
               <select value={form.category_id} onChange={set("category_id")} required className="input-bm">
-                <option value="">Chooseâ€¦</option>
+                <option value="">Choose…</option>
                 {cats.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
               </select>
             </div>
@@ -709,7 +709,7 @@ function ProductEditor({ product, onClose, onSaved }) {
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="label-bm">Base price (â‚¦) *</label>
+              <label className="label-bm">Base price (₦) *</label>
               <input type="number" min="0" step="any" value={form.price} onChange={set("price")} required className="input-bm" />
             </div>
             <div>
@@ -755,7 +755,7 @@ function ProductEditor({ product, onClose, onSaved }) {
                 {variants.length === 0 && <p className="text-xs text-midnight-700">No active variants yet.</p>}
                 {variants.map((v) => (
                   <div key={v.id} className="flex flex-wrap items-center gap-2 rounded-md border border-midnight-100 p-2 text-sm">
-                    <span className="min-w-[90px] font-medium text-midnight-900">{n(v.size)} {v.color ? "Â· " + v.color : ""}</span>
+                    <span className="min-w-[90px] font-medium text-midnight-900">{n(v.size)} {v.color ? "· " + v.color : ""}</span>
                     <span className="text-xs text-midnight-700">{v.is_in_stock ? "In stock" : "Out"}</span>
                     <div className="ml-auto flex items-center gap-2">
                       <input
@@ -779,7 +779,7 @@ function ProductEditor({ product, onClose, onSaved }) {
           )}
 
           <div className="flex flex-wrap gap-2 pt-2">
-            <button type="submit" disabled={busy} className="btn-gold">{busy ? "Savingâ€¦" : isNew ? "Create product" : "Save changes"}</button>
+            <button type="submit" disabled={busy} className="btn-gold">{busy ? "Saving…" : isNew ? "Create product" : "Save changes"}</button>
             {!isNew && (
               <button type="button" onClick={deleteProduct} disabled={busy} className="btn-outline !text-red-500">Delete product</button>
             )}
@@ -832,7 +832,7 @@ function ReviewsTab() {
 
       <div className="mt-4 space-y-3">
         {loading ? (
-          <p className="text-midnight-700">Loading reviewsâ€¦</p>
+          <p className="text-midnight-700">Loading reviews…</p>
         ) : reviews.length === 0 ? (
           <p className="text-midnight-700">No reviews here.</p>
         ) : (
@@ -848,7 +848,7 @@ function ReviewsTab() {
                 </span>
               </div>
               <div className="mt-1 text-sm">
-                <span className="text-gold-600">{"â˜…".repeat(r.rating)}{"â˜†".repeat(5 - r.rating)}</span>
+                <span className="text-gold-600">{"★".repeat(r.rating)}{"☆".repeat(5 - r.rating)}</span>
                 {r.verified_purchase && <span className="ml-2 rounded bg-emerald-100 px-1.5 py-0.5 text-[10px] font-bold text-emerald-800">VERIFIED PURCHASE</span>}
               </div>
               {r.comment && <p className="mt-1 text-sm text-midnight-900">{r.comment}</p>}
@@ -909,18 +909,18 @@ function SettingsTab() {
       {notice && <p className="mt-2 text-sm text-emerald-600">{notice}</p>}
       <form onSubmit={save} className="mt-4 space-y-4">
         <div>
-          <label className="label-bm">Standard delivery fee (â‚¦)</label>
+          <label className="label-bm">Standard delivery fee (₦)</label>
           <input type="number" min="0" step="any" required value={form.delivery_fee} onChange={(e) => setForm((f) => ({ ...f, delivery_fee: e.target.value }))} className="input-bm" />
         </div>
         <div>
-          <label className="label-bm">Free delivery over (â‚¦) â€” leave empty to disable</label>
+          <label className="label-bm">Free delivery over (₦) — leave empty to disable</label>
           <input type="number" min="0" step="any" value={form.free_shipping_threshold} onChange={(e) => setForm((f) => ({ ...f, free_shipping_threshold: e.target.value }))} className="input-bm" />
         </div>
         <div>
           <label className="label-bm">Low-stock alert threshold</label>
           <input type="number" min="0" value={form.low_stock_threshold} onChange={(e) => setForm((f) => ({ ...f, low_stock_threshold: e.target.value }))} className="input-bm" />
         </div>
-        <button type="submit" disabled={busy} className="btn-gold">{busy ? "Savingâ€¦" : "Save settings"}</button>
+        <button type="submit" disabled={busy} className="btn-gold">{busy ? "Saving…" : "Save settings"}</button>
       </form>
       <p className="mt-4 text-xs text-midnight-700">
         Tip: manage product images, galleries and extra categories in the Django admin at{" "}
