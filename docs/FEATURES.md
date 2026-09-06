@@ -47,3 +47,8 @@
   images, categories, brands, featured flags.
 - Full view of users, addresses, orders, payments, reviews — read-only convenience
   when you need raw data, with search/filter/export built in.
+
+- **Products tab** — the whole catalog in one table: search + filters (Featured/Inactive/Out of stock),
+  price, live stock badge, units sold, one-click Feature/Enable toggles. The editor drawer creates or
+  edits a product (name, category, brand, price, SKU, status, description), edits variant stock/price
+  inline, and deletes products/variants. Categories and brand lists come from the store itself.
