@@ -57,3 +57,4 @@ coverage/
 # Docker / deployment secrets
 .docker/
 docker-compose.override.yml
+backend/test_out.txt
