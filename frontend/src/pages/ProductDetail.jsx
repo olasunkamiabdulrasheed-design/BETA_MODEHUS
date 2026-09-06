@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api, currency } from "../api/client.js";
 import { useCart } from "../context/CartContext.jsx";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -246,6 +247,7 @@ export default function ProductDetail() {
 
       <section className="mt-12">
         <h2 className="font-display text-xl font-bold text-midnight-900">Reviews</h2>
+        <ReviewForm productId={product.id} onPosted={(r) => setReviews((prev) => [r, ...prev])} />
         {reviews.length === 0 ? (
           <p className="mt-3 text-sm text-midnight-700">
             No reviews yet. Share your experience after your first purchase.
@@ -272,5 +274,67 @@ export default function ProductDetail() {
         )}
       </section>
     </div>
+  );
+}
+
+function ReviewForm({ productId, onPosted }) {
+  const { user } = useAuth();
+  const [rating, setRating] = useState(5);
+  const [comment, setComment] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [notice, setNotice] = useState("");
+
+  if (!user) {
+    return (
+      <p className="mt-3 text-sm text-midnight-700">
+        <Link to="/login" className="text-gold-600 underline">Login</Link> to review this product after purchase.
+      </p>
+    );
+  }
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setBusy(true);
+    setNotice("");
+    try {
+      const res = await api.post("/reviews/", { product: productId, rating, comment });
+      setComment("");
+      onPosted(res.data);
+      setNotice("Thanks! Your review is live.");
+    } catch (err) {
+      setNotice(err.response?.data?.detail || err.response?.data?.[0] || "Could not post review.");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <form onSubmit={submit} className="mt-4 rounded-lg border border-midnight-100 bg-white p-4">
+      {notice && <p className="mb-2 text-sm text-gold-700">{notice}</p>}
+      <div className="flex items-center gap-1 text-2xl">
+        {[1, 2, 3, 4, 5].map((n) => (
+          <button
+            key={n}
+            type="button"
+            onClick={() => setRating(n)}
+            className={n <= rating ? "text-gold-500" : "text-midnight-200"}
+            aria-label={`${n} stars`}
+          >
+            ★
+          </button>
+        ))}
+        <span className="ml-2 text-sm font-medium text-midnight-700">{rating} / 5</span>
+      </div>
+      <textarea
+        rows="3"
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Share your experience with this piece…"
+        className="input-bm mt-3 w-full"
+      />
+      <button type="submit" disabled={busy} className="btn-gold mt-3">
+        {busy ? "Posting…" : "Post review"}
+      </button>
+    </form>
   );
 }
