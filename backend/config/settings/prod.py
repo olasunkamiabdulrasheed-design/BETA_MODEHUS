@@ -67,9 +67,11 @@ MAILERS = {
     }
 }
 
-# Cloudinary storage in production
+# Media uploads go to Cloudinary; static files stay local on the server
+# (collected by `manage.py collectstatic` and served by nginx).
 DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-STATICFILES_STORAGE = "cloudinary_storage.storage.StaticHashedCloudinaryStorage"
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 CLOUDINARY_URL = env("CLOUDINARY_URL", "")
 
 INSTALLED_APPS += ["cloudinary_storage"]  # noqa: F405
