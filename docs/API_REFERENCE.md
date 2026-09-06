@@ -65,3 +65,44 @@ active variants (size, color, color_hex, sku, effective_price, stock), ratings.
 
 > The list endpoint is optimized: **4 DB queries** for the entire page regardless
 > of product count.
+---
+
+# API Reference — part 2: cart and orders
+
+## Cart (auth)
+
+### GET /cart/
+→ `{ items: [{id, variant {product,product_name,image,size,color,price}, quantity, line_total}], subtotal, item_count }`
+
+### POST /cart/items/
+```json
+{ "variant": 12, "quantity": 2 }
+```
+→ 201 (with the cart); quantity capped at available stock; duplicates merge.
+
+### POST /cart/merge/
+```json
+{ "items": [ { "variant": 4, "quantity": 1 }, { "variant": 9, "quantity": 3 } ] }
+```
+Called automatically after login with the guest cart from localStorage.
+
+### PATCH /cart/items/<id>/ — `{ "quantity": 3 }`
+### DELETE /cart/items/<id>/ — removes line
+### POST /cart/clear/ — empties the cart (used after successful checkout)
+
+## Orders (auth)
+
+### POST /orders/
+```json
+{ "address": 5, "notes": "Call before delivery" }
+```
+Uses the saved address (snapshot) → computes subtotal, delivery fee (free above
+threshold) → creates order + items in a transaction → **no stock change** → 201
+`{ number, total, delivery_fee, payment_status: "pending" }`.
+
+### GET /orders/ → the caller's orders (newest first, paginated)
+### GET /orders/<number>/ → detail incl. items, address snapshot, status history
+
+### Public shipping settings (no auth)
+`GET /orders/shipping-setting/` → `{ delivery_fee, free_shipping_threshold }` —
+drives the live fee/subtotal preview before login/orders.
