@@ -12,6 +12,7 @@ User=www-data
 Group=www-data
 WorkingDirectory=/var/www/betamodehus/backend
 EnvironmentFile=/var/www/betamodehus/backend/.env
+Environment=DJANGO_SETTINGS_MODULE=config.settings.prod
 ExecStart=/var/www/betamodehus/backend/.venv/bin/gunicorn \
     config.wsgi:application \
     --bind unix:/run/betamodehus.sock \
