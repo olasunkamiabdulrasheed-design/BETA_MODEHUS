@@ -145,8 +145,8 @@ export default function Admin() {
 function Dashboard({ onOrders }) {
   const [stats, setStats] = useState(null);
 
-  const load = useCallback(() => {
-    api.get("/orders/admin/stats/").then(setStats).catch(() => {});
+const load = useCallback(() => {
+    api.get("/orders/admin/stats/").then((res) => setStats(res.data)).catch(() => {});
   }, []);
 
   useEffect(load, [load]);
