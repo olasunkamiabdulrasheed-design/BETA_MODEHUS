@@ -2,10 +2,30 @@ from .base import *  # noqa: F401,F403
 
 DEBUG = False
 
+# A real secret key is mandatory in production.
+if not env("DJANGO_SECRET_KEY"):
+    raise RuntimeError(
+        "DJANGO_SECRET_KEY must be set in the production .env file."
+    )
+
 ALLOWED_HOSTS = env_list(
     "DJANGO_ALLOWED_HOSTS",
-    ["api.betamodehus.com", "localhost", "127.0.0.1"],
+    ["api.betamodehus.com", "betamodehus.com", "www.betamodehus.com"],
 )
+
+# The storefront (nginx) sits behind these origins; update for your real domain.
+CORS_ALLOWED_ORIGINS = env_list(
+    "CORS_ALLOWED_ORIGINS",
+    ["https://betamodehus.com", "https://www.betamodehus.com"],
+)
+CORS_ALLOW_CREDENTIALS = True
+CSRF_TRUSTED_ORIGINS = env_list(
+    "DJANGO_CSRF_TRUSTED_ORIGINS",
+    ["https://betamodehus.com", "https://www.betamodehus.com"],
+)
+
+# nginx terminates TLS and forwards the original scheme.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
 # PostgreSQL
 DATABASES = {

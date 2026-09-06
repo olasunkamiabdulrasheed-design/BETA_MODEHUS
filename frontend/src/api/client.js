@@ -1,5 +1,10 @@
 import axios from "axios";
 
+const API_BASE = import.meta.env.VITE_API_URL || "/api/v1";
+const REFRESH_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/auth/refresh/`
+  : "/api/v1/auth/refresh/";
+
 export const TOKENS_KEY = "bm_tokens";
 
 export function getTokens() {
@@ -23,7 +28,7 @@ export function currency(amount) {
   }).format(Number(amount || 0));
 }
 
-export const api = axios.create({ baseURL: "/api/v1" });
+export const api = axios.create({ baseURL: API_BASE });
 
 api.interceptors.request.use((config) => {
   const tokens = getTokens();
@@ -43,7 +48,7 @@ api.interceptors.response.use(
       refreshing =
         refreshing ||
         axios
-          .post("/api/v1/auth/refresh/", { refresh: tokens.refresh })
+          .post(REFRESH_URL, { refresh: tokens.refresh })
           .then((res) => {
             setTokens({ ...tokens, access: res.data.access });
             return res;

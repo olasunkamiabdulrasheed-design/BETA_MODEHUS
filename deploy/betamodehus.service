@@ -1,0 +1,27 @@
+# BETA_MODEHUS — gunicorn systemd unit
+# Install to /etc/systemd/system/betamodehus.service, then:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now betamodehus
+
+[Unit]
+Description=Gunicorn serving BETA_MODEHUS Django API
+After=network.target postgresql.service
+
+[Service]
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/betamodehus/backend
+EnvironmentFile=/var/www/betamodehus/backend/.env
+ExecStart=/var/www/betamodehus/backend/.venv/bin/gunicorn \
+    config.wsgi:application \
+    --bind unix:/run/betamodehus.sock \
+    --workers 3 \
+    --threads 2 \
+    --timeout 60 \
+    --access-logfile /var/log/betamodehus/access.log \
+    --error-logfile /var/log/betamodehus/error.log
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
