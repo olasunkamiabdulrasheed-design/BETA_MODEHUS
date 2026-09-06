@@ -1,17 +1,17 @@
-# BETA_MODEHUS — Production Deployment Guide
+﻿# BETA_MODEHUS â€” Production Deployment Guide
 
 Everything you need to take the store live. The exact reference docs for every
 step live in `docs/PROJECT_NOTES.md`; this file is the runbook for launch day.
 
 ## Architecture
 
-    Internet ──▶ nginx :443 (TLS)
-                  ├── /            → frontend/dist  (React SPA)
-                  ├── /api /admin /health  → gunicorn (Django DRF) via unix socket
-                  └── /static /media       → Django (or Cloudinary)
-    gunicorn ──▶ PostgreSQL
-    Payments ──▶ OPay Checkout (live)
-    Email ─────▶ Gmail SMTP
+    Internet â”€â”€â–¶ nginx :443 (TLS)
+                  â”œâ”€â”€ /            â†’ frontend/dist  (React SPA)
+                  â”œâ”€â”€ /api /admin /health  â†’ gunicorn (Django DRF) via unix socket
+                  â””â”€â”€ /static /media       â†’ Django (or Cloudinary)
+    gunicorn â”€â”€â–¶ PostgreSQL
+    Payments â”€â”€â–¶ OPay Checkout (live)
+    Email â”€â”€â”€â”€â”€â–¶ Gmail SMTP
 
 ## 1. Server basics (Ubuntu 24.04 LTS, any VPS)
 
@@ -21,9 +21,9 @@ step live in `docs/PROJECT_NOTES.md`; this file is the runbook for launch day.
     sudo ufw allow OpenSSH && sudo ufw allow 'Nginx Full' && sudo ufw enable
 
 Point `A` records at the server:
-    betamodehus.com    → <server-ip>
-    www.betamodehus.com → <server-ip>
-    api.betamodehus.com → <server-ip>
+    betamodehus.com    â†’ <server-ip>
+    www.betamodehus.com â†’ <server-ip>
+    api.betamodehus.com â†’ <server-ip>
 
 ## 2. Database
 
@@ -64,7 +64,7 @@ Create `backend/.env` (copy from `backend/.env.example`). The important values:
     OPAY_PUBLIC_KEY=...
     OPAY_PRIVATE_KEY=...
     OPAY_WEBHOOK_SECRET=...
-    # leave OPAY_BASE_URL unset — base.py picks liveapi.opaycheckout.com when DEBUG=false
+    # leave OPAY_BASE_URL unset â€” base.py picks liveapi.opaycheckout.com when DEBUG=false
 
     # Gmail SMTP (app password, not your normal password)
     EMAIL_HOST=smtp.gmail.com
@@ -107,13 +107,13 @@ Prepare Django:
 
 ## 7. Launch checklist
 
-- [ ] `curl https://betamodehus.com/health/` → `{"status":"ok"}`
+- [ ] `curl https://betamodehus.com/health/` â†’ `{"status":"ok"}`
 - [ ] HSTS headers present: `curl -sI https://betamodehus.com | grep -i strict`
-- [ ] Place a test order end-to-end (guest → signup → cart merge → checkout → OPay live)
+- [ ] Place a test order end-to-end (guest â†’ signup â†’ cart merge â†’ checkout â†’ OPay live)
 - [ ] Confirm OPay webhook returns, then verify stock decreased exactly once + emails sent
 - [ ] Staff account: `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` in `.env`, then
       `.venv/bin/python manage.py seed_catalog` (creates the staff user)
-- [ ] Set delivery fee / free-shipping threshold in the admin dashboard → Settings tab
+- [ ] Set delivery fee / free-shipping threshold in the admin dashboard â†’ Settings tab
 - [ ] Set `DJANGO_SECRET_KEY` (raising check in prod.py fails fast if missing)
 
 ## 8. Day-to-day ops
@@ -129,12 +129,12 @@ Backup daily (cron):
 
 - Stock is only decremented AFTER OPay confirms a SUCCESS payment
   (`mark_payment_success`), and exactly once (idempotent).
-- Amounts are compared in kobo (total × 100); mismatches are rejected and logged.
-- Emails never break flows — exceptions are swallowed and logged.
+- Amounts are compared in kobo (total Ã— 100); mismatches are rejected and logged.
+- Emails never break flows â€” exceptions are swallowed and logged.
 - Reviews are only possible for verified purchasers and are moderated in the dashboard.
 
 ## Architecture notes / cost of keeping hygiene
 
 - Backend: Django 6.1 + DRF + SimpleJWT, `config.settings.prod`.
-- Frontend: React (Vite build) — served as static files by nginx.
+- Frontend: React (Vite build) â€” served as static files by nginx.
 - Media: Cloudinary in prod (keeps the origin server lean); local `media/` in dev.
