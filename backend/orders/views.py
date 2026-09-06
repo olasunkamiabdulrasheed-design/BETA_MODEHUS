@@ -109,7 +109,8 @@ class AdminStatsView(views.APIView):
         low = [
             {
                 "id": p.id, "name": p.name, "slug": p.slug,
-                "remaining_stock": p.remaining or 0, "thumbnail": p.primary_image,
+                "remaining_stock": p.remaining or 0,
+                "thumbnail": p.primary_image.url if p.primary_image else None,
             }
             for p in low_stock
         ]
@@ -120,6 +121,10 @@ class AdminStatsView(views.APIView):
             .annotate(units=Sum("quantity"), revenue=Sum("line_total"))
             .order_by("-units")[:8]
         )
+        thumb_map = {
+            p.id: p.primary_image.url if p.primary_image else None
+            for p in Product.objects.filter(id__in=[b["product_id"] for b in bestsellers])
+        }
 
         recent = list(
             Order.objects.order_by("-created_at")[:8].values(
@@ -144,7 +149,12 @@ class AdminStatsView(views.APIView):
                 "recent_orders": recent,
                 "low_stock": low,
                 "bestsellers": [
-                    {"product_name": b["product_name"], "units_sold": b["units"], "revenue": str(b["revenue"])}
+                    {
+                        "product_name": b["product_name"],
+                        "units_sold": b["units"],
+                        "revenue": str(b["revenue"]),
+                        "thumbnail": thumb_map.get(b["product_id"]),
+                    }
                     for b in bestsellers
                 ],
             }

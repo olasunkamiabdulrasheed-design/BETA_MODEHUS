@@ -33,35 +33,6 @@ const NAV = [
   ["settings", "Settings"],
 ];
 
-const NAV_ICON = {
-  dashboard: (
-    <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.6">
-      <rect x="3" y="3" width="6" height="6" rx="1" /><rect x="11" y="3" width="6" height="6" rx="1" />
-      <rect x="3" y="11" width="6" height="6" rx="1" /><rect x="11" y="11" width="6" height="6" rx="1" />
-    </svg>
-  ),
-  orders: (
-    <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.6">
-      <path d="M6 2.5 3 5v11a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 17 16V5l-3-2.5H6Z" /><path d="M3 5h14" /><path d="M13 8a3 3 0 1 1-6 0" />
-    </svg>
-  ),
-  products: (
-    <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.6">
-      <path d="M10 2 3 5.5v9L10 18l7-3.5v-9L10 2Z" /><path d="M3 5.5 10 9l7-3.5M10 9v9" />
-    </svg>
-  ),
-  reviews: (
-    <svg viewBox="0 0 20 20" fill="currentColor" className="h-4 w-4" stroke="none">
-      <path d="M10 2.5 12 7l5 .4-3.8 3.4 1.1 4.9L10 13l-4.3 2.7 1.1-4.9L3 7.4 8 7l2-4.5Z" />
-    </svg>
-  ),
-  settings: (
-    <svg viewBox="0 0 20 20" fill="none" className="h-4 w-4" stroke="currentColor" strokeWidth="1.6">
-      <circle cx="10" cy="10" r="2.5" /><path d="M10 2.5v2.2M10 15.3v2.2M2.5 10h2.2M15.3 10h2.2M4.7 4.7l1.6 1.6M13.7 13.7l1.6 1.6M15.3 4.7l-1.6 1.6M6.3 13.7l-1.6 1.6" />
-    </svg>
-  ),
-};
-
 export default function Admin() {
   const { user, logout, loading: authLoading } = useAuth();
   const [tab, setTab] = useState("dashboard");
@@ -80,57 +51,61 @@ export default function Admin() {
 
   return (
     <div className="min-h-screen bg-midnight-50">
-      <header className="sticky top-0 z-40 bg-midnight-950 shadow-lg">
-        <div className="container-bm flex items-center justify-between py-3">
-          <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold-400 font-display text-lg font-black text-midnight-900">M</span>
-            <div className="leading-tight">
-              <div className="font-display text-lg font-bold tracking-wide text-white">
+      <header className="sticky top-0 z-40 bg-gradient-to-b from-midnight-950 to-midnight-900 shadow-lg">
+        <div className="container-bm flex items-center justify-between gap-2 py-3">
+          <div className="flex min-w-0 items-center gap-3">
+            <img src="/logo.svg" alt="BETA_MODEHUS" className="h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain p-1" />
+            <div className="min-w-0 leading-tight">
+              <div className="flex flex-wrap items-center gap-2 font-display text-base font-bold tracking-wide text-white sm:text-lg">
                 BETA<span className="text-gold-500">MODEHUS</span>
-                <span className="ml-2 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-midnight-950">Admin</span>
+                <span className="hidden rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-midnight-950 sm:inline">Admin</span>
               </div>
-              <div className="text-[10px] uppercase tracking-[0.2em] text-midnight-300">
+              <div className="hidden truncate text-[10px] uppercase tracking-[0.2em] text-midnight-300 sm:block">
                 Owner panel · separate system
               </div>
             </div>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex shrink-0 items-center gap-2">
             <Link to="/" className="btn-outline !border-white/30 !px-3 !py-2 text-xs !text-white hover:!border-gold-500 hover:!text-gold-400">
-              View storefront →
+              <span className="hidden sm:inline">View storefront →</span>
+              <span className="sm:hidden">Store →</span>
             </Link>
-            <button onClick={logout} className="rounded-md border border-midnight-800 px-3 py-2 text-xs font-semibold text-midnight-300 hover:text-white">
+            <button onClick={logout} className="rounded-lg border border-midnight-700 px-3 py-2 text-xs font-semibold text-midnight-300 hover:border-red-400 hover:text-red-400">
               Logout
             </button>
           </div>
         </div>
       </header>
 
-      <div className="container-bm py-8">
+      <div className="container-bm py-6 lg:py-8">
         <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="overflow-hidden rounded-xl border border-midnight-100 bg-white shadow-sm">
-              <div className="bg-midnight-900 px-5 py-4">
+            <div className="card-bm overflow-hidden">
+              <div className="bg-midnight-900 px-4 py-4 sm:px-5">
                 <div className="flex items-center gap-3">
-                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold-400 font-display text-lg font-black text-midnight-900">M</span>
+                  <img src="/logo.svg" alt="" className="h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain p-1" />
                   <div className="min-w-0">
                     <div className="font-display text-sm font-bold text-white">BETA_MODEHUS</div>
                     <div className="truncate text-[11px] text-midnight-300">Owner panel</div>
                   </div>
                 </div>
-                <div className="mt-3 truncate rounded-md bg-white/10 px-2.5 py-1.5 text-[11px] text-gold-200">{user.email}</div>
+                <div className="mt-3 hidden truncate rounded-lg bg-white/10 px-2.5 py-1.5 text-[11px] text-gold-200 sm:block">{user.email}</div>
               </div>
-              <nav className="flex gap-1 overflow-x-auto p-2 lg:flex-col">
+              <nav className="admin-scroll flex gap-1.5 overflow-x-auto p-2 lg:flex-col">
                 {NAV.map(([key, label]) => (
                   <button
                     key={key}
                     onClick={() => setTab(key)}
-                    className={`flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                    className={`flex shrink-0 items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition lg:w-full ${
                       tab === key
-                        ? "bg-midnight-900 text-gold-400"
+                        ? "bg-gradient-to-b from-midnight-800 to-midnight-950 text-gold-400 shadow-soft"
                         : "text-midnight-700 hover:bg-midnight-100"
                     }`}
                   >
-                    {NAV_ICON[key]}
+                    <span
+                      aria-hidden="true"
+                      className={`h-1.5 w-1.5 rounded-full ${tab === key ? "bg-gold-500" : "bg-midnight-300"}`}
+                    />
                     {label}
                   </button>
                 ))}
@@ -196,27 +171,27 @@ const load = useCallback(() => {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
         {cards.map((c) => (
-          <div key={c.label} className="overflow-hidden rounded-xl border border-midnight-100 bg-white shadow-sm">
+          <div key={c.label} className="card-bm overflow-hidden">
             <div className={`h-1.5 ${c.accent}`} />
-            <div className="p-5">
-              <div className="text-xs uppercase tracking-wide text-midnight-700">{c.label}</div>
-              <div className={`mt-1 font-display text-2xl font-bold ${c.tone}`}>{c.value}</div>
-              <div className="mt-1 text-xs text-midnight-700">{c.hint}</div>
+            <div className="p-4 sm:p-5">
+              <div className="text-[10px] font-semibold uppercase tracking-wide text-midnight-700 sm:text-xs">{c.label}</div>
+              <div className={`mt-1 truncate font-display text-lg font-bold sm:text-2xl ${c.tone}`}>{c.value}</div>
+              <div className="mt-1 hidden text-xs text-midnight-700 sm:block">{c.hint}</div>
             </div>
           </div>
         ))}
       </div>
 
-      <section className="rounded-xl border border-midnight-100 bg-white p-5 shadow-sm">
+      <section className="card-bm p-5">
         <h2 className="font-display text-lg font-bold text-midnight-900">Order pipeline</h2>
-        <div className="mt-4 grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-4 grid grid-cols-2 gap-2 sm:grid-cols-2 lg:grid-cols-4">
           {["pending_payment", "processing", "shipped", "delivered"].map((key) => (
             <button
               key={key}
               onClick={onOrders}
-              className="rounded-lg border border-midnight-100 p-3 text-left transition hover:border-gold-400 hover:bg-gold-50"
+              className="rounded-xl border border-midnight-100 p-3 text-left transition hover:border-gold-400 hover:bg-gold-50"
             >
               <div className="text-xs font-semibold text-midnight-700">{STATUS_LABEL[key]}</div>
               <div className="mt-1 font-display text-xl font-bold text-midnight-900">{stats.order_counts[key] || 0}</div>
@@ -226,27 +201,35 @@ const load = useCallback(() => {
       </section>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        <section className="rounded-xl border border-midnight-100 bg-white p-5 shadow-sm">
+        <section className="card-bm p-5">
           <h2 className="font-display text-lg font-bold text-midnight-900">Bestsellers</h2>
           <div className="mt-3 space-y-3">
             {stats.bestsellers.length === 0 && <p className="text-sm text-midnight-700">No sales yet.</p>}
             {stats.bestsellers.map((b, i) => (
               <div key={b.product_name} className="flex items-center gap-3 text-sm">
-                <span className="w-5 text-center font-display text-xs font-bold text-midnight-300">{i + 1}</span>
+                <span className="w-5 shrink-0 text-center font-display text-xs font-bold text-midnight-300">{i + 1}</span>
+                {b.thumbnail && (
+                  <img src={b.thumbnail} alt="" loading="lazy" className="h-10 w-10 shrink-0 rounded-lg border border-midnight-100 object-cover" />
+                )}
                 <span className="min-w-0 flex-1 truncate text-midnight-900">{b.product_name}</span>
-                <span className="shrink-0 font-medium text-midnight-700">{b.units_sold} sold · {naira(b.revenue)}</span>
+                <span className="shrink-0 text-xs font-medium text-midnight-700 sm:text-sm">{b.units_sold} sold · {naira(b.revenue)}</span>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="rounded-xl border border-midnight-100 bg-white p-5 shadow-sm">
+        <section className="card-bm p-5">
           <h2 className="font-display text-lg font-bold text-midnight-900">Low stock</h2>
           <div className="mt-3 space-y-3">
             {stats.low_stock.length === 0 && <p className="text-sm text-emerald-600">All good — nothing low.</p>}
             {stats.low_stock.map((p) => (
-              <div key={p.id} className="flex items-center justify-between gap-2 text-sm">
-                <span className="truncate text-midnight-900">{p.name}</span>
+              <div key={p.id} className="flex items-center justify-between gap-3 text-sm">
+                <div className="flex min-w-0 items-center gap-3">
+                  {p.thumbnail && (
+                    <img src={p.thumbnail} alt="" loading="lazy" className="h-10 w-10 shrink-0 rounded-lg border border-midnight-100 object-cover" />
+                  )}
+                  <span className="truncate text-midnight-900">{p.name}</span>
+                </div>
                 <span className={`shrink-0 rounded-full px-2 py-0.5 text-xs font-bold ${p.remaining_stock === 0 ? "bg-red-100 text-red-700" : "bg-amber-100 text-amber-800"}`}>
                   {p.remaining_stock} left
                 </span>

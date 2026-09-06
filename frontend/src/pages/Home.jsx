@@ -72,7 +72,7 @@ export default function Home() {
             ["💳", "Pay online securely", "OPay & card payments"],
             ["📞", "Real human support", "08077063971 / WhatsApp"],
           ].map(([icon, title, sub]) => (
-            <div key={title} className="rounded-lg bg-white p-5 shadow-sm">
+            <div key={title} className="card-bm p-5 text-center transition hover:-translate-y-0.5 hover:shadow-lift">
               <div className="text-3xl">{icon}</div>
               <div className="mt-2 font-semibold text-midnight-900">{title}</div>
               <div className="text-sm text-midnight-700">{sub}</div>
@@ -109,7 +109,7 @@ export default function Home() {
       <section className="bg-midnight-900 py-14 text-white">
         <div className="container-bm grid gap-6 md:grid-cols-3">
           {SECTIONS.map((s) => (
-            <div key={s.key} className="rounded-lg border border-midnight-700 bg-midnight-800 p-6">
+            <div key={s.key} className="card-bm !shadow-none border !border-midnight-700 bg-midnight-800 p-6 transition hover:border-gold-500/70 hover:shadow-lift">
               <h3 className="font-display text-xl font-semibold text-gold-400">{s.name}</h3>
               <p className="mt-2 text-sm text-midnight-100">{s.desc}</p>
               <Link to={`/products?category=${s.key}`} className="mt-4 inline-block text-sm font-semibold text-gold-500 hover:text-gold-400">
