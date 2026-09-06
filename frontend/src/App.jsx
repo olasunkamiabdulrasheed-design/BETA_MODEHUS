@@ -27,7 +27,7 @@ export default function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/orders/:number" element={<OrderDetail />} />
         <Route path="/payment/callback" element={<PaymentCallback />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/backstage" element={<Admin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<NotFound />} />

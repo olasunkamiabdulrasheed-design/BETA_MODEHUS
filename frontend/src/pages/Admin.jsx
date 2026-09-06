@@ -924,7 +924,7 @@ function SettingsTab() {
       </form>
       <p className="mt-4 text-xs text-midnight-700">
         Tip: manage product images, galleries and extra categories in the Django admin at{" "}
-        <a href="http://127.0.0.1:8000/admin/" className="text-gold-600 underline">/admin/</a>.
+        <a href="http://127.0.0.1:8000/vault/" className="text-gold-600 underline">/vault/</a>.
       </p>
     </div>
   );

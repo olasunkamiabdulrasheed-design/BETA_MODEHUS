@@ -54,7 +54,7 @@ export default function Layout() {
               </span>
             </NavLink>
             {user?.is_staff && (
-              <NavLink to="/admin" className={navLink}>
+              <NavLink to="/backstage" className={navLink}>
                 Dashboard
               </NavLink>
             )}

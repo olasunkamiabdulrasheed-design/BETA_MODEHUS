@@ -16,7 +16,7 @@ export default function Login() {
     setError("");
     try {
       const user = await login(email, password);
-      navigate(user?.is_staff ? "/admin" : "/");
+      navigate(user?.is_staff ? "/backstage" : "/");
     } catch (err) {
       setError(
         err.response?.data?.detail || err.response?.data?.non_field_errors?.[0] || "Login failed."
