@@ -94,3 +94,15 @@ status directly if you prefer to moderate here instead of the dashboard.
 
 > Tip: keep the custom dashboard for day-to-day; use Django admin when you need
 > to change catalog content or dig into raw records.
+
+## Products tab (new)
+The dashboard now manages the catalog too:
+- Filter pills: All / Featured / Inactive / Out of stock + search box.
+- Each row: image, name + category, price (lowest variant), stock badge (red=0,
+  amber=≤ threshold), units sold, status, and one-click **Feature**/**Enable** toggles.
+- **Add product** opens the editor: name, category + brand (dropdowns from the
+  store), base price, SKU (optional), status, featured/active, description.
+- **Edit** opens the same editor plus an inline **variants** panel where you can
+  retype stock and price directly on each size/colour — saved on blur. Delete a
+  product (blocked if it has orders) or a variant.
+- Deep image/gallery management stays in the Django admin.
