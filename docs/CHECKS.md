@@ -25,8 +25,8 @@ Each check = one long step; mark off until green.
 - [ ] Owner can't set delivered without going through processing/shipped
 
 ## Admin
-- [ ] `/admin` dashboard rejects non-staff (redirect/login)
-- [ ] Django admin at backend `/admin/` edits products, variants, images
+- [ ] `/backstage` dashboard rejects non-staff (redirect/login)
+- [ ] Django admin at backend `/vault/` edits products, variants, images
 - [ ] Shipping setting change affects ONLY new orders
 
 ## Production sanity (`python manage.py check` + test suite)

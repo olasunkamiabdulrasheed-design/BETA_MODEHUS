@@ -142,7 +142,7 @@ Spotlight — where data flows:
   401 trigger auto-refreshes via `/auth/refresh/` and retries once. Tokens live
   in `localStorage` under `bm_tokens`.
 - **AuthContext** — holds the signed-in user; drives the navbar (Login/Signup vs
-  account name + Logout) and the `is_staff` gate on `/admin`.
+  account name + Logout) and the `is_staff` gate on `/backstage`.
 - **CartContext** — shoppers can add to cart WITHOUT an account (stored in
   `localStorage` under `bm_cart`). On login the guest items are posted to
   `/cart/merge/`, then the backend cart is loaded.

@@ -4,8 +4,8 @@ There are TWO management screens. Learn both:
 
 | Screen | URL | What it is for |
 | --- | --- | --- |
-| **Custom dashboard** | `/admin` on the store | orders, reviews, settings, stats |
-| **Django admin** | backend `/admin/` (Django) | products, variants, images, stock |
+| **Custom dashboard** | `/backstage` on the store | orders, reviews, settings, stats |
+| **Django admin** | backend `/vault/` (Django) | products, variants, images, stock |
 
 ## Your daily routine (the short version)
 
@@ -65,8 +65,8 @@ public on the product page) or Reject (they never go public).
 
 # Owner's Guide — part 3: Django admin for products and stock
 
-The backend admin at `http://127.0.0.1:8000/admin/` is where the catalog is
-managed. It reappears on your domain at `yourdomain.com/admin/` behind HTTPS.
+The backend admin at `http://127.0.0.1:8000/vault/` is where the catalog is
+managed. It reappears on your domain at `yourdomain.com/vault/` behind HTTPS.
 
 ## Add a product
 1. **Add category** / **Add brand** first if the product is new to those.

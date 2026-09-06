@@ -80,7 +80,7 @@ Verified purchase check: review allowed only for users with a `processing`/
 `shipped`/`delivered` paid order containing that product (one review per
 user×product). New reviews are `pending` until the dashboard moderates.
 
-## Admin dashboard (frontend `/admin`, staff only)
+## Admin dashboard (frontend `/backstage`, staff only)
 
 - **Dashboard tab**: `order_counts`, revenue (total/today), awaiting fulfilment,
   new customers (30d), recent orders, low stock, bestsellers — served by

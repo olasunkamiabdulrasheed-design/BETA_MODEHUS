@@ -29,7 +29,7 @@
 
 # Features — part 2: what the owner gets
 
-## Custom dashboard (`/admin`)
+## Custom dashboard (`/backstage`)
 
 - **Dashboard tab** — one-panel snapshot: order counts per status, revenue total +
   today, orders awaiting fulfilment, new customers (30 days), recent orders, low-stock
@@ -41,7 +41,7 @@
 - **Reviews tab** — every review, pending first, approve/reject inline.
 - **Settings tab** — delivery fee and free-delivery threshold, saved instantly.
 
-## Django admin (`/admin/` on the backend)
+## Django admin (`/vault/` on the backend)
 
 - Product manager: create/edit products, variants (size, colour, SKU, price, stock),
   images, categories, brands, featured flags.

@@ -7,7 +7,7 @@ step live in `docs/PROJECT_NOTES.md`; this file is the runbook for launch day.
 
     Internet â”€â”€â–¶ nginx :443 (TLS)
                   â”œâ”€â”€ /            â†’ frontend/dist  (React SPA)
-                  â”œâ”€â”€ /api /admin /health  â†’ gunicorn (Django DRF) via unix socket
+                  â”œâ”€â”€ /api /vault /health  â†’ gunicorn (Django DRF) via unix socket
                   â””â”€â”€ /static /media       â†’ Django (or Cloudinary)
     gunicorn â”€â”€â–¶ PostgreSQL
     Payments â”€â”€â–¶ OPay Checkout (live)
