@@ -322,3 +322,21 @@ Complete owner-facing and developer-facing documentation was added:
 - `README.md` rewritten as the single entry point.
 
 Everything remains verified: 18 automated tests pass; both servers run locally.
+
+---
+
+# Phase 19 — New admin dashboard + products
+
+- Redesigned the owner dashboard: sidebar design with logo + account, five tabs
+  (Dashboard / Orders / Products / Reviews / Settings).
+- New **Products** tab: full catalog table (search + Featured/Inactive/Out filters),
+  price/stock/sold per product, one-click Feature/Enable toggles, inline variant
+  stock & price editing, and a create/edit/delete product drawer.
+- New staff-only API: `/api/v1/admin/products/` (list/create/patch/delete) and
+  `/api/v1/admin/variants/<id>/` (patch/delete) in `catalog/admin_api.py`.
+- Fixed a real data bug: `Product.sku` was unique + blank, so creating a second
+  product without a SKU crashed (UNIQUE constraint). Now blank is stored as NULL
+  and duplicates are allowed (migration `catalog/0002`).
+- Removed all smoke/test accounts; only the owner and developer accounts remain.
+- Owner admin password reset as requested.
+- Tests: 25 passing (7 new catalog admin API tests). Frontend builds clean.
