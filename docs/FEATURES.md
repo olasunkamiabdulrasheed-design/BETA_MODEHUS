@@ -25,3 +25,25 @@
 ## Reviews
 - Verified purchasers can rate 1–5 stars + a comment (once per product); pending
   reviews are moderated before becoming public.
+---
+
+# Features — part 2: what the owner gets
+
+## Custom dashboard (`/admin`)
+
+- **Dashboard tab** — one-panel snapshot: order counts per status, revenue total +
+  today, orders awaiting fulfilment, new customers (30 days), recent orders, low-stock
+  variants, bestsellers. All values are server-computed.
+- **Orders tab** — full order list with status pills and search (`q` matches order
+  number, phone or name; `status` filter), opening any order shows items + address,
+  and one-click action buttons: processing → shipped (tracking number required) →
+  delivered, or cancel. Final states lock.
+- **Reviews tab** — every review, pending first, approve/reject inline.
+- **Settings tab** — delivery fee and free-delivery threshold, saved instantly.
+
+## Django admin (`/admin/` on the backend)
+
+- Product manager: create/edit products, variants (size, colour, SKU, price, stock),
+  images, categories, brands, featured flags.
+- Full view of users, addresses, orders, payments, reviews — read-only convenience
+  when you need raw data, with search/filter/export built in.
