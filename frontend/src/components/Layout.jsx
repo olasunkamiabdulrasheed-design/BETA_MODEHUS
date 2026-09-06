@@ -1,4 +1,4 @@
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
 
@@ -7,7 +7,7 @@ const navLink = ({ isActive }) =>
     isActive ? "text-gold-500" : "text-white hover:text-gold-400"
   }`;
 
-export default function Layout({ children }) {
+export default function Layout() {
   const { user, logout } = useAuth();
   const { itemCount } = useCart();
   const navigate = useNavigate();
@@ -84,7 +84,9 @@ export default function Layout({ children }) {
         </div>
       </header>
 
-      <main className="flex-1">{children}</main>
+      <main className="flex-1">
+        <Outlet />
+      </main>
 
       <footer className="bg-midnight-900 text-midnight-100">
         <div className="container-bm grid gap-8 py-12 sm:grid-cols-2 lg:grid-cols-4">
