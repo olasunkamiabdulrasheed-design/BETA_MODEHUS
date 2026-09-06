@@ -23,3 +23,34 @@
 - The product page only allows adding a variant that is active and in stock; the
   server ALSO re-checks stock on every add/quantity change — the client never
   overrides the server.
+---
+
+# How It Works — part 2: checkout, payment engine, and returns on money
+
+## Checkout (backend flow)
+
+1. `POST /orders/` validates the address, then `create_order_from_cart` runs in a
+   **transaction**: re-validates variant stock, writes the address snapshot,
+   copies product name/images into `OrderItem` (history-proof), computes
+   subtotal + delivery fee (free ≥ threshold) and stores the total.
+2. The cart is emptied and the order is `pending_payment`. **Stock is untouched.**
+
+## Payment engine
+
+1. `POST /payments/initiate/` builds a Payment (`reference`, amount in **kobo**),
+   signs the payload (HMAC-SHA512) and calls OPay Checkout's cashier API to get
+   `cashier_url`.
+2. The frontend redirects the customer. They pay on OPay's page.
+3. On return, `PaymentCallback.jsx` polls `GET /payments/status/` until resolved.
+4. OPay ALSO sends `POST /webhook/opay/` (signature verified, amount compared in
+   kobo). Both reconciliation paths converge on the SAME function:
+   `mark_payment_success`, which — inside a transaction with row locks — flips the
+   order to `processing`/payment paid and decrements stock **exactly once**.
+5. Paid → emails go out (customer confirmation + owner alert). Idempotency +
+   `select_for_update` guarantee no double decrement even if webhook & poll race.
+
+## Why stock only after payment
+
+No money, no stock movement — this keeps "cancelled/reserved" carts from eating
+inventory and keeps the low-stock signal honest. Refunds set payment → `refunded`
+and leave fulfilled units alone (stock policy is FIFO-manual).
