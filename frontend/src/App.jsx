@@ -18,6 +18,7 @@ import NotFound from "./pages/NotFound.jsx";
 export default function App() {
   return (
     <Routes>
+      <Route path="/backstage" element={<Admin />} />
       <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
@@ -29,7 +30,6 @@ export default function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/orders/:number" element={<OrderDetail />} />
         <Route path="/payment/callback" element={<PaymentCallback />} />
-        <Route path="/backstage" element={<Admin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="*" element={<NotFound />} />

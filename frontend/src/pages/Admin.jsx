@@ -63,7 +63,7 @@ const NAV_ICON = {
 };
 
 export default function Admin() {
-  const { user, loading: authLoading } = useAuth();
+  const { user, logout, loading: authLoading } = useAuth();
   const [tab, setTab] = useState("dashboard");
 
   if (authLoading) return <div className="container-bm py-16 text-center">Loading…</div>;
@@ -79,63 +79,93 @@ export default function Admin() {
   }
 
   return (
-    <div className="container-bm py-8">
-      <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
-        <aside className="lg:sticky lg:top-24 lg:self-start">
-          <div className="overflow-hidden rounded-xl border border-midnight-100 bg-white shadow-sm">
-            <div className="bg-midnight-900 px-5 py-4">
-              <div className="flex items-center gap-3">
-                <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold-400 font-display text-lg font-black text-midnight-900">M</span>
-                <div className="min-w-0">
-                  <div className="font-display text-sm font-bold text-white">BETA_MODEHUS</div>
-                  <div className="truncate text-[11px] text-midnight-300">Owner panel</div>
-                </div>
+    <div className="min-h-screen bg-midnight-50">
+      <header className="sticky top-0 z-40 bg-midnight-950 shadow-lg">
+        <div className="container-bm flex items-center justify-between py-3">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 items-center justify-center rounded-lg bg-gold-400 font-display text-lg font-black text-midnight-900">M</span>
+            <div className="leading-tight">
+              <div className="font-display text-lg font-bold tracking-wide text-white">
+                BETA<span className="text-gold-500">MODEHUS</span>
+                <span className="ml-2 rounded-full bg-gold-500 px-2 py-0.5 text-[10px] font-bold uppercase tracking-widest text-midnight-950">Admin</span>
               </div>
-              <div className="mt-3 truncate rounded-md bg-white/10 px-2.5 py-1.5 text-[11px] text-gold-200">{user.email}</div>
+              <div className="text-[10px] uppercase tracking-[0.2em] text-midnight-300">
+                Owner panel · separate system
+              </div>
             </div>
-            <nav className="flex gap-1 overflow-x-auto p-2 lg:flex-col">
-              {NAV.map(([key, label]) => (
-                <button
-                  key={key}
-                  onClick={() => setTab(key)}
-                  className={`flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold transition ${
-                    tab === key
-                      ? "bg-midnight-900 text-gold-400"
-                      : "text-midnight-700 hover:bg-midnight-100"
-                  }`}
-                >
-                  {NAV_ICON[key]}
-                  {label}
-                </button>
-              ))}
-            </nav>
           </div>
-        </aside>
+          <div className="flex items-center gap-2">
+            <Link to="/" className="btn-outline !border-white/30 !px-3 !py-2 text-xs !text-white hover:!border-gold-500 hover:!text-gold-400">
+              View storefront →
+            </Link>
+            <button onClick={logout} className="rounded-md border border-midnight-800 px-3 py-2 text-xs font-semibold text-midnight-300 hover:text-white">
+              Logout
+            </button>
+          </div>
+        </div>
+      </header>
 
-        <main className="min-w-0">
-          <div className="mb-5 flex flex-wrap items-end justify-between gap-2">
-            <div>
-              <h1 className="font-display text-2xl font-bold text-midnight-900">
-                {NAV.find(([k]) => k === tab)?.[1]}
-              </h1>
-              <p className="text-sm text-midnight-700">
-                {tab === "dashboard" && "Your store at a glance"}
-                {tab === "orders" && "Fulfil and track customer orders"}
-                {tab === "products" && "Catalog, stock and variants"}
-                {tab === "reviews" && "Moderate customer feedback"}
-                {tab === "settings" && "Delivery fees and store rules"}
-              </p>
+      <div className="container-bm py-8">
+        <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
+          <aside className="lg:sticky lg:top-24 lg:self-start">
+            <div className="overflow-hidden rounded-xl border border-midnight-100 bg-white shadow-sm">
+              <div className="bg-midnight-900 px-5 py-4">
+                <div className="flex items-center gap-3">
+                  <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-gold-400 font-display text-lg font-black text-midnight-900">M</span>
+                  <div className="min-w-0">
+                    <div className="font-display text-sm font-bold text-white">BETA_MODEHUS</div>
+                    <div className="truncate text-[11px] text-midnight-300">Owner panel</div>
+                  </div>
+                </div>
+                <div className="mt-3 truncate rounded-md bg-white/10 px-2.5 py-1.5 text-[11px] text-gold-200">{user.email}</div>
+              </div>
+              <nav className="flex gap-1 overflow-x-auto p-2 lg:flex-col">
+                {NAV.map(([key, label]) => (
+                  <button
+                    key={key}
+                    onClick={() => setTab(key)}
+                    className={`flex shrink-0 items-center gap-2.5 rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                      tab === key
+                        ? "bg-midnight-900 text-gold-400"
+                        : "text-midnight-700 hover:bg-midnight-100"
+                    }`}
+                  >
+                    {NAV_ICON[key]}
+                    {label}
+                  </button>
+                ))}
+              </nav>
             </div>
-            <Link to="/" className="btn-outline text-xs">View storefront →</Link>
-          </div>
+          </aside>
 
-          {tab === "dashboard" && <Dashboard onOrders={() => setTab("orders")} />}
-          {tab === "orders" && <OrdersTab />}
-          {tab === "products" && <ProductsTab />}
-          {tab === "reviews" && <ReviewsTab />}
-          {tab === "settings" && <SettingsTab />}
-        </main>
+          <main className="min-w-0">
+            <div className="mb-5 flex flex-wrap items-end justify-between gap-2">
+              <div>
+                <h1 className="font-display text-2xl font-bold text-midnight-900">
+                  {NAV.find(([k]) => k === tab)?.[1]}
+                </h1>
+                <p className="text-sm text-midnight-700">
+                  {tab === "dashboard" && "Your store at a glance"}
+                  {tab === "orders" && "Fulfil and track customer orders"}
+                  {tab === "products" && "Catalog, stock and variants"}
+                  {tab === "reviews" && "Moderate customer feedback"}
+                  {tab === "settings" && "Delivery fees and store rules"}
+                </p>
+              </div>
+            </div>
+
+            {tab === "dashboard" && <Dashboard onOrders={() => setTab("orders")} />}
+            {tab === "orders" && <OrdersTab />}
+            {tab === "products" && <ProductsTab />}
+            {tab === "reviews" && <ReviewsTab />}
+            {tab === "settings" && <SettingsTab />}
+          </main>
+        </div>
       </div>
+
+      <footer className="border-t border-midnight-200 bg-white py-4 text-center text-xs text-midnight-700">
+        BETA_MODEHUS Owner panel· © {new Date().getFullYear()} · protected area
+      </footer>
     </div>
   );
 }

@@ -60,7 +60,7 @@ export default function About() {
         </div>
       </section>
 
-      <section className="bg-midnight-900 py-14 py-14 text-white">
+      <section className="bg-midnight-900 py-14 text-white">
         <div className="container-bm">
           <h2 className="text-center font-display text-2xl font-bold">Why shop with us</h2>
           <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
