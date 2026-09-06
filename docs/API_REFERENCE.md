@@ -149,3 +149,48 @@ strict production), fetches the real status and reconciles. Return `200` always.
 { "action": "approve" | "reject" }
 ```
 Sets public visibility; `pending` list for staff shows everything first.
+
+---
+
+# API Reference — part 4: owner (staff) endpoints
+
+Every endpoint here requires a logged-in **staff** user (`IsAdminUser`).
+
+## Orders admin
+
+### GET /orders/admin/stats/
+Dashboard numbers without drilling down:
+```json
+{ "order_counts": { "total": 120, "pending_payment": 3, "processing": 5, "shipped": 8,
+    "delivered": 100, "cancelled": 2, "refunded": 2 },
+  "revenue": { "total": "1425000.00", "today": "25000.00", "paid_orders": 113 },
+  "pending_fulfillment": 5,
+  "new_customers_30d": 17,
+  "recent_orders": [ { "number": "...", "customer": "...", "status": "...", "total": "..." } ],
+  "low_stock": [ { "name": "...", "variant": "...", "stock": 2 } ],
+  "bestsellers": [ { "name": "...", "units_sold": 14, "revenue": "..." } ] }
+```
+
+### GET /orders/admin/   (all orders)
+Query params on the regular order list for staff: `status=<pipeline>`,
+`q=<order-number|phone|customer name>`, `page`. Non-staff never sees this.
+
+### PATCH /orders/admin/<number>/  — advance the pipeline
+```json
+{ "action": "mark_processing" | "mark_shipped" | "mark_delivered" | "cancel" }
+```
+- `mark_shipped` REQUIRES `{ "tracking_number": "..." }` — validates before saving.
+- Final states (delivered/cancelled/refunded) are locked; further changes rejected
+  with 400. Shipping a `pending_payment` order is rejected.
+
+## Reviews admin
+`GET /reviews/?status=pending` (staff see all) + `POST /reviews/<id>/moderate/`
+as described in part 3.
+
+## Settings
+### GET /orders/shipping-setting/  (everyone, read-only)
+### PUT /orders/shipping-setting/  (staff)
+```json
+{ "delivery_fee": 3000, "free_shipping_threshold": 100000 }
+```
+Applies to new orders only.
