@@ -2,10 +2,22 @@ from django.db.models import OuterRef, Subquery, Sum
 from rest_framework import serializers, status
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from common.permissions import IsAdminUser
 from orders.models import Order, OrderItem
-from .models import Brand, Category, Product, ProductVariant
+from .models import Brand, Category, Product, ProductImage, ProductVariant
+
+
+class ProductImageSerializer(serializers.ModelSerializer):
+    url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProductImage
+        fields = ["id", "url", "alt_text", "is_primary", "sort_order"]
+
+    def get_url(self, obj):
+        return obj.image.url if obj.image else None
 
 
 class AdminProductListSerializer(serializers.ModelSerializer):
@@ -31,8 +43,8 @@ class AdminProductListSerializer(serializers.ModelSerializer):
         ]
 
     def get_image(self, obj):
-        image = obj.primary_image
-        return image.image.url if image else None
+        img = obj.primary_image
+        return img.url if img else None
 
 
 class AdminProductWriteSerializer(serializers.ModelSerializer):
@@ -167,3 +179,42 @@ class AdminVariantPatchView(RetrieveUpdateDestroyAPIView):
         variant = self.get_object()
         variant.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class AdminProductImagesView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request, pk):
+        product = Product.objects.prefetch_related("images").get(pk=pk)
+        return Response(ProductImageSerializer(product.images.all(), many=True).data)
+
+    def post(self, request, pk):
+        product = Product.objects.get(pk=pk)
+        file = request.FILES.get("image")
+        if not file:
+            return Response({"detail": "No image file provided."}, status=status.HTTP_400_BAD_REQUEST)
+        image_obj = ProductImage.objects.create(
+            product=product,
+            image=file,
+            alt_text=request.data.get("alt_text", ""),
+            is_primary=bool(request.data.get("is_primary")),
+        )
+        return Response(ProductImageSerializer(image_obj).data, status=status.HTTP_201_CREATED)
+
+    def delete(self, request, pk, img_id):
+        image_obj = ProductImage.objects.filter(product_id=pk, pk=img_id).first()
+        if not image_obj:
+            return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+        image_obj.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def patch(self, request, pk, img_id):
+        image_obj = ProductImage.objects.filter(product_id=pk, pk=img_id).first()
+        if not image_obj:
+            return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+        if "is_primary" in request.data:
+            image_obj.is_primary = bool(request.data["is_primary"])
+        if "alt_text" in request.data:
+            image_obj.alt_text = request.data["alt_text"]
+        image_obj.save()
+        return Response(ProductImageSerializer(image_obj).data)

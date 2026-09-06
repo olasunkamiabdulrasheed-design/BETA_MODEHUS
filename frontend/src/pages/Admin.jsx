@@ -588,6 +588,7 @@ function ProductEditor({ product, onClose, onSaved }) {
   const [cats, setCats] = useState([]);
   const [brands, setBrands] = useState([]);
   const [variants, setVariants] = useState([]);
+  const [images, setImages] = useState([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [form, setForm] = useState({
@@ -612,6 +613,9 @@ function ProductEditor({ product, onClose, onSaved }) {
           setVariants(r.data.variants || []);
           if (r.data.sku) setForm((f) => ({ ...f, sku: r.data.sku }));
         })
+        .catch(() => {});
+      api.get(`/admin/products/${product.id}/images/`)
+        .then((r) => setImages(r.data))
         .catch(() => {});
     }
   }, [isNew, product.slug]);
@@ -671,6 +675,40 @@ function ProductEditor({ product, onClose, onSaved }) {
       return true;
     } catch {
       return false;
+    }
+  };
+
+  const uploadImage = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const fd = new FormData();
+    fd.append("image", file);
+    fd.append("is_primary", String(images.length === 0));
+    try {
+      const res = await api.post(`/admin/products/${product.id}/images/`, fd);
+      setImages((prev) => [...prev, res.data]);
+    } catch {
+      setError("Could not upload image.");
+    } finally {
+      e.target.value = "";
+    }
+  };
+
+  const removeImage = async (img) => {
+    try {
+      await api.delete(`/admin/products/${product.id}/images/${img.id}/`);
+      setImages((prev) => prev.filter((i) => i.id !== img.id));
+    } catch {
+      setError("Could not delete image.");
+    }
+  };
+
+  const setPrimary = async (img) => {
+    try {
+      await api.patch(`/admin/products/${product.id}/images/${img.id}/`, { is_primary: true });
+      setImages((prev) => prev.map((i) => ({ ...i, is_primary: i.id === img.id })));
+    } catch {
+      setError("Could not set primary image.");
     }
   };
 
@@ -747,9 +785,41 @@ function ProductEditor({ product, onClose, onSaved }) {
 
           {!isNew && (
             <div className="rounded-lg border border-midnight-100 p-4">
-              <h3 className="font-display text-sm font-bold text-midnight-900">Variants & stock</h3>
+              <h3 className="font-display text-sm font-bold text-midnight-900">Images</h3>
               <p className="mt-1 text-xs text-midnight-700">
-                Edit stock and price inline. Add variants, images and galleries in the Django admin.
+                The first image is the main product photo. Upload JPG/PNG/WebP files.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-3">
+                {images.map((img) => (
+                  <div key={img.id} className="relative w-24">
+                    <img
+                      src={img.url}
+                      alt={img.alt_text || "product"}
+                      className={`h-24 w-24 rounded-md border object-cover ${img.is_primary ? "border-gold-500 ring-2 ring-gold-500/50" : "border-midnight-200"}`}
+                    />
+                    <div className="mt-1 flex items-center justify-center gap-2">
+                      {!img.is_primary ? (
+                        <button type="button" onClick={() => setPrimary(img)} className="text-[11px] font-semibold text-gold-600 hover:underline">Make main</button>
+                      ) : (
+                        <span className="text-[11px] font-semibold text-gold-600">Main</span>
+                      )}
+                      <button type="button" onClick={() => removeImage(img)} className="text-[11px] font-semibold text-red-500 hover:underline">Remove</button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <label className="btn-outline mt-3 inline-flex cursor-pointer !px-3 !py-2 text-xs">
+                + Upload image
+                <input type="file" accept="image/*" className="hidden" onChange={uploadImage} />
+              </label>
+            </div>
+          )}
+
+          {!isNew && (
+            <div className="rounded-lg border border-midnight-100 p-4">
+              <h3 className="font-display text-sm font-bold text-midnight-900">Variants &amp; stock</h3>
+              <p className="mt-1 text-xs text-midnight-700">
+                Edit stock and price inline. Add new sizes/colours in the Django admin.
               </p>
               <div className="mt-3 space-y-2">
                 {variants.length === 0 && <p className="text-xs text-midnight-700">No active variants yet.</p>}
