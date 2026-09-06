@@ -195,8 +195,17 @@ SIMPLE_JWT = {
 }
 
 # ---------------------------------------------------------------------------
-# Cloudinary (configured securely via env in production)
+# Cloudinary (media uploads). A single CLOUDINARY_URL is enough for both the
+# python "cloudinary" client and django-cloudinary-storage. If it is empty the
+# project falls back to local media/ (handy for offline dev).
 # ---------------------------------------------------------------------------
+CLOUDINARY_URL = env("CLOUDINARY_URL", "")
+if CLOUDINARY_URL:
+    INSTALLED_APPS += ["cloudinary_storage"]  # noqa: F405
+    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
+else:
+    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": env("CLOUDINARY_CLOUD_NAME"),
     "API_KEY": env("CLOUDINARY_API_KEY"),

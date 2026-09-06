@@ -34,20 +34,27 @@ export default function Home() {
 
   return (
     <div>
-      <section className="bg-midnight-900 py-20 text-center text-white">
-        <div className="container-bm">
+      <section className="relative overflow-hidden bg-midnight-950 py-24 text-center text-white sm:py-32">
+        <img
+          src="/logo.svg"
+          alt=""
+          aria-hidden="true"
+          className="pointer-events-none absolute left-1/2 top-1/2 w-[min(80vw,560px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.10]"
+        />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(27,27,47,0.55)_60%,#0a0a18_100%)]" />
+        <div className="container-bm relative">
           <p className="text-xs uppercase tracking-[0.35em] text-gold-500">
             For Better Elegance and Luxury
           </p>
-          <h1 className="font-display mt-4 text-4xl font-bold sm:text-5xl">
+          <h1 className="font-display mt-4 text-4xl font-bold sm:text-6xl">
             Wear the Elegance, <br className="hidden sm:block" />
             Speak the Luxury
           </h1>
-          <p className="mx-auto mt-5 max-w-xl text-midnight-100">
+          <p className="mx-auto mt-6 max-w-xl text-base text-midnight-100 sm:text-lg">
             Premium Nigerian fashion — agbada, senator, kaftans, ankara and more.
             Tailored to you, delivered nationwide.
           </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <div className="mt-10 flex flex-wrap justify-center gap-4">
             <Link to="/products" className="btn-gold">
               Shop the collection
             </Link>
@@ -59,7 +66,7 @@ export default function Home() {
       </section>
 
       <section className="bg-gold-50 py-10">
-        <div className="container-bm grid gap-6 text-center sm:grid-cols-3">
+        <div className="container-bm grid gap-4 text-center sm:grid-cols-3 sm:gap-6">
           {[
             ["🚚", "Nationwide delivery", "Across all 36 states"],
             ["💳", "Pay online securely", "OPay & card payments"],
@@ -78,7 +85,7 @@ export default function Home() {
 
       <section className="py-14">
         <div className="container-bm">
-          <div className="flex items-end justify-between">
+          <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 className="font-display text-2xl font-bold text-midnight-900">
                 Featured pieces
@@ -100,7 +107,7 @@ export default function Home() {
       </section>
 
       <section className="bg-midnight-900 py-14 text-white">
-        <div className="container-bm grid gap-10 md:grid-cols-3">
+        <div className="container-bm grid gap-6 md:grid-cols-3">
           {SECTIONS.map((s) => (
             <div key={s.key} className="rounded-lg border border-midnight-700 bg-midnight-800 p-6">
               <h3 className="font-display text-xl font-semibold text-gold-400">{s.name}</h3>
@@ -110,6 +117,22 @@ export default function Home() {
               </Link>
             </div>
           ))}
+        </div>
+
+        <div className="container-bm mt-14 border-t border-midnight-800 pt-12 text-center">
+          <h2 className="font-display text-2xl font-bold text-white">Ready to own a piece?</h2>
+          <p className="mx-auto mt-2 max-w-md text-sm text-midnight-200">
+            Browse the full collection or talk to us directly on WhatsApp for
+            bespoke tailoring and bulk orders.
+          </p>
+          <div className="mt-6 flex flex-wrap justify-center gap-4">
+            <Link to="/products" className="btn-gold">
+              Shop now
+            </Link>
+            <Link to="/about" className="btn-outline !border-white/40 !text-white hover:!border-gold-500 hover:!text-gold-400">
+              About us
+            </Link>
+          </div>
         </div>
       </section>
     </div>

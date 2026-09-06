@@ -511,7 +511,8 @@ function ProductsTab() {
         ) : products.length === 0 ? (
           <p className="p-5 text-sm text-midnight-700">No products match.</p>
         ) : (
-          <table className="w-full text-left text-sm">
+          <div className="overflow-x-auto">
+          <table className="w-full min-w-[720px] text-left text-sm">
             <thead>
               <tr className="border-b border-midnight-100 text-xs uppercase tracking-wide text-midnight-700">
                 <th className="px-4 py-3">Product</th>
@@ -577,6 +578,7 @@ function ProductsTab() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

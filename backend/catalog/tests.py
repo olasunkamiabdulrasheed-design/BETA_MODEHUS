@@ -107,3 +107,47 @@ class AdminCatalogApiTests(TestCase):
         res = self.client.delete(f"/api/v1/admin/variants/{self.variant.id}/")
         self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(ProductVariant.objects.filter(pk=self.variant.id).exists())
+
+    def test_admin_product_image_upload_and_primary(self):
+        import tempfile
+        from io import BytesIO
+
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from django.test import override_settings
+
+        png = BytesIO(b"\x89PNG\r\n\x1a\n" + b"0" * 8 + b"chunk")
+        upload = SimpleUploadedFile("gown.png", png.getvalue(), content_type="image/png")
+
+        self._auth(self.staff)
+        with tempfile.TemporaryDirectory() as tmp, override_settings(
+            MEDIA_ROOT=tmp, DEFAULT_FILE_STORAGE="django.core.files.storage.FileSystemStorage"
+        ):
+            res = self.client.post(
+                f"/api/v1/admin/products/{self.product.id}/images/",
+                {"image": upload, "is_primary": "true"},
+                format="multipart",
+            )
+            self.assertEqual(res.status_code, status.HTTP_201_CREATED, res.data)
+            img_id = res.data["id"]
+            self.assertTrue(res.data["is_primary"])
+
+            res = self.client.get(f"/api/v1/admin/products/{self.product.id}/images/")
+            self.assertEqual(res.status_code, status.HTTP_200_OK)
+            self.assertEqual(len(res.data), 1)
+
+            res = self.client.patch(
+                f"/api/v1/admin/products/{self.product.id}/images/{img_id}/",
+                {"alt_text": "Gold lace gown"},
+                format="json",
+            )
+            self.assertEqual(res.status_code, status.HTTP_200_OK, res.data)
+            self.assertEqual(res.data["alt_text"], "Gold lace gown")
+
+            res = self.client.delete(f"/api/v1/admin/products/{self.product.id}/images/{img_id}/")
+            self.assertEqual(res.status_code, status.HTTP_204_NO_CONTENT)
+            self.assertEqual(self.product.images.count(), 0)
+
+    def test_admin_product_images_required_staff(self):
+        self._auth(self.user)
+        res = self.client.get(f"/api/v1/admin/products/{self.product.id}/images/")
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)

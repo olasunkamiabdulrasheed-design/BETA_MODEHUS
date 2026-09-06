@@ -16,10 +16,14 @@ export default function Catalog() {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [count, setCount] = useState(0);
 
   const q = params.get("q") || "";
   const category = params.get("category") || "";
   const sort = params.get("sort") || "newest";
+  const page = Number(params.get("page")) || 1;
+  const PAGE_SIZE = 24;
+  const totalPages = Math.max(1, Math.ceil(count / PAGE_SIZE));
 
   useEffect(() => {
     api.get("/categories/").then((res) => setCategories(res.data.results || [])).catch(() => {});
@@ -31,16 +35,18 @@ export default function Catalog() {
     if (q) search.set("search", q);
     if (category) search.set("category", category);
     if (sort) search.set("sort", sort);
-    search.set("page_size", "24");
+    search.set("page_size", String(PAGE_SIZE));
+    search.set("page", String(page));
     api
       .get(`/products/?${search.toString()}`)
       .then((res) => {
         setProducts(res.data.results || []);
+        setCount(res.data.count || 0);
         setError("");
       })
       .catch(() => setError("Could not load products."))
       .finally(() => setLoading(false));
-  }, [q, category, sort]);
+  }, [q, category, sort, page]);
 
   const setParam = (key, value) => {
     const next = new URLSearchParams(params);
@@ -48,6 +54,26 @@ export default function Catalog() {
     else next.delete(key);
     next.delete("page");
     setParams(next);
+  };
+
+  const goToPage = (p) => {
+    const next = new URLSearchParams(params);
+    next.set("page", String(p));
+    setParams(next);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const pageNumbers = () => {
+    const pages = [];
+    const windowSize = 2;
+    for (let p = 1; p <= totalPages; p++) {
+      if (p === 1 || p === totalPages || Math.abs(p - page) <= windowSize) {
+        pages.push(p);
+      } else if (pages[pages.length - 1] !== "…") {
+        pages.push("…");
+      }
+    }
+    return pages;
   };
 
   return (
@@ -106,6 +132,46 @@ export default function Catalog() {
 
       {!loading && !error && products.length === 0 && (
         <p className="mt-8 text-midnight-700">No products match your search.</p>
+      )}
+
+      {!loading && !error && count > 0 && (
+        <nav className="mt-10 flex flex-wrap items-center justify-center gap-2" aria-label="Pagination">
+          <button
+            onClick={() => goToPage(page - 1)}
+            disabled={page <= 1}
+            className="btn-outline !px-3 !py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            ← Prev
+          </button>
+          {totalPages > 1 &&
+            pageNumbers().map((p, i) =>
+              p === "…" ? (
+                <span key={`gap-${i}`} className="px-1 text-midnight-500">…</span>
+              ) : (
+                <button
+                  key={p}
+                  onClick={() => goToPage(p)}
+                  className={`rounded-lg px-3 py-2 text-sm font-semibold transition ${
+                    p === page
+                      ? "bg-midnight-900 text-gold-400"
+                      : "bg-white text-midnight-700 hover:bg-midnight-50"
+                  }`}
+                >
+                  {p}
+                </button>
+              )
+            )}
+          <button
+            onClick={() => goToPage(page + 1)}
+            disabled={page >= totalPages}
+            className="btn-outline !px-3 !py-2 text-sm disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            Next →
+          </button>
+          <span className="w-full pt-1 text-center text-xs text-midnight-500">
+            Page {page} of {totalPages} · {count} product{count === 1 ? "" : "s"}
+          </span>
+        </nav>
       )}
     </div>
   );
