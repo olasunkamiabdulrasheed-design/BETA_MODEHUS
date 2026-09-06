@@ -1,6 +1,7 @@
 from django.urls import include, path
 
 from . import views
+from .admin_api import AdminProductDetailView, AdminProductListView, AdminVariantPatchView
 
 urlpatterns = [
     path("categories/", views.CategoryViewSet.as_view({"get": "list"}), name="category-list"),
@@ -18,4 +19,7 @@ urlpatterns = [
         ),
         name="product-detail",
     ),
+    path("admin/products/", AdminProductListView.as_view(), name="admin-product-list"),
+    path("admin/products/<int:pk>/", AdminProductDetailView.as_view(), name="admin-product-detail"),
+    path("admin/variants/<int:pk>/", AdminVariantPatchView.as_view(), name="admin-variant-detail"),
 ]
