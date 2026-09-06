@@ -106,3 +106,46 @@ threshold) → creates order + items in a transaction → **no stock change** �
 ### Public shipping settings (no auth)
 `GET /orders/shipping-setting/` → `{ delivery_fee, free_shipping_threshold }` —
 drives the live fee/subtotal preview before login/orders.
+
+---
+
+# API Reference — part 3: payments and reviews
+
+## Payments
+
+### POST /payments/initiate/  (auth, order owner)
+```json
+{ "order_number": "BM-20260906-XXXX" }
+```
+Creates/reuses a Payment for the order, returns:
+```json
+{ "payment_reference": "BM-...", "cashier_url": "https://cashier.opayweb.com/...",
+  "amount": "14500.00", "currency": "NGN", "order": { "number": "...", "total": 14500 } }
+```
+Frontend redirects the browser to `cashier_url`. Needs OPay keys in `.env`;
+without them → graceful `502`.
+
+### GET /payments/status/?reference=<ref>  (auth, order owner)
+Polls OPay `/cashier/status` → `{ status: "pending"|"paid"|"failed", payment_status, order_status, amount_kobo, paid_amount_kobo }`.
+On `paid`: verifies amount == order total (kobo), then `mark_payment_success`.
+
+### POST /payments/webhook/opay/  (signature-protected)
+OPay notifies the app; the handler verifies the HMAC signature (lenient DEBUG,
+strict production), fetches the real status and reconciles. Return `200` always.
+
+## Reviews
+
+### GET /reviews/?product=<id>&status=approved  (public)
+→ paginated approved reviews with user name, rating, comment, verified_purchase.
+
+### POST /reviews/  (auth, verified purchaser)
+```json
+{ "product": 12, "rating": 5, "comment": "..." }
+```
+→ 201 as `pending`. One per product; only paid+fulfilled customers.
+
+### POST /reviews/<id>/moderate/  (staff)
+```json
+{ "action": "approve" | "reject" }
+```
+Sets public visibility; `pending` list for staff shows everything first.
