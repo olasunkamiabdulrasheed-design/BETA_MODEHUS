@@ -54,3 +54,38 @@
 No money, no stock movement — this keeps "cancelled/reserved" carts from eating
 inventory and keeps the low-stock signal honest. Refunds set payment → `refunded`
 and leave fulfilled units alone (stock policy is FIFO-manual).
+
+---
+
+# How It Works — part 3: emails, reviews, admin dashboard
+
+## Emails (best-effort, never blocks)
+
+`notifications/service.py` sends plain-text email from `templates/emails/`:
+
+| Trigger | To | Content |
+| --- | --- | --- |
+| Order placed (unpaid) | customer | order received, Pay now link |
+| Payment confirmed | customer + owner | items, total, next step |
+| Shipped | customer | tracking number |
+| Delivered | customer | thanks + review invite |
+| Low stock | owner | variants under threshold |
+
+Every send is wrapped in try/except — a mail outage never breaks checkout.
+Dev prints to console; production uses Gmail SMTP via `MAILERS`.
+
+## Reviews
+
+Verified purchase check: review allowed only for users with a `processing`/
+`shipped`/`delivered` paid order containing that product (one review per
+user×product). New reviews are `pending` until the dashboard moderates.
+
+## Admin dashboard (frontend `/admin`, staff only)
+
+- **Dashboard tab**: `order_counts`, revenue (total/today), awaiting fulfilment,
+  new customers (30d), recent orders, low stock, bestsellers — served by
+  `/orders/admin/stats/` in 1–2 queries.
+- **Orders tab**: all orders with `status` + `q` filters; advance actions with the
+  tracking-number rule enforced server-side.
+- **Reviews tab**: pending first; approve/reject from the list.
+- **Settings tab**: read/write `shipping-setting` (delivery fee + free threshold).
