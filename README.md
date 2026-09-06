@@ -1,80 +1,72 @@
-# BETA_MODEHUS — E-Commerce Web Application
+# BETA_MODEHUS
 
-> **For Better Elegance and Luxury.**
+> For Better Elegance and Luxury — a complete Nigerian fashion e-commerce platform.
 
-A single-admin Nigerian fashion e-commerce web application. One store owner
-manages products, inventory, orders, payments, shipping and reports, while
-customers browse, cart, checkout, pay through **OPay**, track orders and leave
-verified-purchase reviews.
+Full-stack single-vendor store for BETA_MODEHUS (Ibadan South-East, Oyo State).
+Customers browse, order and pay online (OPay Checkout); the owner runs the whole
+store from a custom admin dashboard plus Django's content admin.
 
-## Tech Stack
+## Tech stack
 
-| Layer        | Technology                                              |
-| ------------ | ------------------------------------------------------- |
-| Backend      | Python 3.14 · Django 6.1 · Django REST Framework        |
-| Frontend     | React 18 · JavaScript · Tailwind CSS · Vite · Axios     |
-| Database     | PostgreSQL (production) · SQLite (local development)    |
-| Auth         | JWT (djangorestframework-simplejwt)                     |
-| Payments     | OPay Checkout (sandbox → production)                    |
-| Image files  | Cloudinary (primary)                                    |
-| Email        | Django SMTP (Gmail) with environment-managed secrets    |
-| Search       | PostgreSQL/Django full-text + django-filter             |
+| Layer    | Technology |
+| -------- | ---------- |
+| Backend  | Django 6.1 · Django REST Framework · SimpleJWT (JWT auth) · django-filter |
+| Database | PostgreSQL (production) / SQLite (local development) |
+| Payments | OPay Checkout (international Cashier API; live + test modes) |
+| Media    | Cloudinary (production) / local `media/` (development) |
+| Email    | Gmail SMTP via Django 6.1 `MAILERS` (transactional order emails) |
+| Frontend | React 18 · Vite · Tailwind CSS v4 · React Router v6 · axios |
+| Serving  | gunicorn + nginx (see `deploy/`) |
 
-## Project Layout
+## Quickstart (development)
 
-```
-BETA_MODEHUS/
-├── backend/                # Django REST API
-│   ├── config/             # Project settings (base/dev/prod)
-│   ├── apps/               # Django apps
-│   │   ├── accounts/       # Users, JWT auth, profiles, addresses
-│   │   ├── catalog/        # Categories, brands, products, variants
-│   │   ├── cart/           # Guest + account carts
-│   │   ├── orders/         # Orders, shipping, receipts
-│   │   ├── payments/       # OPay transactions & verification
-│   │   ├── reviews/        # Verified-purchase reviews
-│   │   ├── notifications/  # Email notifications
-│   │   └── reports/        # Dashboard + reports
-│   └── .env.example        # Environment variable template
-├── frontend/               # React + Vite + Tailwind storefront/admin
-├── docs/
-│   ├── BUILD_PLAN.md       # Master build plan & architecture
-│   └── PROJECT_NOTES.md    # Living change log (read FIRST)
-└── README.md
-```
+Two terminals, from the repo root.
 
-## Quick Start
+**Terminal 1 — backend** (PowerShell):
 
-### Backend (Dev)
-
-```bash
+```powershell
 cd backend
-python -m venv .venv
-.venv\Scripts\activate        # PowerShell
-pip install -r requirements.txt
-copy .env.example .env        # then fill any real values
+.\.venv\Scripts\activate.bat
 python manage.py migrate
-python manage.py seed_catalog # optional demo products
-python manage.py runserver
+python manage.py seed_catalog      # optional demo catalog + admin user
+python manage.py runserver 8000
 ```
 
-### Frontend (Dev)
+**Terminal 2 — frontend**:
 
-```bash
+```powershell
 cd frontend
-npm install
-npm run dev
+npm.cmd install
+npm.cmd run dev
 ```
+
+Open **http://localhost:5173** (use `localhost`, not `127.0.0.1` — Vite binds `::1`).
+The API lives at `http://127.0.0.1:8000/api/v1/`.
 
 ## Documentation
 
-- **docs/PROJECT_NOTES.md** — living change log. Read this first to see exactly
-  what has been built, what changed in each commit, and what remains.
-- **docs/BUILD_PLAN.md** — full architecture, build phases and decisions.
+Start with [`docs/START_HERE.md`](docs/START_HERE.md), then:
 
-## Secrets
+- **Project structure** — [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md)
+- **How features work** — [`docs/HOW_IT_WORKS.md`](docs/HOW_IT_WORKS.md)
+- **Feature list** — [`docs/FEATURES.md`](docs/FEATURES.md)
+- **API reference** — [`docs/API_REFERENCE.md`](docs/API_REFERENCE.md)
+- **Owner's guide** — [`docs/OWNER_GUIDE.md`](docs/OWNER_GUIDE.md)
+- **FAQ** — [`docs/FAQ.md`](docs/FAQ.md)
+- **Go-live runbook** — [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
+- **Changelog** — [`docs/PROJECT_NOTES.md`](docs/PROJECT_NOTES.md)
 
-Never put real secrets in source code. Copy `.env.example` to `.env` and fill
-real values there. The full list of required environment variables (OPay,
-Gmail, Cloudinary, PostgreSQL, JWT) is documented in `.env.example` and
-`docs/BUILD_PLAN.md`.
+## Tests
+
+```powershell
+cd backend
+.\.venv\Scripts\python.exe manage.py test
+```
+
+18 automated tests cover cart, checkout, payments, reviews and admin actions.
+
+## Secrets (never commit these)
+
+All configuration lives in environment variables — copy `backend/.env.example`
+to `backend/.env` and fill in: OPay merchant/public/private keys, Gmail SMTP app
+password, `DJANGO_SECRET_KEY`, and Cloudinary URL. Never push the `.env` file.
