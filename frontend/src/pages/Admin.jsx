@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+﻿import { useCallback, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api } from "../api/client.js";
 import { useAuth } from "../context/AuthContext.jsx";
@@ -54,7 +54,7 @@ export default function Admin() {
       <header className="sticky top-0 z-40 bg-gradient-to-b from-midnight-950 to-midnight-900 shadow-lg">
         <div className="container-bm flex items-center justify-between gap-2 py-3">
           <div className="flex min-w-0 items-center gap-3">
-            <img src="/logo.svg" alt="BETA_MODEHUS" className="h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain p-1" />
+            <img src="/logo.png" alt="BETA_MODEHUS" className="h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain p-1" />
             <div className="min-w-0 leading-tight">
               <div className="flex flex-wrap items-center gap-2 font-display text-base font-bold tracking-wide text-white sm:text-lg">
                 BETA<span className="text-gold-500">MODEHUS</span>
@@ -83,7 +83,7 @@ export default function Admin() {
             <div className="card-bm overflow-hidden">
               <div className="bg-midnight-900 px-4 py-4 sm:px-5">
                 <div className="flex items-center gap-3">
-                  <img src="/logo.svg" alt="" className="h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain p-1" />
+                  <img src="/logo.png" alt="" className="h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain p-1" />
                   <div className="min-w-0">
                     <div className="font-display text-sm font-bold text-white">BETA_MODEHUS</div>
                     <div className="truncate text-[11px] text-midnight-300">Owner panel</div>

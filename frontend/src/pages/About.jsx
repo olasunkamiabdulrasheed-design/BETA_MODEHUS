@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 
 const VALUES = [
   ["✂️", "Hand-finished tailoring", "Every piece is cut and finished with care, from ankara to grand agbada."],
@@ -18,7 +18,7 @@ export default function About() {
     <div>
       <section className="relative overflow-hidden bg-midnight-950 py-16 text-center text-white sm:py-20">
         <img
-          src="/logo.svg"
+          src="/logo.png"
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-1/2 w-[min(70vw,440px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.10]"

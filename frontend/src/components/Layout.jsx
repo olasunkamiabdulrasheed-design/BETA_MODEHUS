@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
@@ -90,7 +90,7 @@ export default function Layout() {
         </div>
         <div className="container-bm flex items-center justify-between py-3">
           <Link to="/" className="flex items-center gap-3">
-            <img src="/logo.svg" alt="BETA_MODEHUS logo" className="h-12 w-12 rounded-full object-cover" />
+            <img src="/logo.png" alt="BETA_MODEHUS logo" className="h-12 w-12 rounded-full object-cover" />
             <div className="leading-tight">
               <div className="font-display text-lg font-bold tracking-wide text-white sm:text-xl">
                 BETA<span className="text-gold-500">MODEHUS</span>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { api } from "../api/client.js";
 import ProductCard from "../components/ProductCard.jsx";
@@ -36,7 +36,7 @@ export default function Home() {
     <div>
       <section className="relative overflow-hidden bg-midnight-950 py-24 text-center text-white sm:py-32">
         <img
-          src="/logo.svg"
+          src="/logo.png"
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute left-1/2 top-1/2 w-[min(80vw,560px)] -translate-x-1/2 -translate-y-1/2 opacity-[0.10]"
