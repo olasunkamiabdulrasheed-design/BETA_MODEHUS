@@ -60,3 +60,37 @@ public on the product page) or Reject (they never go public).
 ## Settings tab
 - Delivery fee (flat-rate) and **free delivery above N naira**.
 - Instant effect on the storefront; applies to new orders only.
+
+---
+
+# Owner's Guide — part 3: Django admin for products and stock
+
+The backend admin at `http://127.0.0.1:8000/admin/` is where the catalog is
+managed. It reappears on your domain at `yourdomain.com/admin/` behind HTTPS.
+
+## Add a product
+1. **Add category** / **Add brand** first if the product is new to those.
+2. **Products → Add product**: name, description, base price, category, brand,
+   tick **Featured** for the homepage carousel, save.
+3. In the product page scroll to **Add another Product variant**: pick size and
+   colour, set SKU (unique), stock, and optionally a variant-specific price
+   (leave blank to inherit the base price). Save.
+4. **Add another Product image** per variant/colour so the gallery swaps images
+   when the shopper changes colour.
+
+## Edit stock on the fly
+Orders → spend a little time each morning:
+**Product variants** filter by SKU → update `stock` → save. Stock shown on the
+storefront is live; sales decrement it automatically at payment.
+
+## Reading order data
+Orders list shows number, customer, total, status, payment_status. Click any
+order for items and the address snapshot. Payments shows every payment with the
+raw OPay response stored for audit.
+
+## Users & reviews
+Users → emails, active flags (deactivate = block account). Reviews → change
+status directly if you prefer to moderate here instead of the dashboard.
+
+> Tip: keep the custom dashboard for day-to-day; use Django admin when you need
+> to change catalog content or dig into raw records.
