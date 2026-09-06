@@ -194,3 +194,42 @@ as described in part 3.
 { "delivery_fee": 3000, "free_shipping_threshold": 100000 }
 ```
 Applies to new orders only.
+
+---
+
+# API Reference — part 5: copy-paste curl samples
+
+```bash
+BASE=http://127.0.0.1:8000/api/v1
+
+# sign up → tokens
+curl -X POST $BASE/auth/signup/ -H "Content-Type: application/json" \
+  -d @- <<'EOF'
+{ "email": "bola@example.com", "password": "StrongP@ss1", "password2": "StrongP@ss1",
+  "full_name": "Bola Ade", "phone": "08012345678" }
+EOF
+
+# public catalog (no auth needed)
+curl "$BASE/catalog/products/?search=lace&ordering=-price"
+
+# add to cart (auth: header below)
+TOKEN=<access-token>
+curl -X POST $BASE/cart/items/ -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" -d "{\"variant\": 12, \"quantity\": 2}"
+
+# checkout → new order
+curl -X POST $BASE/orders/ -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" -d "{\"address\": 5}"
+
+# pay (returns cashier URL to open in a browser)
+curl -X POST $BASE/payments/initiate/ -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" -d "{\"order_number\": \"BM-…\"}"
+
+# staff: dashboard stats
+curl "$BASE/orders/admin/stats/" -H "Authorization: Bearer $ADMIN_TOKEN"
+
+# staff: ship an order (tracking required)
+curl -X PATCH $BASE/orders/admin/BM-…/ -H "Authorization: Bearer $ADMIN_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d "{\"action\": \"mark_shipped\", \"tracking_number\": \"GT03…\"}"
+```
