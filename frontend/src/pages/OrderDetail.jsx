@@ -87,9 +87,9 @@ export default function OrderDetail() {
     (order.status === "PENDING_PAYMENT" || order.status === "FAILED");
 
   return (
-    <div className="container-bm py-10">
+    <div className="container-bm py-12 sm:py-16">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="font-display text-3xl font-bold text-midnight-900">Order #{order.number}</h1>
+        <h1 className="font-display text-4xl font-bold text-midnight-950 sm:text-5xl">Order #{order.number}</h1>
         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_COLORS[order.status] || "bg-midnight-100 text-midnight-700"}`}>
           {order.status_display}
         </span>

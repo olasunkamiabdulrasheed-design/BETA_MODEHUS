@@ -34,7 +34,7 @@ export default function Home() {
 
   return (
     <div>
-      <section className="relative overflow-hidden bg-midnight-950 py-24 text-center text-white sm:py-32">
+      <section className="relative overflow-hidden bg-midnight-950 py-28 text-center text-white sm:py-36">
         <img
           src="/logo.png"
           alt=""
@@ -43,10 +43,10 @@ export default function Home() {
         />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(27,27,47,0.55)_60%,#0a0a18_100%)]" />
         <div className="container-bm relative">
-          <p className="text-xs uppercase tracking-[0.35em] text-gold-500">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.42em] text-gold-400">
             For Better Elegance and Luxury
           </p>
-          <h1 className="font-display mt-4 text-4xl font-bold sm:text-6xl">
+          <h1 className="font-display mt-4 text-4xl font-bold leading-[1.05] sm:text-6xl lg:text-7xl">
             Wear the Elegance, <br className="hidden sm:block" />
             Speak the Luxury
           </h1>
@@ -54,7 +54,7 @@ export default function Home() {
             Premium Nigerian fashion — agbada, senator, kaftans, ankara and more.
             Tailored to you, delivered nationwide.
           </p>
-          <div className="mt-10 flex flex-wrap justify-center gap-4">
+          <div className="mt-10 flex flex-wrap justify-center gap-3">
             <Link to="/products" className="btn-gold">
               Shop the collection
             </Link>
@@ -65,8 +65,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-gold-50 py-10">
-        <div className="container-bm grid gap-4 text-center sm:grid-cols-3 sm:gap-6">
+      <section className="bg-white py-10">
+        <div className="container-bm grid gap-4 text-center sm:grid-cols-3 sm:gap-5">
           {[
             ["🚚", "Nationwide delivery", "Across all 36 states"],
             ["💳", "Pay online securely", "OPay & card payments"],
@@ -83,7 +83,7 @@ export default function Home() {
 
       {error && <p className="container-bm mt-6 text-sm text-red-500">{error}</p>}
 
-      <section className="py-14">
+      <section className="py-20">
         <div className="container-bm">
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
@@ -98,7 +98,7 @@ export default function Home() {
               View all →
             </Link>
           </div>
-          <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          <div className="mt-8 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
             {featured.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
@@ -106,7 +106,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="bg-midnight-900 py-14 text-white">
+      <section className="bg-midnight-900 py-20 text-white">
         <div className="container-bm grid gap-6 md:grid-cols-3">
           {SECTIONS.map((s) => (
             <div key={s.key} className="card-bm !shadow-none border !border-midnight-700 bg-midnight-800 p-6 transition hover:border-gold-500/70 hover:shadow-lift">

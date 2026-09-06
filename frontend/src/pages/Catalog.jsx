@@ -77,8 +77,8 @@ export default function Catalog() {
   };
 
   return (
-    <div className="container-bm py-10">
-      <h1 className="font-display text-3xl font-bold text-midnight-900">Shop</h1>
+    <div className="container-bm py-12 sm:py-16">
+      <h1 className="font-display text-4xl font-bold tracking-tight text-midnight-950 sm:text-5xl">Shop</h1>
       <p className="mt-1 text-sm text-midnight-700">
         {category
           ? categories.find((c) => c.slug === category)?.name || "Category"
@@ -87,7 +87,7 @@ export default function Catalog() {
             : "All products"}
       </p>
 
-      <div className="mt-6 flex flex-wrap gap-3">
+      <div className="mt-8 flex flex-wrap gap-3 rounded-2xl border border-black/5 bg-white p-3 shadow-soft">
         <input
           value={q}
           onChange={(e) => setParam("q", e.target.value)}

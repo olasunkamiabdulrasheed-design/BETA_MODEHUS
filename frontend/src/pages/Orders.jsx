@@ -36,8 +36,8 @@ export default function Orders() {
   }
 
   return (
-    <div className="container-bm py-10">
-      <h1 className="font-display text-3xl font-bold text-midnight-900">Orders</h1>
+    <div className="container-bm py-12 sm:py-16">
+      <h1 className="font-display text-4xl font-bold text-midnight-950 sm:text-5xl">Orders</h1>
 
       {busy ? (
         <p className="mt-6 text-midnight-700">Loading your orders…</p>
@@ -52,7 +52,7 @@ export default function Orders() {
             <Link
               key={o.number}
               to={`/orders/${o.number}`}
-              className="block rounded-lg border border-midnight-100 bg-white p-5 transition hover:border-gold-400"
+              className="block rounded-2xl border border-black/5 bg-white p-5 shadow-soft transition hover:-translate-y-0.5 hover:border-gold-400 hover:shadow-lift"
             >
               <div className="flex flex-wrap items-center justify-between gap-2">
                 <div>

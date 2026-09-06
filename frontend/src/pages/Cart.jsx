@@ -10,8 +10,8 @@ export default function Cart() {
   if (loading) return <div className="container-bm py-16 text-center">Loading cart…</div>;
 
   return (
-    <div className="container-bm py-10">
-      <h1 className="font-display text-3xl font-bold text-midnight-900">
+    <div className="container-bm py-12 sm:py-16">
+      <h1 className="font-display text-4xl font-bold text-midnight-950 sm:text-5xl">
         Your cart
         {itemCount > 0 && (
           <span className="ml-2 text-lg font-normal text-midnight-700">

@@ -50,11 +50,11 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-midnight-50">
-      <header className="sticky top-0 z-40 bg-gradient-to-b from-midnight-950 to-midnight-900 shadow-lg">
-        <div className="container-bm flex items-center justify-between gap-2 py-3">
+    <div className="min-h-screen bg-[#f7f5f0]">
+      <header className="sticky top-0 z-40 border-b border-white/10 bg-midnight-950/95 shadow-lg backdrop-blur-xl">
+        <div className="container-bm flex items-center justify-between gap-2 py-4">
           <div className="flex min-w-0 items-center gap-3">
-            <img src="/logo.png" alt="BETA_MODEHUS" className="h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain p-1" />
+            <img src="/logo.png" alt="BETA_MODEHUS" className="h-10 w-10 shrink-0 rounded-xl bg-white/10 object-contain p-1 ring-1 ring-gold-500/20" />
             <div className="min-w-0 leading-tight">
               <div className="flex flex-wrap items-center gap-2 font-display text-base font-bold tracking-wide text-white sm:text-lg">
                 BETA<span className="text-gold-500">MODEHUS</span>
@@ -70,7 +70,7 @@ export default function Admin() {
               <span className="hidden sm:inline">View storefront →</span>
               <span className="sm:hidden">Store →</span>
             </Link>
-            <button onClick={logout} className="rounded-lg border border-midnight-700 px-3 py-2 text-xs font-semibold text-midnight-300 hover:border-red-400 hover:text-red-400">
+            <button onClick={logout} className="rounded-full border border-midnight-700 px-3 py-2 text-xs font-semibold text-midnight-300 hover:border-red-400 hover:text-red-400">
               Logout
             </button>
           </div>
@@ -80,16 +80,16 @@ export default function Admin() {
       <div className="container-bm py-6 lg:py-8">
         <div className="grid gap-6 lg:grid-cols-[220px_1fr]">
           <aside className="lg:sticky lg:top-24 lg:self-start">
-            <div className="card-bm overflow-hidden">
-              <div className="bg-midnight-900 px-4 py-4 sm:px-5">
+            <div className="card-bm overflow-hidden shadow-lift">
+              <div className="bg-midnight-950 px-4 py-5 sm:px-5">
                 <div className="flex items-center gap-3">
-                  <img src="/logo.png" alt="" className="h-10 w-10 shrink-0 rounded-lg bg-white/10 object-contain p-1" />
+                  <img src="/logo.png" alt="" className="h-10 w-10 shrink-0 rounded-xl bg-white/10 object-contain p-1 ring-1 ring-gold-500/20" />
                   <div className="min-w-0">
                     <div className="font-display text-sm font-bold text-white">BETA_MODEHUS</div>
                     <div className="truncate text-[11px] text-midnight-300">Owner panel</div>
                   </div>
                 </div>
-                <div className="mt-3 hidden truncate rounded-lg bg-white/10 px-2.5 py-1.5 text-[11px] text-gold-200 sm:block">{user.email}</div>
+                <div className="mt-3 hidden truncate rounded-xl bg-white/10 px-2.5 py-1.5 text-[11px] text-gold-200 sm:block">{user.email}</div>
               </div>
               <nav className="admin-scroll flex gap-1.5 overflow-x-auto p-2 lg:flex-col">
                 {NAV.map(([key, label]) => (
@@ -173,7 +173,7 @@ const load = useCallback(() => {
     <div className="space-y-6">
       <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3">
         {cards.map((c) => (
-          <div key={c.label} className="card-bm overflow-hidden">
+          <div key={c.label} className="card-bm overflow-hidden shadow-lift">
             <div className={`h-1.5 ${c.accent}`} />
             <div className="p-4 sm:p-5">
               <div className="text-[10px] font-semibold uppercase tracking-wide text-midnight-700 sm:text-xs">{c.label}</div>
@@ -352,7 +352,7 @@ function OrdersTab() {
         </form>
       </div>
 
-      {notice && <div className="mt-4 rounded-md border border-gold-300 bg-gold-50 px-4 py-3 text-sm">{notice}</div>}
+      {notice && <div className="mt-4 rounded-md border border-gold-300 bg-gold-50 px-4 py-4 text-sm">{notice}</div>}
 
       <div className="mt-4 space-y-3">
         {loading ? (
@@ -509,7 +509,7 @@ function ProductsTab() {
         </div>
       </div>
 
-      {notice && <div className="mt-4 rounded-md border border-gold-300 bg-gold-50 px-4 py-3 text-sm">{notice}</div>}
+      {notice && <div className="mt-4 rounded-md border border-gold-300 bg-gold-50 px-4 py-4 text-sm">{notice}</div>}
       {editing && (
         <ProductEditor
           product={editing}
@@ -528,18 +528,18 @@ function ProductsTab() {
           <table className="w-full min-w-[720px] text-left text-sm">
             <thead>
               <tr className="border-b border-midnight-100 text-xs uppercase tracking-wide text-midnight-700">
-                <th className="px-4 py-3">Product</th>
-                <th className="px-4 py-3">Price</th>
-                <th className="px-4 py-3">Stock</th>
-                <th className="px-4 py-3">Sold</th>
-                <th className="px-4 py-3">Status</th>
-                <th className="px-4 py-3 text-right">Actions</th>
+                <th className="px-4 py-4">Product</th>
+                <th className="px-4 py-4">Price</th>
+                <th className="px-4 py-4">Stock</th>
+                <th className="px-4 py-4">Sold</th>
+                <th className="px-4 py-4">Status</th>
+                <th className="px-4 py-4 text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
               {products.map((p) => (
                 <tr key={p.id} className="border-b border-midnight-50 last:border-0 hover:bg-gold-50/50">
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4">
                     <div className="flex items-center gap-3">
                       {p.image ? (
                         <img src={p.image} alt={p.name} className="h-10 w-10 rounded-lg object-cover" />
@@ -554,14 +554,14 @@ function ProductsTab() {
                       </div>
                     </div>
                   </td>
-                  <td className="px-4 py-3 font-medium text-midnight-900">{naira(p.min_price || p.price)}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4 font-medium text-midnight-900">{naira(p.min_price || p.price)}</td>
+                  <td className="px-4 py-4">
                     <span className={`rounded-full px-2 py-0.5 text-xs font-bold ${p.total_stock === 0 ? "bg-red-100 text-red-700" : p.total_stock <= 5 ? "bg-amber-100 text-amber-800" : "bg-emerald-100 text-emerald-800"}`}>
                       {p.total_stock} {p.total_stock === 1 ? "unit" : "units"}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-midnight-700">{p.units_sold}</td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4 text-midnight-700">{p.units_sold}</td>
+                  <td className="px-4 py-4">
                     <div className="flex items-center gap-1.5">
                       <span className={`h-2 w-2 rounded-full ${p.is_active ? "bg-emerald-500" : "bg-midnight-300"}`} />
                       <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${p.status === "published" ? "bg-emerald-100 text-emerald-800" : "bg-midnight-100 text-midnight-700"}`}>
@@ -570,7 +570,7 @@ function ProductsTab() {
                       {p.is_featured && <span className="rounded bg-gold-100 px-1.5 py-0.5 text-[10px] font-bold text-gold-600">FEATURED</span>}
                     </div>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-4 py-4">
                     <div className="flex justify-end gap-2">
                       <button
                         onClick={() => api.patch(`/admin/products/${p.id}/`, { is_featured: !p.is_featured }).then(afterSave)}
@@ -736,7 +736,7 @@ function ProductEditor({ product, onClose, onSaved }) {
         <button onClick={onClose} className="text-midnight-500 hover:text-midnight-900" aria-label="Close">×</button>
       </div>
 
-      {error && <div className="mt-3 rounded-md border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">{error}</div>}
+      {error && <div className="mt-3 rounded-md border border-red-200 bg-red-50 px-4 py-4 text-sm text-red-700">{error}</div>}
 
       <form onSubmit={save} className="mt-4 grid gap-4 lg:grid-cols-2">
         <div className="space-y-4">

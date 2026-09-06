@@ -27,9 +27,9 @@ export default function Login() {
   };
 
   return (
-    <div className="container-bm flex justify-center py-16">
-      <div className="w-full max-w-md rounded-xl border border-midnight-100 bg-white p-8 shadow-md">
-        <h1 className="font-display text-2xl font-bold text-midnight-900">
+    <div className="container-bm flex justify-center py-16 sm:py-24">
+      <div className="w-full max-w-md rounded-[1.5rem] border border-black/5 bg-white p-7 shadow-lift sm:p-9">
+        <h1 className="font-display text-3xl font-bold text-midnight-950">
           Welcome back
         </h1>
         <p className="mt-1 text-sm text-midnight-700">

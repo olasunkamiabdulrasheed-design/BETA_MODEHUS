@@ -54,9 +54,9 @@ export default function Account() {
   const latest = orders[0];
 
   return (
-    <div className="container-bm py-10">
+    <div className="container-bm py-12 sm:py-16">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="font-display text-3xl font-bold text-midnight-900">My account</h1>
+        <h1 className="font-display text-4xl font-bold text-midnight-950 sm:text-5xl">My account</h1>
         <button onClick={logout} className="btn-outline">Logout</button>
       </div>
 

@@ -73,7 +73,7 @@ export default function ProductDetail() {
   };
 
   return (
-    <div className="container-bm py-10">
+    <div className="container-bm py-12 sm:py-16">
       <nav className="text-sm text-midnight-700">
         <Link to="/" className="hover:text-gold-600">Home</Link>
         {" / "}
@@ -83,7 +83,7 @@ export default function ProductDetail() {
       </nav>
 
       <div className="mt-6 grid gap-10 md:grid-cols-2">
-        <div className="overflow-hidden rounded-lg bg-midnight-50">
+        <div className="overflow-hidden rounded-[1.5rem] border border-black/5 bg-[#eeece6] shadow-soft">
           {activeImage && activeImage.image ? (
             <img src={activeImage.image} alt={product.name} className="w-full object-cover" />
           ) : (
@@ -112,7 +112,7 @@ export default function ProductDetail() {
           <p className="text-xs font-semibold uppercase tracking-widest text-gold-600">
             {product.category}
           </p>
-          <h1 className="font-display mt-1 text-3xl font-bold text-midnight-900">
+          <h1 className="font-display mt-1 text-4xl font-bold tracking-tight text-midnight-950 sm:text-5xl">
             {product.name}
           </h1>
           <div className="mt-2 flex items-center gap-3">

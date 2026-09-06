@@ -76,8 +76,8 @@ export default function Checkout() {
   };
 
   return (
-    <div className="container-bm py-10">
-      <h1 className="font-display text-3xl font-bold text-midnight-900">Checkout</h1>
+    <div className="container-bm py-12 sm:py-16">
+      <h1 className="font-display text-4xl font-bold text-midnight-950 sm:text-5xl">Checkout</h1>
 
       {items.length === 0 ? (
         <div className="mt-10 text-center">
