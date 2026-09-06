@@ -40,7 +40,7 @@ export default function Layout() {
             <NavLink to="/" end className={navLink}>
               Home
             </NavLink>
-            {!user?.is_staff && (
+            {user && !user.is_staff && (
               <>
                 <NavLink to="/products" className={navLink}>
                   Shop
