@@ -70,20 +70,18 @@ class PaymentFlowTests(TestCase):
         self.assertEqual(self.payment.status, Payment.Status.PENDING)
 
     def test_reconcile_success_patches_status(self):
-        with patch(
-            "payments.services.OpayClient.query_status",
-            return_value=self._success_payload(),
-        ):
+        with patch("payments.services.OpayClient") as mock_client:
+            mock_client.return_value.query_status.return_value = self._success_payload()
             order = reconcile_payment(self.payment)
         self.payment.refresh_from_db()
         self.assertEqual(self.payment.status, Payment.Status.SUCCESS)
         self.assertEqual(order.payment_status, Order.PaymentStatus.PAID)
 
     def test_reconcile_failure_flips_order_to_failed(self):
-        with patch(
-            "payments.services.OpayClient.query_status",
-            return_value={"reference": self.payment.reference, "status": "FAIL"},
-        ):
+        with patch("payments.services.OpayClient") as mock_client:
+            mock_client.return_value.query_status.return_value = {
+                "reference": self.payment.reference, "status": "FAIL",
+            }
             order = reconcile_payment(self.payment)
         self.payment.refresh_from_db()
         self.assertEqual(self.payment.status, Payment.Status.FAILED)

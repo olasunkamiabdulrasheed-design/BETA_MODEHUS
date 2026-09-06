@@ -4,6 +4,8 @@ from django.test import TestCase
 from rest_framework.test import APIClient
 
 from accounts.models import User
+
+from accounts.models import User
 from catalog.models import Category, Product, ProductVariant
 from orders.models import Order, OrderItem
 from reviews.models import Review
@@ -20,6 +22,7 @@ class ReviewTests(TestCase):
         self.staff = User.objects.create_user(
             email="staff@example.com", password="Testpass123!", is_staff=True
         )
+        self.client = APIClient()
         category = Category.objects.create(name="Agbada")
         self.product = Product.objects.create(
             name="Agbada Royal", price=Decimal("30000.00"), category=category
@@ -67,17 +70,15 @@ class ReviewTests(TestCase):
         self.assertIn("already reviewed", str(res.data))
 
     def test_public_list_only_shows_approved(self):
-        review = Review.objects.create(
-            user=self.verified, product=self.product, rating=5,
-            comment="Nice", status=Review.Status.PENDING,
-        )
         Review.objects.create(
-            user=self.verified, product=self.product, rating=1,
-            comment="Bad", status=Review.Status.REJECTED,
+            user=self.verified, product=self.product, rating=5,
+            comment="Nice", status=Review.Status.REJECTED,
         )
-        # unique constraint blocks two reviews from the same user on one product
-        Review.objects.filter(pk=review.pk).update(status=Review.Status.REJECTED)
         other = User.objects.create_user(email="other@x.com", password="Testpass123!")
+        Review.objects.create(
+            user=other, product=self.product, rating=1,
+            comment="Pending", status=Review.Status.PENDING,
+        )
 
         anon = APIClient()
         res = anon.get(f"/api/v1/reviews/?product={self.product.slug}")
@@ -86,7 +87,8 @@ class ReviewTests(TestCase):
 
         self.client.force_authenticate(self.staff)
         res = self.client.get("/api/v1/reviews/?status=rejected")
-        self.assertEqual(res.status_code, 200)
+        self.assertEqual(len(res.data["results"]), 1)
+        res = self.client.get("/api/v1/reviews/?status=pending")
         self.assertEqual(len(res.data["results"]), 1)
 
     def test_staff_can_moderate(self):

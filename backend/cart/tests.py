@@ -62,6 +62,7 @@ class CartAPITests(TestCase):
         res = self.client.post(
             "/api/v1/cart/merge/",
             {"items": [{"variant_id": self.variant.id, "quantity": 3}]},
+            format="json",
         )
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.data["item_count"], 3)
