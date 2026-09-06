@@ -100,3 +100,64 @@ production.
 ## Where the API routes really live
 
 See `docs/API_REFERENCE.md` for the full table.
+---
+
+# Project Structure — Part 2: frontend and deploy
+
+## Frontend (React + Vite + Tailwind v4)
+
+```
+frontend/
+├── index.html          SPA shell (favicon = real BETA_MODEHUS logo)
+├── vite.config.js      dev server + proxies (/api, /media, /health -> 127.0.0.1:8000)
+└── src/
+    ├── main.jsx        React entry: Router > AuthProvider > CartProvider > App
+    ├── App.jsx         route table for every page
+    ├── index.css       Tailwind v4 theme tokens (gold/midnight brand palette)
+    ├── api/client.js   axios instance, JWT refresh interceptor, currency()
+    ├── components/
+    │   ├── Layout.jsx      sticky header + footer + <Outlet /> for routes
+    │   └── ProductCard.jsx reusable product tiles (home + catalog)
+    ├── context/
+    │   ├── AuthContext.jsx    user session, login/signup/logout, token persistence
+    │   └── CartContext.jsx    cart state; guest localStorage cart auto-merges on login
+    └── pages/
+        ├── Home.jsx           hero, featured, category cards, USPs
+        ├── Catalog.jsx        search + category + sorting + price filter
+        ├── ProductDetail.jsx  gallery, size/color picker, add-to-cart, reviews (+ form)
+        ├── Cart.jsx           line items, qty steppers, remove, subtotal
+        ├── Checkout.jsx       saved-address picker + delivery form -> POST /orders
+        ├── Orders.jsx         customer order history
+        ├── OrderDetail.jsx    items, address, Pay-now button, status polling
+        ├── PaymentCallback.jsx OPay return page, polls /payments/status
+        ├── Account.jsx        profile, address book CRUD, recent orders
+        ├── Admin.jsx          staff dashboard (Dashboard/Orders/Reviews/Settings tabs)
+        ├── Login.jsx / Signup.jsx
+        └── NotFound.jsx
+```
+
+Spotlight — where data flows:
+
+- **api/client.js** — every request carries `Authorization: Bearer <access>`; a
+  401 trigger auto-refreshes via `/auth/refresh/` and retries once. Tokens live
+  in `localStorage` under `bm_tokens`.
+- **AuthContext** — holds the signed-in user; drives the navbar (Login/Signup vs
+  account name + Logout) and the `is_staff` gate on `/admin`.
+- **CartContext** — shoppers can add to cart WITHOUT an account (stored in
+  `localStorage` under `bm_cart`). On login the guest items are posted to
+  `/cart/merge/`, then the backend cart is loaded.
+- **Cart badge** — `Layout` shows a live item-count bubble fed by the context.
+- **Admin.jsx** — the owner-only dashboard. Guards with `user?.is_staff`; tabs
+  call the admin APIs and PATCH/PUT status + settings.
+
+## Deploy assets
+
+```
+deploy/
+├── betamodehus.service   systemd unit: gunicorn (3 workers, unix socket, logs)
+└── nginx.conf            site config: serves frontend/dist, proxies /api /admin
+                          /health, static/media, SPA fallback, asset caching
+```
+
+`config/settings/prod.py` flips to DEBUG=False, Postgres, HTTPS security headers,
+Cloudinary storage and Gmail SMTP. Follow `docs/DEPLOYMENT.md` to go live.
