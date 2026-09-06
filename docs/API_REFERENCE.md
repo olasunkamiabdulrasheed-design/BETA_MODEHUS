@@ -233,3 +233,26 @@ curl -X PATCH $BASE/orders/admin/BM-…/ -H "Authorization: Bearer $ADMIN_TOKEN"
   -H "Content-Type: application/json" \
   -d "{\"action\": \"mark_shipped\", \"tracking_number\": \"GT03…\"}"
 ```
+
+## Catalog admin (staff)
+
+### GET /admin/products/?search=&flag=
+All products (incl. inactive/drafts) with `category_name`, `brand_name`,
+`price`, `min_price` (cheapest active variant), `total_stock` (sum of active
+variants), `variant_count`, `units_sold` (paid orders only), `status`,
+`is_featured`, `is_active`, `image`. Flags: `featured`, `inactive`, `out`.
+
+### POST /admin/products/  (staff) — create
+`{ name, category_id, price, brand_id?, short_description?, description?, sku?, status?, is_featured?, is_active? }`
+Slug auto-generated; SKU optional (blank allowed for many products).
+
+### PATCH /admin/products/<id>/  (staff) — same fields, partial
+### DELETE /admin/products/<id>/  (staff)
+Rejected if the product has order items attached (PROTECT).
+
+### PATCH /admin/variants/<id>/  (staff-in discovery)
+```json
+{ "stock": 3, "price": "40000", "is_active": true }
+```
+Returns `{ id, product, label, stock, price, is_active }`.
+### DELETE /admin/variants/<id>/  (staff)
