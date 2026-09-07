@@ -81,3 +81,24 @@ body {
   border-radius: 9999px;
   background-color: var(--color-midnight-300);
 }
+
+/* ---------- Editorial helpers ---------- */
+.eyebrow {
+  @apply text-[11px] font-semibold uppercase tracking-[0.3em] text-gold-600;
+}
+
+/* ---------- Marquee ---------- */
+@keyframes bm-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.bm-marquee {
+  animation: bm-marquee 26s linear infinite;
+}
+.bm-marquee:hover {
+  animation-play-state: paused;
+}
