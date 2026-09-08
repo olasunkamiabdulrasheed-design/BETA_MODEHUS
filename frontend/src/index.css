@@ -102,3 +102,20 @@ body {
 .bm-marquee:hover {
   animation-play-state: paused;
 }
+
+/* ---------- Mobile dropdown menu ---------- */
+@keyframes dropdown {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ---------- Gradient gold text ---------- */
+.grad-gold-text {
+  @apply bg-gradient-to-r from-gold-400 via-gold-500 to-gold-700 bg-clip-text text-transparent;
+}

@@ -84,7 +84,7 @@ export default function Layout() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="sticky top-0 z-40 bg-midnight-950 shadow-lg">
+      <header className="sticky top-0 z-40 bg-midnight-950/95 shadow-lg backdrop-blur-md">
         <div className="bg-gold-500 py-1.5 text-center text-xs font-semibold text-midnight-950">
           For Better Elegance and Luxury — Nationwide delivery across Nigeria
         </div>
@@ -115,7 +115,7 @@ export default function Layout() {
         </div>
 
         {open && (
-          <nav className="border-t border-midnight-800 px-4 pb-4 pt-2 md:hidden">
+          <nav className="animate-[dropdown_.2s_ease-out] border-t border-midnight-800 px-4 pb-4 pt-2 md:hidden">
             {user && !user.is_staff && itemCount > 0 && (
               <div className="flex items-center justify-between rounded-lg bg-midnight-900 px-4 py-3 text-sm text-white">
                 <span>{itemCount} item{itemCount === 1 ? "" : "s"} in cart</span>
