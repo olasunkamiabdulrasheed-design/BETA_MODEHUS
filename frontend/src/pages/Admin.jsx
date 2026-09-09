@@ -671,15 +671,15 @@ function OrdersTab() {
   return (
     <div>
       {/* FILTER BAR */}
-      <div className="rounded-2xl border border-midnight-100 bg-white p-4 shadow-sm">
-        <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="adm-toolbar !p-4 sm:!p-5">
+        <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
           {filters.map((f) => (
             <button
               key={f || "all"}
               onClick={() => setFilter(f)}
               className={`shrink-0 rounded-full border px-3 py-2 text-xs font-semibold transition ${
                 filter === f
-                  ? "border-midnight-950 bg-midnight-950 text-gold-400"
+                  ? "border-midnight-950 bg-midnight-950 text-gold-400 shadow-soft"
                   : "border-midnight-100 bg-midnight-50 text-midnight-600 hover:border-gold-300"
               }`}
             >
@@ -734,7 +734,7 @@ function OrdersTab() {
           orders.map((o) => (
             <div
               key={o.number}
-              className="overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-sm"
+              className="adm-card overflow-hidden"
             >
               <button
                 onClick={() =>
@@ -742,7 +742,7 @@ function OrdersTab() {
                     ? setExpanded(null)
                     : openDetail(o.number)
                 }
-                className="w-full p-5 text-left transition hover:bg-gold-50/20"
+                className="w-full p-4 text-left transition hover:bg-gold-50/20 sm:p-5"
               >
                 <div className="flex flex-wrap items-center justify-between gap-4">
                   <div className="min-w-0">
