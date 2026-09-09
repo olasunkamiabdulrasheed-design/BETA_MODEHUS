@@ -427,10 +427,10 @@ function Dashboard({ onOrders }) {
             {stats.bestsellers.map((b, i) => (
               <div
                 key={b.product_name}
-                className="flex items-center gap-3 rounded-xl border border-midnight-100 p-3"
+                className="flex items-center gap-3 rounded-xl border border-midnight-100 bg-white p-3 shadow-soft transition hover:border-gold-300"
               >
-                <span className="w-5 text-center font-display text-xs font-bold text-midnight-300">
-                  {String(i + 1).padStart(2, "0")}
+                <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-midnight-950 font-display text-[11px] font-bold text-gold-400">
+                  {i + 1}
                 </span>
 
                 {b.thumbnail ? (
@@ -438,10 +438,10 @@ function Dashboard({ onOrders }) {
                     src={b.thumbnail}
                     alt=""
                     loading="lazy"
-                    className="h-11 w-11 rounded-lg object-cover"
+                    className="h-11 w-11 shrink-0 rounded-lg object-cover"
                   />
                 ) : (
-                  <div className="h-11 w-11 rounded-lg bg-midnight-100" />
+                  <div className="h-11 w-11 shrink-0 rounded-lg bg-midnight-100" />
                 )}
 
                 <div className="min-w-0 flex-1">
@@ -454,7 +454,7 @@ function Dashboard({ onOrders }) {
                   </p>
                 </div>
 
-                <p className="shrink-0 text-xs font-bold text-midnight-900">
+                <p className="shrink-0 rounded-full border border-gold-200 bg-gold-50 px-2.5 py-1 text-xs font-bold text-midnight-900">
                   {naira(b.revenue)}
                 </p>
               </div>
