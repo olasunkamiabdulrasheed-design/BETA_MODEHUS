@@ -141,7 +141,7 @@ body {
 }
 
 .adm-empty {
-  @apply rounded-2xl border border-dashed border-midnight-200 bg-white p-10 text-center shadow-soft;
+  @apply rounded-2xl border border-dashed border-midnight-300 bg-white p-10 text-center shadow-soft;
 }
 
 .adm-skeleton {
