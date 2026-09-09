@@ -1470,13 +1470,13 @@ function ProductEditor({ product, onClose, onSaved }) {
   return (
     <div className="mt-5 overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-lift">
       {/* EDITOR HEADER */}
-      <div className="flex items-center justify-between border-b border-midnight-100 bg-midnight-950 p-5">
-        <div>
+      <div className="flex min-w-0 items-center justify-between gap-3 border-b border-midnight-100 bg-midnight-950 p-4 sm:p-5">
+        <div className="min-w-0">
           <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-gold-500">
             Catalogue
           </p>
 
-          <h2 className="font-display mt-1 text-xl font-bold text-white">
+          <h2 className="font-display mt-1 truncate text-xl font-bold text-white">
             {isNew ? "Add product" : `Edit — ${product.name}`}
           </h2>
         </div>
@@ -1718,9 +1718,9 @@ function ProductEditor({ product, onClose, onSaved }) {
                       key={v.id}
                       className="rounded-xl border border-midnight-100 p-3"
                     >
-                      <div className="flex items-center justify-between gap-3">
-                        <div>
-                          <p className="text-sm font-semibold text-midnight-900">
+                      <div className="flex min-w-0 flex-wrap items-center justify-between gap-3">
+                        <div className="min-w-0">
+                          <p className="truncate text-sm font-semibold text-midnight-900">
                             {n(v.size)}
                             {v.color ? ` · ${v.color}` : ""}
                           </p>
