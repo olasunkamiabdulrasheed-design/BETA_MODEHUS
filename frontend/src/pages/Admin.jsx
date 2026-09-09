@@ -790,7 +790,7 @@ function OrdersTab() {
               </button>
 
               {expanded === o.number && detail && (
-                <div className="border-t border-midnight-100 bg-[#fcfbf8] p-5">
+                <div className="border-t border-midnight-100 bg-midnight-50/40 p-4 sm:p-5">
                   <div className="grid gap-6 lg:grid-cols-2">
                     {/* ITEMS */}
                     <div>
@@ -830,7 +830,7 @@ function OrdersTab() {
                             className="flex justify-between gap-5 p-3 text-sm"
                           >
                             <dt className="text-midnight-500">{k}</dt>
-                            <dd className="max-w-[65%] text-right font-medium text-midnight-900">
+                            <dd className="max-w-[55%] text-right font-medium text-midnight-900 sm:max-w-[65%]">
                               {v}
                             </dd>
                           </div>
