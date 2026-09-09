@@ -1846,16 +1846,16 @@ function ReviewsTab() {
   return (
     <div>
       {/* REVIEW FILTERS */}
-      <div className="rounded-2xl border border-midnight-100 bg-white p-4 shadow-sm">
-        <div className="flex gap-2 overflow-x-auto">
+      <div className="adm-toolbar !p-4 sm:!p-5">
+        <div className="no-scrollbar flex gap-2 overflow-x-auto">
           {["pending", "approved", "rejected", ""].map((f) => (
             <button
               key={f || "all"}
               onClick={() => setFilter(f)}
-              className={`shrink-0 rounded-full border px-4 py-2 text-xs font-semibold ${
+              className={`shrink-0 rounded-full border px-4 py-2 text-xs font-semibold transition ${
                 filter === f
-                  ? "border-midnight-950 bg-midnight-950 text-gold-400"
-                  : "border-midnight-100 bg-midnight-50 text-midnight-600"
+                  ? "border-midnight-950 bg-midnight-950 text-gold-400 shadow-soft"
+                  : "border-midnight-100 bg-midnight-50 text-midnight-600 hover:border-gold-300"
               }`}
             >
               {f
@@ -1886,7 +1886,7 @@ function ReviewsTab() {
           reviews.map((r) => (
             <div
               key={r.id}
-              className="rounded-2xl border border-midnight-100 bg-white p-5 shadow-sm"
+              className="adm-card p-5 sm:p-6"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
@@ -1900,7 +1900,7 @@ function ReviewsTab() {
                 </div>
 
                 <span
-                  className={`rounded-full border px-3 py-1 text-[9px] font-bold uppercase tracking-wider ${
+                  className={`adm-badge ${
                     r.status === "approved"
                       ? "border-emerald-200 bg-emerald-50 text-emerald-700"
                       : r.status === "rejected"
@@ -1919,7 +1919,7 @@ function ReviewsTab() {
                 </span>
 
                 {r.verified_purchase && (
-                  <span className="rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[8px] font-bold uppercase tracking-wider text-emerald-700">
+                  <span className="adm-badge border-emerald-200 bg-emerald-50 text-emerald-700">
                     Verified purchase
                   </span>
                 )}
