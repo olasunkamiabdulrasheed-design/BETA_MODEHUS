@@ -2026,8 +2026,8 @@ function SettingsTab() {
 
   return (
     <div className="space-y-5">
-      <section className="max-w-2xl overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-sm">
-        <div className="bg-midnight-950 p-6">
+      <section className="max-w-2xl overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-soft">
+        <div className="bg-midnight-950 p-6 sm:p-7">
           <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-gold-500">
             Configuration
           </p>
@@ -2130,7 +2130,7 @@ function SettingsTab() {
         </div>
       </section>
 
-      <section className="max-w-2xl rounded-2xl border border-midnight-100 bg-white p-5 shadow-sm sm:p-6">
+      <section className="max-w-2xl rounded-2xl border border-midnight-100 bg-white p-5 shadow-soft sm:p-6">
         <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-gold-600">
           Advanced management
         </p>
