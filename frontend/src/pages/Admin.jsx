@@ -268,64 +268,94 @@ function Dashboard({ onOrders }) {
       label: "Revenue",
       value: naira(stats.revenue.total),
       hint: "Confirmed paid revenue",
-      accent: "bg-gold-500",
+      dot: "bg-gold-500",
+      grad: "from-gold-300 to-gold-600",
     },
     {
       label: "Paid today",
       value: naira(stats.revenue.today),
       hint: "Confirmed today",
-      accent: "bg-emerald-500",
+      dot: "bg-emerald-500",
+      grad: "from-emerald-400 to-emerald-600",
     },
     {
       label: "Awaiting fulfilment",
       value: String(stats.pending_fulfillment),
       hint: "Paid orders to dispatch",
-      accent: "bg-sky-500",
+      dot: "bg-sky-500",
+      grad: "from-sky-400 to-sky-600",
     },
     {
       label: "New customers",
       value: String(stats.new_customers_30d),
       hint: "Accounts in the last 30 days",
-      accent: "bg-purple-500",
+      dot: "bg-purple-500",
+      grad: "from-purple-400 to-purple-600",
     },
     {
       label: "All orders",
       value: String(totalOrders),
       hint: "Every order placed",
-      accent: "bg-midnight-500",
+      dot: "bg-midnight-500",
+      grad: "from-midnight-400 to-midnight-700",
     },
     {
       label: "Paid orders",
       value: String(stats.revenue.paid_orders),
       hint: "Successfully paid orders",
-      accent: "bg-rose-500",
+      dot: "bg-rose-500",
+      grad: "from-rose-400 to-rose-600",
     },
   ];
+
+  const [hero, ...rest] = cards;
 
   return (
     <div className="space-y-6">
       {/* METRICS */}
-      <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
-        {cards.map((card) => (
-          <div
-            key={card.label}
-            className="overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lift"
-          >
-            <div className={`h-1 ${card.accent}`} />
-
-            <div className="p-4 sm:p-5">
-              <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-midnight-500 sm:text-[10px]">
-                {card.label}
-              </p>
-
-              <p className="mt-2 truncate font-display text-xl font-bold text-midnight-950 sm:text-2xl">
-                {card.value}
-              </p>
-
-              <p className="mt-1 hidden text-xs text-midnight-500 sm:block">
-                {card.hint}
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
+        {/* FEATURED HERO METRIC */}
+        <div className="relative overflow-hidden rounded-2xl bg-midnight-950 p-5 text-white shadow-lift sm:col-span-2 sm:p-6">
+          <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-gold-500/20 blur-2xl" />
+          <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-gold-300 to-gold-600" />
+          <div className="relative">
+            <div className="flex items-center gap-2">
+              <span className={`h-2 w-2 rounded-full ${hero.dot}`} />
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-gold-400">
+                {hero.label}
               </p>
             </div>
+
+            <p className="grad-gold-text mt-3 font-display text-2xl font-bold leading-none sm:text-4xl">
+              {hero.value}
+            </p>
+
+            <p className="mt-2 text-xs text-midnight-300">{hero.hint}</p>
+          </div>
+        </div>
+
+        {/* REGULAR METRICS */}
+        {rest.map((card) => (
+          <div
+            key={card.label}
+            className="adm-card group relative overflow-hidden p-5 sm:p-6"
+          >
+            <div
+              className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${card.grad}`}
+            />
+
+            <div className="flex items-center gap-2">
+              <span className={`h-2 w-2 rounded-full ${card.dot}`} />
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-midnight-500">
+                {card.label}
+              </p>
+            </div>
+
+            <p className="mt-3 font-display text-2xl font-bold text-midnight-950 sm:text-3xl">
+              {card.value}
+            </p>
+
+            <p className="mt-1.5 text-xs text-midnight-500">{card.hint}</p>
           </div>
         ))}
       </div>
