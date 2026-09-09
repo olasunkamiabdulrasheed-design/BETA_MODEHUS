@@ -43,7 +43,7 @@ export default function Admin() {
 
   if (authLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#f7f5f0]">
+      <div className="flex min-h-screen items-center justify-center bg-[#f6f2e8]">
         <div className="text-sm text-midnight-600">Loading admin panel...</div>
       </div>
     );
@@ -51,7 +51,7 @@ export default function Admin() {
 
   if (!user?.is_staff) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-[#f7f5f0] px-5">
+      <div className="flex min-h-screen items-center justify-center bg-[#f6f2e8] px-5">
         <div className="w-full max-w-md rounded-3xl border border-midnight-100 bg-white p-10 text-center shadow-lift">
           <img
             src="/logo.png"
@@ -76,10 +76,11 @@ export default function Admin() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f7f5f0] text-midnight-950">
+    <div className="min-h-screen bg-[#f6f2e8] text-midnight-950">
       {/* HEADER */}
       <header className="sticky top-0 z-50 border-b border-white/10 bg-midnight-950/95 shadow-lg backdrop-blur-xl">
-        <div className="container-bm flex min-h-[72px] items-center justify-between gap-4">
+        <div className="h-0.5 bg-gradient-to-r from-gold-500 via-gold-300 to-gold-500" />
+        <div className="container-bm flex min-h-[64px] items-center justify-between gap-3 sm:min-h-[72px] sm:gap-4">
           <div className="flex min-w-0 items-center gap-3">
             <img
               src="/logo.png"
@@ -124,35 +125,35 @@ export default function Admin() {
       </header>
 
       {/* LAYOUT */}
-      <div className="container-bm py-6 lg:py-8">
-        <div className="grid gap-6 lg:grid-cols-[230px_minmax(0,1fr)]">
+      <div className="container-bm py-5 lg:py-8">
+        <div className="grid gap-4 lg:grid-cols-[230px_minmax(0,1fr)] lg:gap-6">
           {/* SIDEBAR */}
           <aside className="lg:sticky lg:top-24 lg:self-start">
             <div className="overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-lift">
-              <div className="bg-midnight-950 p-5">
+              <div className="bg-midnight-950 p-4 sm:p-5">
                 <div className="flex items-center gap-3">
                   <img
                     src="/logo.png"
                     alt=""
-                    className="h-10 w-10 rounded-xl bg-white/10 object-contain p-1"
+                    className="h-10 w-10 rounded-xl bg-white/10 object-contain p-1 ring-1 ring-gold-500/20"
                   />
 
                   <div className="min-w-0">
                     <p className="font-display text-sm font-bold text-white">
                       BETA_MODEHUS
                     </p>
-                    <p className="text-[10px] uppercase tracking-wider text-midnight-400">
+                    <p className="text-[10px] uppercase tracking-wider text-midnight-300">
                       Owner panel
                     </p>
                   </div>
                 </div>
 
-                <div className="mt-4 truncate rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] text-midnight-300">
+                <div className="mt-3 truncate rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-[10px] text-midnight-300">
                   {user.email}
                 </div>
               </div>
 
-              <nav className="admin-scroll flex gap-2 overflow-x-auto p-3 lg:flex-col">
+              <nav className="admin-scroll no-scrollbar flex gap-1.5 overflow-x-auto p-2.5 lg:flex-col lg:gap-1">
                 {NAV.map(([key, label]) => {
                   const active = tab === key;
 
@@ -182,13 +183,13 @@ export default function Admin() {
 
           {/* CONTENT */}
           <main className="min-w-0">
-            <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <div className="mb-5 flex flex-wrap items-end justify-between gap-3 sm:mb-6">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-gold-600">
                   BETA_MODEHUS
                 </p>
 
-                <h1 className="font-display mt-1 text-3xl font-bold text-midnight-950">
+                <h1 className="font-display mt-1 text-2xl font-bold text-midnight-950 sm:text-3xl">
                   {NAV.find(([k]) => k === tab)?.[1]}
                 </h1>
 
