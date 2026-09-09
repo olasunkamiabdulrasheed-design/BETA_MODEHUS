@@ -316,7 +316,7 @@ function Dashboard({ onOrders }) {
   const [hero, ...rest] = cards;
 
   return (
-    <div className="space-y-6">
+    <div className="adm-fade-up space-y-6">
       {/* METRICS */}
       <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
         {/* FEATURED HERO METRIC */}
@@ -674,7 +674,7 @@ function OrdersTab() {
   ];
 
   return (
-    <div>
+    <div className="adm-fade-up">
       {/* FILTER BAR */}
       <div className="adm-toolbar !p-4 sm:!p-5">
         <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
@@ -982,7 +982,7 @@ function ProductsTab() {
   };
 
   return (
-    <div>
+    <div className="adm-fade-up">
       {/* PRODUCT TOOLBAR */}
       <div className="adm-toolbar !p-4 sm:!p-5">
         <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
@@ -1862,7 +1862,7 @@ function ReviewsTab() {
   };
 
   return (
-    <div>
+    <div className="adm-fade-up">
       {/* REVIEW FILTERS */}
       <div className="adm-toolbar !p-4 sm:!p-5">
         <div className="no-scrollbar flex gap-2 overflow-x-auto">
@@ -2047,7 +2047,7 @@ function SettingsTab() {
   };
 
   return (
-    <div className="space-y-5">
+    <div className="adm-fade-up space-y-5">
       <section className="max-w-2xl overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-soft">
         <div className="bg-midnight-950 p-6 sm:p-7">
           <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-gold-500">
