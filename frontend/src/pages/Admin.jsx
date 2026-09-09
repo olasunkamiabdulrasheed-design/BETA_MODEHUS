@@ -372,13 +372,13 @@ function Dashboard({ onOrders }) {
           </h2>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 p-4 sm:grid-cols-4 sm:p-6">
+        <div className="flex snap-x snap-mandatory gap-3 overflow-x-auto no-scrollbar p-4 pb-3 sm:grid sm:snap-none sm:grid-cols-4 sm:overflow-visible sm:p-6">
           {["pending_payment", "processing", "shipped", "delivered"].map(
             (key) => (
               <button
                 key={key}
                 onClick={onOrders}
-                className="group rounded-xl border border-midnight-100 p-4 text-left transition hover:border-gold-300 hover:bg-gold-50/40"
+                className="group w-40 shrink-0 snap-start rounded-xl border border-midnight-100 bg-white p-4 text-left shadow-soft transition hover:border-gold-300 hover:bg-gold-50/40 sm:w-auto"
               >
                 <div className="flex items-center justify-between">
                   <span className="h-2 w-2 rounded-full bg-gold-500" />
