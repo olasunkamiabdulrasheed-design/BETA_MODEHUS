@@ -482,25 +482,30 @@ function Dashboard({ onOrders }) {
             {stats.low_stock.map((p) => (
               <div
                 key={p.id}
-                className="flex items-center gap-3 rounded-xl border border-midnight-100 p-3"
+                className="flex items-center gap-3 rounded-xl border border-midnight-100 bg-white p-3 shadow-soft"
               >
                 {p.thumbnail ? (
                   <img
                     src={p.thumbnail}
                     alt=""
                     loading="lazy"
-                    className="h-11 w-11 rounded-lg object-cover"
+                    className="h-11 w-11 shrink-0 rounded-lg object-cover"
                   />
                 ) : (
-                  <div className="h-11 w-11 rounded-lg bg-midnight-100" />
+                  <div className="h-11 w-11 shrink-0 rounded-lg bg-midnight-100" />
                 )}
 
-                <p className="min-w-0 flex-1 truncate text-sm font-semibold text-midnight-900">
-                  {p.name}
-                </p>
+                <div className="min-w-0 flex-1">
+                  <p className="truncate text-sm font-semibold text-midnight-900">
+                    {p.name}
+                  </p>
+                  <p className="mt-0.5 text-[11px] text-midnight-500">
+                    Inventory
+                  </p>
+                </div>
 
                 <span
-                  className={`rounded-full border px-2.5 py-1 text-[10px] font-bold ${
+                  className={`adm-badge ${
                     p.remaining_stock === 0
                       ? "border-red-200 bg-red-50 text-red-700"
                       : "border-amber-200 bg-amber-50 text-amber-700"
@@ -522,10 +527,13 @@ function Dashboard({ onOrders }) {
                 <Link
                   key={o.number}
                   to={`/orders/${o.number}`}
-                  className="flex items-center justify-between gap-3 rounded-lg px-2 py-2 text-sm transition hover:bg-gold-50"
+                  className="flex items-center justify-between gap-3 rounded-xl border border-midnight-100 bg-white px-3 py-2.5 text-sm shadow-soft transition hover:border-gold-300 hover:bg-gold-50/40"
                 >
-                  <span className="truncate text-midnight-800">
-                    #{o.number} · {o.full_name || "Customer"}
+                  <span className="flex min-w-0 items-center gap-2 text-midnight-800">
+                    <span className="rounded-md bg-midnight-950 px-1.5 py-0.5 font-display text-[10px] font-bold text-gold-400">
+                      #{o.number}
+                    </span>
+                    <span className="truncate">{o.full_name || "Customer"}</span>
                   </span>
 
                   <span className="shrink-0 font-semibold text-midnight-950">
