@@ -252,8 +252,13 @@ function Dashboard({ onOrders }) {
 
   if (!stats) {
     return (
-      <div className="rounded-2xl border border-midnight-100 bg-white p-8 text-sm text-midnight-600 shadow-sm">
-        Loading store statistics...
+      <div className="space-y-4" aria-busy="true">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="adm-skeleton h-32 rounded-2xl" />
+          ))}
+        </div>
+        <div className="adm-skeleton h-40 rounded-2xl" />
       </div>
     );
   }
@@ -717,12 +722,16 @@ function OrdersTab() {
       {/* ORDERS */}
       <div className="mt-5 space-y-3">
         {loading ? (
-          <div className="rounded-2xl bg-white p-8 text-center text-sm text-midnight-600">
-            Loading orders...
+          <div className="adm-empty">
+            <div className="mx-auto h-10 w-10 adm-skeleton rounded-xl" />
+            <p className="mt-4 text-sm text-midnight-600">Loading orders...</p>
           </div>
         ) : orders.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-midnight-200 bg-white p-10 text-center">
-            <p className="font-semibold text-midnight-900">
+          <div className="adm-empty">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-50 font-display text-lg font-bold text-gold-600">
+              !
+            </div>
+            <p className="mt-4 font-semibold text-midnight-900">
               No orders found
             </p>
 
@@ -1038,13 +1047,22 @@ function ProductsTab() {
       {/* TABLE */}
       <div className="mt-5 overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-sm">
         {loading ? (
-          <p className="p-8 text-center text-sm text-midnight-600">
-            Loading products...
-          </p>
+          <div className="adm-empty">
+            <div className="mx-auto h-10 w-10 adm-skeleton rounded-xl" />
+            <p className="mt-4 text-sm text-midnight-600">Loading products...</p>
+          </div>
         ) : products.length === 0 ? (
-          <p className="p-8 text-center text-sm text-midnight-600">
-            No products match.
-          </p>
+          <div className="adm-empty">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-50 font-display text-lg font-bold text-gold-600">
+              !
+            </div>
+            <p className="mt-4 font-semibold text-midnight-900">
+              No products match
+            </p>
+            <p className="mt-1 text-sm text-midnight-500">
+              Try a different search or filter.
+            </p>
+          </div>
         ) : (
           <>
             {/* MOBILE CARDS */}
@@ -1869,12 +1887,16 @@ function ReviewsTab() {
       {/* REVIEW LIST */}
       <div className="mt-5 space-y-3">
         {loading ? (
-          <div className="rounded-2xl bg-white p-8 text-center text-sm text-midnight-600">
-            Loading reviews...
+          <div className="adm-empty">
+            <div className="mx-auto h-10 w-10 adm-skeleton rounded-xl" />
+            <p className="mt-4 text-sm text-midnight-600">Loading reviews...</p>
           </div>
         ) : reviews.length === 0 ? (
-          <div className="rounded-2xl border border-dashed border-midnight-200 bg-white p-10 text-center">
-            <p className="font-semibold text-midnight-900">
+          <div className="adm-empty">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-2xl bg-gold-50 font-display text-lg font-bold text-gold-600">
+              ✦
+            </div>
+            <p className="mt-4 font-semibold text-midnight-900">
               No reviews here
             </p>
 
