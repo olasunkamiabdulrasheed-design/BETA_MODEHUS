@@ -975,8 +975,8 @@ function ProductsTab() {
   return (
     <div>
       {/* PRODUCT TOOLBAR */}
-      <div className="rounded-2xl border border-midnight-100 bg-white p-4 shadow-sm">
-        <div className="flex gap-2 overflow-x-auto pb-1">
+      <div className="adm-toolbar !p-4 sm:!p-5">
+        <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
           {PRODUCT_FLAGS.map(([key, label]) => (
             <button
               key={key || "all"}
@@ -1046,7 +1046,84 @@ function ProductsTab() {
             No products match.
           </p>
         ) : (
-          <div className="overflow-x-auto">
+          <>
+            {/* MOBILE CARDS */}
+            <div className="divide-y divide-midnight-100 md:hidden">
+              {products.map((p) => (
+                <div key={p.id} className="flex items-center gap-3 p-4">
+                  {p.image ? (
+                    <img
+                      src={p.image}
+                      alt={p.name}
+                      className="h-12 w-12 shrink-0 rounded-xl object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-midnight-100 font-bold text-midnight-400">
+                      {p.name.slice(0, 1)}
+                    </div>
+                  )}
+
+                  <div className="min-w-0 flex-1">
+                    <p className="truncate text-sm font-semibold text-midnight-950">
+                      {p.name}
+                    </p>
+
+                    <p className="mt-0.5 text-xs text-midnight-500">
+                      {p.category_name} · {naira(p.min_price || p.price)}
+                    </p>
+
+                    <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                      <span
+                        className={`adm-badge ${
+                          p.total_stock === 0
+                            ? "border-red-200 bg-red-50 text-red-700"
+                            : p.total_stock <= 5
+                            ? "border-amber-200 bg-amber-50 text-amber-700"
+                            : "border-emerald-200 bg-emerald-50 text-emerald-700"
+                        }`}
+                      >
+                        {p.total_stock} left
+                      </span>
+
+                      {p.is_featured && (
+                        <span className="adm-badge border-gold-200 bg-gold-100 text-gold-700">
+                          Featured
+                        </span>
+                      )}
+
+                      <span className="text-xs font-medium text-midnight-600">
+                        {p.status}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex shrink-0 flex-col items-end gap-2">
+                    <button
+                      onClick={() => setEditing(p)}
+                      className="btn-outline !px-3 !py-1.5 text-xs"
+                    >
+                      Edit
+                    </button>
+
+                    <button
+                      onClick={() =>
+                        api
+                          .patch(`/admin/products/${p.id}/`, {
+                            is_active: !p.is_active,
+                          })
+                          .then(afterSave)
+                      }
+                      className="text-[11px] font-semibold text-midnight-600 hover:underline"
+                    >
+                      {p.is_active ? "Disable" : "Enable"}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* DESKTOP TABLE */}
+            <div className="hidden overflow-x-auto md:block">
             <table className="w-full min-w-[780px] text-left text-sm">
               <thead>
                 <tr className="border-b border-midnight-100 bg-[#fcfbf8] text-[9px] uppercase tracking-[0.15em] text-midnight-500">
@@ -1176,7 +1253,8 @@ function ProductsTab() {
                 ))}
               </tbody>
             </table>
-          </div>
+            </div>
+          </>
         )}
       </div>
     </div>
