@@ -78,7 +78,7 @@ export default function ContactSection() {
         </div>
 
         {/* FORM */}
-        <div className="card-bm p-6 sm:p-8">
+        <div id="contact-form" className="card-bm scroll-mt-24 p-6 sm:p-8">
           {sent ? (
             <div className="flex h-full flex-col items-center justify-center py-10 text-center">
               <span className="flex h-14 w-14 items-center justify-center rounded-full bg-gold-50 text-2xl font-bold text-gold-600">
