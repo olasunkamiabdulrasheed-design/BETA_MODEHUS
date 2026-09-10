@@ -1,0 +1,15 @@
+New contact form submission
+
+From: {{ message.name }}
+Email: {{ message.email }}
+Phone: {{ message.phone|default:"Not provided" }}
+Subject: {{ message.subject }}
+
+Message:
+{{ message.message }}
+
+Received {{ message.created_at|date:"D, d M Y H:i" }}.
+
+---
+Replied in the order panel or by replying to this message.
+BETA_MODEHUS
