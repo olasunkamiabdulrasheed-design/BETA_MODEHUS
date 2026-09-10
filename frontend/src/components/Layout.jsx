@@ -42,6 +42,9 @@ export default function Layout() {
         <NavLink to="/about" className={navLink}>
           About
         </NavLink>
+        <NavLink to="/contact" className={navLink}>
+          Contact
+        </NavLink>
         {!user?.is_staff && (
           <>
             <NavLink to="/products" className={navLink}>
@@ -129,6 +132,9 @@ export default function Layout() {
                 </NavLink>
                 <NavLink to="/about" onClick={go} className="block px-4 py-3 text-sm font-medium text-white hover:text-gold-400">
                   About us
+                </NavLink>
+                <NavLink to="/contact" onClick={go} className="block px-4 py-3 text-sm font-medium text-white hover:text-gold-400">
+                  Contact
                 </NavLink>
                 {user && !user.is_staff && (
                   <>
