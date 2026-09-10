@@ -70,7 +70,7 @@ export default function About() {
         <div className="absolute left-1/2 top-1/2 hidden h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold-500/10 lg:block" />
         <div className="absolute left-1/2 top-1/2 hidden h-[390px] w-[390px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-gold-500/10 lg:block" />
 
-        <div className="container-bm relative flex min-h-[610px] items-center justify-center py-24">
+        <div className="container-bm relative flex min-h-[700px] items-center justify-center py-24">
           <div className="max-w-4xl text-center">
             <div className="mb-7 inline-flex items-center gap-3 rounded-full border border-gold-500/30 bg-white/[0.04] px-5 py-2 text-[10px] font-semibold uppercase tracking-[0.35em] text-gold-400 backdrop-blur-sm">
               <span className="h-px w-5 bg-gold-500" />
@@ -78,7 +78,7 @@ export default function About() {
               <span className="h-px w-5 bg-gold-500" />
             </div>
 
-            <h1 className="font-display text-5xl font-bold tracking-tight sm:text-6xl lg:text-8xl">
+            <h1 className="font-display text-3xl font-bold tracking-tight sm:text-6xl lg:text-8xl">
               BETA
               <span className="text-gold-500">_</span>
               MODEHUS
