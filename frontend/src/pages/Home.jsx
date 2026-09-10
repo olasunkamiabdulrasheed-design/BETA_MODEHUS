@@ -112,7 +112,7 @@ export default function Home() {
               </Link>
               <a
                 href="https://wa.me/2347012124050"
-                className="btn-outline !border-white/40 !px-8 !py-3.5 !text-base !text-white hover:!border-gold-500 hover:!text-gold-400"
+                className="btn-outline !border-white/40 !px-8 !py-3.5 !text-base !text-black hover:!border-gold-500 hover:!text-gold-400"
               >
                 Order on WhatsApp
               </a>
@@ -340,7 +340,7 @@ export default function Home() {
         <div className="container-bm relative grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           <div className="relative order-2 lg:order-1">
             <img
-              src="/admin-owner.png"
+              src="/images.png"
               alt=""
               aria-hidden="true"
               className="aspect-[4/5] w-full rounded-3xl object-cover object-top shadow-lift lg:h-[560px]"
