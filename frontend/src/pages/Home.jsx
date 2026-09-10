@@ -83,10 +83,9 @@ export default function Home() {
             src="/hero-main.png"
             alt=""
             aria-hidden="true"
-            className="h-full w-full object-cover object-top opacity-40 sm:opacity-70"
+            className="h-full w-full object-cover object-top opacity-60"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-midnight-950 via-midnight-950/85 to-midnight-950/30" />
-          <div className="absolute inset-0 bg-gradient-to-t from-midnight-950 via-transparent to-midnight-950/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-midnight-950 via-midnight-950/80 to-transparent" />
         </div>
 
         <div className="container-bm relative py-24 sm:py-32 lg:py-40">
@@ -130,16 +129,6 @@ export default function Home() {
                   </div>
                 </div>
               ))}
-            </div>
-          </div>
-        </div>
-
-        <div className="absolute bottom-8 right-8 hidden rounded-2xl border border-white/15 bg-midnight-900/70 p-5 backdrop-blur-sm lg:block">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="" className="h-12 w-12 rounded-xl object-contain" />
-            <div>
-              <div className="font-display text-lg font-bold text-gold-400">4.9 / 5</div>
-              <div className="text-xs text-midnight-200">120+ happy customers</div>
             </div>
           </div>
         </div>
@@ -237,9 +226,9 @@ export default function Home() {
         <div className="container-bm grid items-center gap-10 lg:grid-cols-2 lg:gap-16">
           <div className="relative">
             <img
-              src="/hero-native.png"
+              src="/admin-owner.png"
               alt="BETA_MODEHUS craftsmanship"
-              className="w-full rounded-2xl object-cover shadow-lift"
+              className="aspect-[4/5] w-full rounded-2xl object-cover object-top shadow-lift"
             />
             <div className="absolute -bottom-6 -right-4 rounded-2xl border border-midnight-100 bg-white p-5 shadow-lift sm:-right-6">
               <div className="font-display text-3xl font-bold text-midnight-900">Est.</div>
@@ -344,31 +333,71 @@ export default function Home() {
       <ContactSection />
 
       {/* ---------- FINAL CTA ---------- */}
-      <section className="relative overflow-hidden bg-gold-500 py-16 text-midnight-950 sm:py-20">
-        <img
-          src="/logo.png"
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute left-1/2 top-1/2 w-[min(70vw,480px)] -translate-x-1/2 -translate-y-1/2 opacity-15"
-        />
-        <div className="container-bm relative text-center">
-          <h2 className="font-display mx-auto max-w-2xl text-3xl font-bold sm:text-5xl">
-            Ready to own a piece?
-          </h2>
-          <p className="mx-auto mt-4 max-w-xl text-midnight-900">
-            Browse the collection or talk to us directly on WhatsApp for bespoke
-            tailoring and bulk orders.
-          </p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <Link to="/products" className="btn-dark !px-8 !py-3.5 !text-base">
-              Shop now
-            </Link>
-            <a
-              href="https://wa.me/2347012124050"
-              className="btn-outline !border-midnight-900/40 !px-8 !py-3.5 !text-base !text-midnight-950 hover:!border-midnight-950"
-            >
-              WhatsApp us
-            </a>
+      <section className="relative overflow-hidden bg-midnight-950 py-16 text-white sm:py-24">
+        <div className="absolute -left-24 top-0 h-80 w-80 rounded-full bg-gold-500/10 blur-3xl" />
+        <div className="absolute -right-24 bottom-0 h-96 w-96 rounded-full bg-gold-500/10 blur-3xl" />
+
+        <div className="container-bm relative grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
+          <div className="relative order-2 lg:order-1">
+            <img
+              src="/admin-owner.png"
+              alt=""
+              aria-hidden="true"
+              className="aspect-[4/5] w-full rounded-3xl object-cover object-top shadow-lift lg:h-[560px]"
+            />
+            <div className="absolute -bottom-6 -left-4 rounded-2xl bg-gold-500 px-5 py-4 text-midnight-950 shadow-lift sm:-left-6">
+              <div className="font-display text-2xl font-bold leading-none">Est.</div>
+              <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider">
+                For better elegance
+                <br />
+                & luxury
+              </div>
+            </div>
+          </div>
+
+          <div className="order-1 lg:order-2">
+            <p className="eyebrow !text-gold-400">Start your order</p>
+            <h2 className="font-display mt-3 text-3xl font-bold leading-tight sm:text-5xl">
+              Ready to own a
+              <span className="bg-gradient-to-r from-gold-300 via-gold-500 to-gold-300 bg-clip-text text-transparent">
+                {" "}
+                piece?
+              </span>
+            </h2>
+            <p className="mt-5 max-w-xl leading-relaxed text-midnight-200">
+              Whether it is a single statement agbada or a full bespoke order,
+              we take your fit, finish and delivery seriously — nationwide.
+            </p>
+
+            <ul className="mt-8 space-y-4">
+              {[
+                ["Bespoke tailoring", "Custom cuts, sizes and fabrics made to your specs."],
+                ["Bulk & corporate orders", "Special pricing for events, groomsmen and teams."],
+                ["Nationwide delivery", "Tracked doorstep delivery across all 36 states."],
+              ].map(([title, desc]) => (
+                <li key={title} className="flex gap-4">
+                  <span className="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-gold-500 font-display text-sm font-bold text-midnight-950">
+                    ✓
+                  </span>
+                  <div>
+                    <div className="font-semibold text-white">{title}</div>
+                    <div className="mt-0.5 text-sm leading-relaxed text-midnight-300">{desc}</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+
+            <div className="mt-9 flex flex-wrap gap-3">
+              <Link to="/products" className="btn-gold !px-8 !py-3.5 !text-base">
+                Shop now
+              </Link>
+              <a
+                href="https://wa.me/2347012124050"
+                className="btn-outline !border-white/30 !px-8 !py-3.5 !text-base !text-white hover:!border-gold-500 hover:!text-gold-400"
+              >
+                WhatsApp us
+              </a>
+            </div>
           </div>
         </div>
       </section>

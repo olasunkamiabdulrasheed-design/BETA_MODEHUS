@@ -118,44 +118,28 @@ export default function About() {
       {/* STORY */}
       <section id="our-story" className="relative py-20 sm:py-28">
         <div className="container-bm">
-          <div className="grid items-center gap-14 lg:grid-cols-[0.85fr_1.15fr] lg:gap-24">
-            {/* Brand Card */}
+          <div className="grid items-center gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:gap-20">
+            {/* Brand Photo */}
             <div className="relative">
               <div className="absolute -left-5 -top-5 h-24 w-24 border-l border-t border-gold-500/50" />
               <div className="absolute -bottom-5 -right-5 h-24 w-24 border-b border-r border-gold-500/50" />
 
-              <div className="relative overflow-hidden rounded-2xl bg-midnight-950 px-8 py-16 text-center shadow-2xl sm:px-12">
-                <div className="absolute inset-0 opacity-[0.04]">
-                  <div
-                    className="h-full w-full"
-                    style={{
-                      backgroundImage:
-                        "radial-gradient(circle at 30% 30%, white 1px, transparent 1px)",
-                      backgroundSize: "24px 24px",
-                    }}
-                  />
-                </div>
-
-                <div className="relative">
-                  <div className="mx-auto flex h-36 w-36 items-center justify-center rounded-full border border-gold-500/30 bg-white p-5 shadow-[0_0_60px_rgba(212,175,55,0.08)]">
-                    <img
-                      src="/logo.png"
-                      alt="BETA_MODEHUS"
-                      className="h-full w-full object-contain"
-                    />
-                  </div>
-
-                  <p className="mt-8 text-[10px] font-semibold uppercase tracking-[0.35em] text-gold-400">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-lift">
+                <img
+                  src="/admin-owner.png"
+                  alt="BETA_MODEHUS — Better Elegance and Luxury"
+                  className="h-full w-full object-cover object-top"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-midnight-950 via-midnight-950/10 to-transparent" />
+                <div className="absolute bottom-0 w-full rounded-2xl bg-midnight-950/80 p-6 text-center backdrop-blur-sm">
+                  <p className="text-[10px] font-semibold uppercase tracking-[0.35em] text-gold-400">
                     BETA_MODEHUS
                   </p>
-
-                  <p className="mt-4 font-display text-2xl font-semibold text-white">
+                  <p className="mt-2 font-display text-xl font-semibold text-white sm:text-2xl">
                     For Better Elegance
                     <br />
                     <span className="text-gold-500">and Luxury</span>
                   </p>
-
-                  <div className="mx-auto mt-7 h-px w-12 bg-gold-500/70" />
                 </div>
               </div>
             </div>
