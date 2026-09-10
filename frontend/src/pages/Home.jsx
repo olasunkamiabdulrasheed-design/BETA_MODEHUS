@@ -80,7 +80,7 @@ export default function Home() {
       <section className="relative overflow-hidden bg-midnight-950 text-white">
         <div className="absolute inset-0">
           <img
-            src="/hero-fashion.png"
+            src="/hero-main.png"
             alt=""
             aria-hidden="true"
             className="h-full w-full object-cover object-top opacity-40 sm:opacity-70"
