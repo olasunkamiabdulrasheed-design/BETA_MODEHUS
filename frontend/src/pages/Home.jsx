@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { api } from "../api/client.js";
 import ProductCard from "../components/ProductCard.jsx";
+import ContactSection from "../components/ContactSection.jsx";
 
 const CATEGORY_FEEDS = [
   { key: "agbada", tag: "Grand occasion", title: "Agbada & Grand Occasion" },
@@ -338,6 +339,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ---------- CONTACT ---------- */}
+      <ContactSection />
 
       {/* ---------- FINAL CTA ---------- */}
       <section className="relative overflow-hidden bg-gold-500 py-16 text-midnight-950 sm:py-20">
