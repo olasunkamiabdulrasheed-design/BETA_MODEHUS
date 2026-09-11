@@ -1,0 +1,91 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block title %}{% if form.errors %}{% translate "Error:" %} {% endif %}Sign in | BETA_MODEHUS Vault{% endblock %}
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/login.css" %}" {% csp_nonce_attr %}>
+{% csp_nonce_attr form.media %}
+<style>
+#header{padding:1.2rem 2rem}
+#branding .vault-brand{display:flex;flex-direction:column;align-items:flex-start;gap:2px}
+#branding .vault-brand small{margin-top:2px}
+.login #content-main{max-width:440px;margin:2rem auto;background:#fff;border:1px solid #e6dfca;border-top:4px solid #d4af37;border-radius:16px;padding:2.2rem;box-shadow:0 18px 50px rgba(20,20,60,.08)}
+[data-theme="dark"] .login #content-main{background:#141a38;border-color:#2a2f56}
+.login #content-main .login-badge{display:flex;flex-direction:column;align-items:center;text-align:center;margin-bottom:1.4rem}
+.login #content-main .login-badge .login-logo{font-family:Georgia,"Times New Roman",serif;font-size:1.7rem;font-weight:700;letter-spacing:.03em;color:#161a38}
+[data-theme="dark"] .login #content-main .login-logo{color:#f6f2e8}
+.login #content-main .login-badge .login-logo span{color:#d4af37}
+.login #content-main .login-badge p{margin:.35rem 0 0;font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#8a6d12}
+.login .form-row input[type=text],.login .form-row input[type=password]{border-radius:10px;padding:10px 12px;border:1px solid #d8d2bd}
+.login .submit-row{background:none;padding-top:10px}
+.login .submit-row input[type=submit]{width:100%;padding:11px 12px;font-weight:700;letter-spacing:.04em}
+.login .password-reset-link{text-align:center;font-size:.85rem}
+.login .errornote{background:#fdf0ee;border:1px solid #e8b4ad;color:#992f23;border-radius:10px}
+.login #footer{display:none}
+</style>
+{% endblock %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div class="login-badge">
+  <div class="login-logo">BETA<span>_</span>MODEHUS</div>
+  <p>Vault Access</p>
+</div>
+{% if form.errors and not form.non_field_errors %}
+<p class="errornote">
+{% blocktranslate count counter=form.errors.items|length %}Please correct the error below.{% plural %}Please correct the errors below.{% endblocktranslate %}
+</p>
+{% endif %}
+
+{% if form.non_field_errors %}
+{% for error in form.non_field_errors %}
+<p class="errornote">
+    {{ error }}
+</p>
+{% endfor %}
+{% endif %}
+
+<div id="content-main">
+
+{% if user.is_authenticated %}
+<p class="errornote">
+{% blocktranslate trimmed %}
+    You are authenticated as {{ username }}, but are not authorized to
+    access this page. Would you like to login to a different account?
+{% endblocktranslate %}
+</p>
+{% endif %}
+
+<form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    {{ form.username.errors }}
+    {{ form.username.label_tag }} {{ form.username }}
+  </div>
+  <div class="form-row">
+    {{ form.password.errors }}
+    {{ form.password.label_tag }} {{ form.password }}
+    <input type="hidden" name="next" value="{{ next }}">
+  </div>
+  {% url 'admin_password_reset' as password_reset_url %}
+  {% if password_reset_url %}
+  <div class="password-reset-link">
+    <a href="{{ password_reset_url }}">{% translate 'Forgotten your login credentials?' %}</a>
+  </div>
+  {% endif %}
+  <div class="submit-row">
+    <input type="submit" value="{% translate 'Log in' %}">
+  </div>
+</form>
+
+</div>
+{% endblock %}
