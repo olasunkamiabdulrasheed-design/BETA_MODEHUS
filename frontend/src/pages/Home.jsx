@@ -6,8 +6,8 @@ import ContactSection from "../components/ContactSection.jsx";
 
 const CATEGORY_FEEDS = [
   { key: "agbada", tag: "Grand occasion", title: "Agbada & Grand Occasion" },
-  { key: "senator", tag: "Refined native", title: "Senator & Native Wear" },
-  { key: "ankara", tag: "Bold prints", title: "Vibrant Ankara" },
+  { key: "senator-wear", tag: "Refined native", title: "Senator & Native Wear" },
+  { key: "ankara-wear", tag: "Bold prints", title: "Vibrant Ankara" },
 ];
 
 const STATS = [

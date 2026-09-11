@@ -1266,10 +1266,10 @@ function ProductEditor({ product, onClose, onSaved }) {
   });
 
   useEffect(() => {
-    api.get("/catalog/categories/").then((r) => setCats(r.data)).catch(() => {});
-    api.get("/catalog/brands/").then((r) => setBrands(r.data)).catch(() => {});
+    api.get("/categories/").then((r) => setCats(r.data)).catch(() => {});
+    api.get("/brands/").then((r) => setBrands(r.data)).catch(() => {});
     if (!isNew && product.slug) {
-      api.get(`/catalog/products/${product.slug}/`).then((r) => {
+      api.get(`/products/${product.slug}/`).then((r) => {
         setVariants(r.data.variants || []);
         if (r.data.sku) {
           setForm((f) => ({ ...f, sku: r.data.sku }));
