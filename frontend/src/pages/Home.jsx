@@ -112,7 +112,7 @@ export default function Home() {
               </Link>
               <a
                 href="https://wa.me/2347012124050"
-                className="btn-outline !border-white/40 !px-8 !py-3.5 !text-base !text-black hover:!border-gold-500 hover:!text-gold-400"
+                className="btn-outline !border-white/40 !px-8 !py-3.5 !text-base !text-white hover:!border-gold-500 hover:!text-gold-400"
               >
                 Order on WhatsApp
               </a>
