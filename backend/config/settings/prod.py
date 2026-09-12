@@ -2,6 +2,12 @@ from .base import *  # noqa: F401,F403
 
 DEBUG = False
 
+# Fail fast if someone tries to force debug mode on with the prod settings.
+if env_bool("DJANGO_DEBUG", False):
+    raise RuntimeError(
+        "DJANGO_DEBUG must not be enabled when running with production settings."
+    )
+
 # A real secret key is mandatory in production.
 if not env("DJANGO_SECRET_KEY"):
     raise RuntimeError(
@@ -51,6 +57,10 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 X_FRAME_OPTIONS = "DENY"
 SESSION_COOKIE_HTTPONLY = True
 CSRF_COOKIE_HTTPONLY = False
+SESSION_COOKIE_SAMESITE = "Lax"
+CSRF_COOKIE_SAMESITE = "Lax"
+SECURE_REFERRER_POLICY = "same-origin"
+SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
 
 # Real email (Gmail SMTP via MAILERS)
 MAILERS = {
@@ -69,10 +79,11 @@ MAILERS = {
 
 # Media uploads go to Cloudinary; static files stay local on the server
 # (collected by `manage.py collectstatic` and served by nginx).
+# NOTE: cloudinary_storage is added to INSTALLED_APPS by base.py when the
+# URL is present - only the storage backend is selected here.
 CLOUDINARY_URL = env("CLOUDINARY_URL", "")
 
 if CLOUDINARY_URL:
-    INSTALLED_APPS += ["cloudinary_storage"]  # noqa: F405
     DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 else:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
