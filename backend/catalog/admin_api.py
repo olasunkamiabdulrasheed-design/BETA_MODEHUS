@@ -165,6 +165,17 @@ class AdminProductDetailView(RetrieveUpdateDestroyAPIView):
                                   "price": serializers.DecimalField(required=False, max_digits=10, decimal_places=2),
                                   "is_active": serializers.BooleanField(required=False)}
     ),
+    responses=inline_serializer(
+        "VariantUpdateDetail",
+        fields={
+            "id": serializers.IntegerField(),
+            "product": serializers.CharField(),
+            "label": serializers.CharField(),
+            "stock": serializers.IntegerField(),
+            "price": serializers.CharField(),
+            "is_active": serializers.BooleanField(),
+        },
+    ),
 )
 class AdminVariantPatchView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
@@ -198,7 +209,14 @@ class AdminVariantPatchView(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@extend_schema(tags=["catalog/admin"])
+@extend_schema(
+    tags=["catalog/admin"],
+    request=inline_serializer(
+        "OrderProductImage",
+        fields={"alt_text": serializers.CharField(required=False), "is_primary": serializers.BooleanField(required=False)},
+    ),
+    responses=ProductImageSerializer,
+)
 class AdminProductImagesView(APIView):
     permission_classes = [IsAdminUser]
 
