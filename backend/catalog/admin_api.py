@@ -1,4 +1,5 @@
 from django.db.models import OuterRef, Subquery, Sum
+from drf_spectacular.utils import OpenApiParameter, extend_schema, inline_serializer
 from rest_framework import serializers, status
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
@@ -68,6 +69,13 @@ class AdminProductWriteSerializer(serializers.ModelSerializer):
         return value
 
 
+@extend_schema(
+    tags=["catalog/admin"],
+    parameters=[
+        OpenApiParameter("search", description="Filter by product name"),
+        OpenApiParameter("flag", description="featured | inactive | out"),
+    ],
+)
 class AdminProductListView(ListCreateAPIView):
     permission_classes = [IsAdminUser]
     pagination_class = None
@@ -130,6 +138,7 @@ class AdminProductListView(ListCreateAPIView):
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
+@extend_schema(tags=["catalog/admin"])
 class AdminProductDetailView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
     queryset = Product.objects.all()
@@ -149,6 +158,14 @@ class AdminProductDetailView(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@extend_schema(
+    tags=["catalog/admin"],
+    request=inline_serializer(
+        "VariantPatch", fields={"stock": serializers.IntegerField(required=False),
+                                  "price": serializers.DecimalField(required=False, max_digits=10, decimal_places=2),
+                                  "is_active": serializers.BooleanField(required=False)}
+    ),
+)
 class AdminVariantPatchView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAdminUser]
     queryset = ProductVariant.objects.all()
@@ -181,6 +198,7 @@ class AdminVariantPatchView(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+@extend_schema(tags=["catalog/admin"])
 class AdminProductImagesView(APIView):
     permission_classes = [IsAdminUser]
 
