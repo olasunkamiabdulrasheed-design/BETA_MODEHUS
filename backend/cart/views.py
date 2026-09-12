@@ -1,6 +1,7 @@
-from rest_framework import status, views
+from rest_framework import serializers, status, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from drf_spectacular.utils import extend_schema, inline_serializer
 
 from .models import CartItem
 from .serializers import (
@@ -10,14 +11,21 @@ from .serializers import (
 )
 from .services import add_item, get_or_create_cart, merge_guest_items
 
+QuantitySerializer = inline_serializer(
+    name="CartQuantityUpdate",
+    fields={"quantity": serializers.IntegerField(max_value=10000)},
+)
+
 
 class CartView(views.APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(responses=CartSerializer)
     def get(self, request):
         cart = get_or_create_cart(request.user)
         return Response(CartSerializer(cart).data)
 
+    @extend_schema(request=AddToCartSerializer, responses=CartSerializer)
     def post(self, request):
         cart = get_or_create_cart(request.user)
         serializer = AddToCartSerializer(data=request.data)
@@ -32,6 +40,7 @@ class CartView(views.APIView):
 class CartItemUpdateView(views.APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(request=QuantitySerializer, responses=CartSerializer)
     def patch(self, request, pk):
         cart = get_or_create_cart(request.user)
         try:
@@ -57,6 +66,7 @@ class CartItemUpdateView(views.APIView):
 class CartItemRemoveView(views.APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(responses=CartSerializer)
     def delete(self, request, pk):
         cart = get_or_create_cart(request.user)
         deleted, _ = CartItem.objects.filter(pk=pk, cart=cart).delete()
@@ -68,17 +78,31 @@ class CartItemRemoveView(views.APIView):
 class MergeGuestCartView(views.APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(request=MergeCartSerializer, responses=CartSerializer)
     def post(self, request):
         serializer = MergeCartSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         cart = get_or_create_cart(request.user)
-        merge_guest_items(cart, serializer.validated_data["items"], validate=lambda x: True)
+        mergeable = []
+        for entry in serializer.validated_data["items"]:
+            variant = entry["variant"]
+            product = variant.product
+            still_available = (
+                product.is_active
+                and product.status == product.Status.PUBLISHED
+                and variant.is_active
+                and variant.stock > 0
+            )
+            if still_available:
+                mergeable.append(entry)
+        merge_guest_items(cart, mergeable, validate=lambda x: True)
         return Response(CartSerializer(cart).data)
 
 
 class ClearCartView(views.APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(responses=CartSerializer)
     def post(self, request):
         cart = get_or_create_cart(request.user)
         cart.clear()

@@ -67,5 +67,22 @@ class AddToCartSerializer(serializers.Serializer):
         return attrs
 
 
+class MergeItemSerializer(serializers.Serializer):
+    variant_id = serializers.IntegerField()
+    quantity = serializers.IntegerField(min_value=1, default=1)
+
+    def validate(self, attrs):
+        from catalog.models import ProductVariant
+
+        try:
+            variant = ProductVariant.objects.select_related("product").get(
+                id=attrs["variant_id"]
+            )
+        except ProductVariant.DoesNotExist:
+            raise serializers.ValidationError({"variant_id": "Variant does not exist."})
+        attrs["variant"] = variant
+        return attrs
+
+
 class MergeCartSerializer(serializers.Serializer):
-    items = serializers.ListField(child=AddToCartSerializer(), allow_empty=True)
+    items = serializers.ListField(child=MergeItemSerializer(), allow_empty=True)

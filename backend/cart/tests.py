@@ -67,6 +67,56 @@ class CartAPITests(TestCase):
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.data["item_count"], 3)
 
+    def test_merge_caps_quantity_at_stock(self):
+        res = self.client.post(
+            "/api/v1/cart/merge/",
+            {"items": [{"variant_id": self.variant.id, "quantity": 99}]},
+            format="json",
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.data["item_count"], 5)
+
+    def test_merge_skips_out_of_stock_and_inactive_items(self):
+        brand_new = Category.objects.create(name="Senator")
+        dead_stock = Product.objects.create(
+            name="Sold out", price=Decimal("15000.00"), category=brand_new
+        )
+        dead_variant = ProductVariant.objects.create(
+            product=dead_stock, size="M", color="Navy",
+            sku="SOLDOUT-NAVY-M", price=Decimal("15000.00"), stock=0,
+        )
+        rescued = Product.objects.create(
+            name="Rescued", price=Decimal("10000.00"), category=brand_new, is_active=False
+        )
+        rescued_variant = ProductVariant.objects.create(
+            product=rescued, size="L", color="Black",
+            sku="RESCUE-BLACK-L", price=Decimal("10000.00"), stock=2,
+        )
+        res = self.client.post(
+            "/api/v1/cart/merge/",
+            {
+                "items": [
+                    {"variant_id": self.variant.id, "quantity": 2},
+                    {"variant_id": dead_variant.id, "quantity": 2},
+                    {"variant_id": rescued_variant.id, "quantity": 2},
+                ]
+            },
+            format="json",
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.data["item_count"], 2)
+        self.assertEqual(res.data["items"][0]["sku"], "AGR-ROYAL-GOLD-L")
+
+    def test_merge_adds_to_existing_quantity_capped(self):
+        self.client.post("/api/v1/cart/", {"variant_id": self.variant.id, "quantity": 4})
+        res = self.client.post(
+            "/api/v1/cart/merge/",
+            {"items": [{"variant_id": self.variant.id, "quantity": 4}]},
+            format="json",
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.data["item_count"], 5)
+
     def test_requires_auth(self):
         anon = APIClient()
         res = anon.get("/api/v1/cart/")
