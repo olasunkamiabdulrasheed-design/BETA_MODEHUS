@@ -1,13 +1,26 @@
 from decimal import Decimal
 from unittest.mock import patch
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
+from rest_framework.test import APIClient
 
 from accounts.models import User
 from catalog.models import Category, Product, ProductVariant
 from orders.models import Order, OrderItem
 from payments.models import Payment
-from payments.services import mark_payment_success, reconcile_payment
+from payments.services import (
+    create_simulated_payment_for_order,
+    mark_payment_success,
+    reconcile_payment,
+)
+
+DEV_SETTINGS = dict(
+    DEBUG=True,
+    OPAY_MERCHANT_ID="",
+    OPAY_PUBLIC_KEY="",
+    OPAY_PRIVATE_KEY="",
+    STORE_BASE_URL="http://localhost:5173",
+)
 
 
 class PaymentFlowTests(TestCase):
@@ -86,3 +99,34 @@ class PaymentFlowTests(TestCase):
         self.payment.refresh_from_db()
         self.assertEqual(self.payment.status, Payment.Status.FAILED)
         self.assertEqual(order.status, Order.Status.FAILED)
+
+    @override_settings(**DEV_SETTINGS)
+    def test_initiate_returns_simulated_payment_in_debug(self):
+        client = APIClient()
+        client.force_authenticate(self.user)
+        res = client.post(
+            "/api/v1/payments/initiate/", {"order_number": self.order.number}
+        )
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(res.data["simulated"])
+        self.assertIn("/payment/simulate/", res.data["payment_url"])
+
+    @override_settings(**DEV_SETTINGS)
+    def test_simulate_page_and_confirm_complete_the_flow(self):
+        payment, _ = create_simulated_payment_for_order(self.order)
+        page = self.client.get(f"/payment/simulate/{payment.reference}/")
+        self.assertEqual(page.status_code, 200)
+        self.assertContains(page, "SIMULATED")
+        res = self.client.post(f"/payment/simulate/{payment.reference}/confirm/")
+        self.assertEqual(res.status_code, 302)
+        payment.refresh_from_db()
+        self.order.refresh_from_db()
+        self.assertEqual(payment.status, Payment.Status.SUCCESS)
+        self.assertEqual(self.order.payment_status, Order.PaymentStatus.PAID)
+        self.assertEqual(self.order.status, Order.Status.PROCESSING)
+
+    @override_settings(DEBUG=False)
+    def test_simulate_page_hidden_outside_debug(self):
+        payment, _ = create_simulated_payment_for_order(self.order)
+        res = self.client.get(f"/payment/simulate/{payment.reference}/")
+        self.assertEqual(res.status_code, 404)
