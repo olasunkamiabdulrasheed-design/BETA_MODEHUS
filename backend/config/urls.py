@@ -10,6 +10,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 
 from . import admin as vault_patch  # noqa: F401  (injects Vault dashboard stats)
+from payments import simulate
 
 
 @extend_schema(responses=OpenApiTypes.OBJECT)
@@ -26,6 +27,12 @@ urlpatterns = [
     path("api/v1/cart/", include("cart.urls")),
     path("api/v1/orders/", include("orders.urls")),
     path("api/v1/payments/", include("payments.urls")),
+    path("payment/simulate/<str:reference>/", simulate.simulate_page, name="payment-simulate"),
+    path(
+        "payment/simulate/<str:reference>/confirm/",
+        simulate.simulate_confirm,
+        name="payment-simulate-confirm",
+    ),
     path("api/v1/reviews/", include("reviews.urls")),
     path("api/v1/contact/", include("common.urls")),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
