@@ -14,14 +14,19 @@ def _make_reference(order):
     return f"BM{order.pk}-{secrets.token_hex(4).upper()}"
 
 
-def create_payment_for_order(order, return_url=None):
-    """Create (or reuse) a Pending payment for an order and start an OPay
-    Cashier session. Returns (payment, cashier_url)."""
+def _get_or_create_payment(order):
     payment = order.payments.filter(status=Payment.Status.PENDING).first()
     if payment is None:
         payment = Payment.objects.create(
             order=order, reference=_make_reference(order), amount=order.total,
         )
+    return payment
+
+
+def create_payment_for_order(order, return_url=None):
+    """Create (or reuse) a Pending payment for an order and start an OPay
+    Cashier session. Returns (payment, cashier_url)."""
+    payment = _get_or_create_payment(order)
 
     client = OpayClient()
     callback_url = settings.OPAY_CB_URL
@@ -48,6 +53,22 @@ def create_payment_for_order(order, return_url=None):
         payment.raw_response = {"error": str(exc)}
         payment.save(update_fields=["status", "raw_response", "updated_at"])
         raise
+
+
+def create_simulated_payment_for_order(order):
+    """Development-only payment creation for the on-site simulator.
+
+    Used when DEBUG is on and OPay credentials are not configured, so the
+    whole checkout → pay → callback flow can be exercised offline. Returns
+    (payment, local_simulate_url)."""
+    payment = _get_or_create_payment(order)
+    payment.provider_reference = ""
+    payment.raw_response = {"simulated": True}
+    payment.status = Payment.Status.PENDING
+    payment.save(
+        update_fields=["provider_reference", "raw_response", "status", "updated_at"]
+    )
+    return payment, f"/payment/simulate/{payment.reference}/"
 
 
 @transaction.atomic
