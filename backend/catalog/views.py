@@ -1,4 +1,5 @@
 from django.db.models import Avg, Count, OuterRef, Prefetch, Q, Subquery
+from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 
@@ -13,6 +14,7 @@ from .serializers import (
 )
 
 
+@extend_schema(tags=["catalog/categories"], responses=CategorySerializer)
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     serializer_class = CategorySerializer
@@ -32,6 +34,7 @@ class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
         )
 
 
+@extend_schema(tags=["catalog/brands"], responses=BrandSerializer)
 class BrandViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [AllowAny]
     queryset = Brand.objects.filter(is_active=True)
@@ -40,6 +43,7 @@ class BrandViewSet(viewsets.ReadOnlyModelViewSet):
     pagination_class = None
 
 
+@extend_schema(tags=["catalog/products"], parameters=[ProductFilter])
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductListSerializer
