@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulated payment · BETA_MODEHUS</title>
+  <style>
+    :root {
+      --gold: #d4af37;
+      --midnight: #10142d;
+      --paper: #f6f2e8;
+      --ink: #25273a;
+      --muted: #5c5e72;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--midnight); color: var(--ink); display: flex; align-items: center; justify-content: center; padding: 24px;
+    }
+    .card {
+      width: 100%; max-width: 420px; background: var(--paper);
+      border-radius: 16px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,.45);
+    }
+    .card__head { background: var(--midnight); padding: 22px 26px; color: var(--paper); display: flex; align-items: center; gap: 10px; }
+    .brand { font-family: Georgia, serif; font-weight: 700; letter-spacing: .02em; }
+    .brand span { color: var(--gold); }
+    .tag { margin-left: auto; font-size: 11px; text-transform: uppercase; letter-spacing: .08em; }
+    .badge {
+      display:inline-block; margin-top:10px; padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700;
+      background: rgba(212,175,55,.15); color: #8a6d12; border: 1px solid var(--gold);
+    }
+    .card__body { padding: 24px 26px; }
+    h1 { margin: 0 0 4px; font-size: 18px; }
+    .sub { margin: 0 0 18px; font-size: 13px; color: var(--muted); }
+    .rows { border-top: 1px solid #e4dcc6; }
+    .row { display: flex; justify-content: space-between; padding: 10px 0; font-size: 14px; border-bottom: 1px solid #e4dcc6; }
+    .row dt { color: var(--muted); }
+    .row dd { margin: 0; font-weight: 600; }
+    .total dd { color: var(--midnight); font-size: 17px; }
+    .note {
+      margin: 16px 0 20px; padding: 10px 12px; border-radius: 8px; font-size: 12px;
+      color: #7a4f00; background: rgba(212,175,55,.18); border: 1px solid rgba(212,175,55,.55);
+    }
+    .btn {
+      display: block; width: 100%; padding: 14px; border: 0; border-radius: 10px; cursor: pointer;
+      font-size: 15px; font-weight: 700; text-align: center; text-decoration: none; color: #141a36; background: var(--gold);
+    }
+    .btn:hover { background: #b8901f; }
+    .cancel { display: block; margin-top: 12px; text-align: center; font-size: 13px; color: var(--muted); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="card__head">
+      <div class="brand">BETA<span>_</span>MODEHUS</div>
+      <div class="tag">Dev checkout</div>
+    </div>
+    <div class="card__body">
+      <h1>Order {{ order.number }}</h1>
+      <p class="sub">Payment of {{ amount_kobo }} kobo · {{ payment.reference }}</p>
+
+      <dl class="rows">
+        <div class="row"><dt>Items</dt><dd>{{ order.items.count }}</dd></div>
+        <div class="row"><dt>Subtotal</dt><dd>₦{{ order.subtotal|floatformat:2 }}</dd></div>
+        <div class="row"><dt>Delivery</dt><dd>₦{{ order.shipping_fee|floatformat:2 }}</dd></div>
+        <div class="row total"><dt>Total</dt><dd>₦{{ order.total|floatformat:2 }}</dd></div>
+      </dl>
+
+      <div class="badge">SIMULATED PAYMENT — DEVELOPMENT ONLY</div>
+
+      <p class="note">No real money moves. Approving below marks this order as paid and
+      redirects you to the storefront, just like a real OPay checkout callback.</p>
+
+      <form method="post" action="{% url 'payment-simulate-confirm' payment.reference %}">
+        {% csrf_token %}
+        <button class="btn" type="submit">Approve payment ✓</button>
+      </form>
+      <a class="cancel" href="{{ return_url }}/payment/callback?order={{ order.number }}">Return to store instead</a>
+    </div>
+  </div>
+</body>
+</html>
