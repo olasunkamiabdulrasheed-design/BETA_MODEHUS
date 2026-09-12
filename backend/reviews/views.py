@@ -1,12 +1,21 @@
 from rest_framework import generics, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
+from drf_spectacular.utils import OpenApiParameter, extend_schema
 
 from common.permissions import IsAdminUser
 from .models import Review
 from .serializers import ReviewCreateSerializer, ReviewSerializer
 
 
+@extend_schema(
+    tags=["reviews"],
+    parameters=[
+        OpenApiParameter("product", description="Product id or slug"),
+        OpenApiParameter("status", description="Staff only: pending | approved | rejected"),
+    ],
+    responses=ReviewSerializer,
+)
 class ReviewListCreateView(generics.ListCreateAPIView):
     serializer_class = ReviewSerializer
 
@@ -57,6 +66,7 @@ class ReviewListCreateView(generics.ListCreateAPIView):
         )
 
 
+@extend_schema(tags=["reviews/moderate"], responses=ReviewSerializer)
 class ReviewModerateView(generics.GenericAPIView):
     permission_classes = [IsAdminUser]
     queryset = Review.objects.all()
