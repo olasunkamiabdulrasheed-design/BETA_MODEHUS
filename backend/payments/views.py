@@ -151,7 +151,8 @@ class PaymentStatusView(views.APIView):
             )
 
         try:
-            reconcile_payment(payment)
+            if not (payment.raw_response or {}).get("simulated"):
+                reconcile_payment(payment)
         except OpayError as exc:
             return Response(
                 {"detail": str(exc)}, status=status.HTTP_502_BAD_GATEWAY
