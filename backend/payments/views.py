@@ -5,6 +5,11 @@ import logging
 
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+from drf_spectacular.utils import (
+    OpenApiParameter,
+    extend_schema,
+    inline_serializer,
+)
 from rest_framework import serializers, status, views
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
@@ -14,6 +19,23 @@ from .models import Payment
 from .services import create_payment_for_order, reconcile_payment
 
 logger = logging.getLogger(__name__)
+
+InitiatePaymentRequestSerializer = inline_serializer(
+    name="InitiatePaymentRequest",
+    fields={
+        "order_number": serializers.CharField(),
+        "return_url": serializers.URLField(required=False),
+    },
+)
+
+InitiatePaymentResponseSerializer = inline_serializer(
+    name="InitiatePaymentResponse",
+    fields={
+        "reference": serializers.CharField(),
+        "order_number": serializers.CharField(),
+        "payment_url": serializers.URLField(),
+    },
+)
 
 
 class PaymentSerializer(serializers.ModelSerializer):
@@ -34,6 +56,10 @@ class PaymentSerializer(serializers.ModelSerializer):
 class InitiatePaymentView(views.APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        request=InitiatePaymentRequestSerializer,
+        responses=InitiatePaymentResponseSerializer,
+    )
     def post(self, request):
         from orders.models import Order
 
@@ -83,6 +109,17 @@ class InitiatePaymentView(views.APIView):
 class PaymentStatusView(views.APIView):
     permission_classes = [IsAuthenticated]
 
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="reference",
+                description="Payment reference returned by initiate.",
+                required=True,
+                type=str,
+            )
+        ],
+        responses=PaymentSerializer,
+    )
     def get(self, request):
         reference = request.query_params.get("reference")
         if not reference:
