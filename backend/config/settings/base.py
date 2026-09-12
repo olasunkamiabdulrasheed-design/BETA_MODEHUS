@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -49,6 +50,8 @@ SECRET_KEY = env(
     "django-insecure-dev-only-key-change-me-in-production",
 )
 ALLOWED_HOSTS = env_list("DJANGO_ALLOWED_HOSTS", ["*"] if DEBUG else [])
+if "test" in sys.argv[1:] and "testserver" not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS += ["testserver"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
