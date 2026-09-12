@@ -2,7 +2,7 @@ from rest_framework import generics, permissions, status, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
-from drf_spectacular.utils import extend_schema
+from drf_spectacular.utils import inline_serializer, extend_schema
 
 from common.permissions import IsAdminUser
 from .models import Order, OrderItem, ShippingSetting
@@ -75,7 +75,40 @@ class ShippingSettingView(generics.RetrieveUpdateAPIView):
 
 
 @extend_schema(
-    tags=["orders"]
+    tags=["orders"],
+    responses=inline_serializer(
+        "AdminStats",
+        fields={
+            "order_counts": inline_serializer(
+                "OrderCounts",
+                fields={c: serializers.IntegerField() for c, _ in Order.Status.choices},
+            ),
+            "revenue": inline_serializer(
+                "AdminRevenue",
+                fields={"total": serializers.CharField(), "today": serializers.CharField(),
+                        "paid_orders": serializers.IntegerField()},
+            ),
+            "pending_fulfillment": serializers.IntegerField(),
+            "new_customers_30d": serializers.IntegerField(),
+            "recent_orders": serializers.ListField(child=inline_serializer(
+                "RecentOrderItem",
+                fields={"number": serializers.CharField(), "full_name": serializers.CharField(),
+                        "total": serializers.CharField(), "status": serializers.CharField(),
+                        "payment_status": serializers.CharField(), "created_at": serializers.CharField()},
+            )),
+            "low_stock": serializers.ListField(child=inline_serializer(
+                "LowStockItem",
+                fields={"id": serializers.IntegerField(), "name": serializers.CharField(),
+                        "slug": serializers.CharField(), "remaining_stock": serializers.IntegerField(),
+                        "thumbnail": serializers.CharField(required=False)},
+            )),
+            "bestsellers": serializers.ListField(child=inline_serializer(
+                "BestSellerItem",
+                fields={"product_name": serializers.CharField(), "units_sold": serializers.IntegerField(),
+                        "revenue": serializers.CharField(), "thumbnail": serializers.CharField(required=False)},
+            )),
+        },
+    ),
 )
 class AdminStatsView(views.APIView):
     """Dashboard numbers for the admin frontend: revenue, order counts,
