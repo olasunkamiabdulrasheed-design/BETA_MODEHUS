@@ -3,8 +3,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.http import JsonResponse
 from django.urls import include, path
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
+
+from . import admin as vault_patch  # noqa: F401  (injects Vault dashboard stats)
 
 
 @api_view(["GET"])
@@ -22,6 +25,17 @@ urlpatterns = [
     path("api/v1/payments/", include("payments.urls")),
     path("api/v1/reviews/", include("reviews.urls")),
     path("api/v1/contact/", include("common.urls")),
+    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
+    path(
+        "api/docs/",
+        SpectacularSwaggerView.as_view(url_name="schema"),
+        name="swagger-ui",
+    ),
+    path(
+        "api/redoc/",
+        SpectacularRedocView.as_view(url_name="schema"),
+        name="redoc",
+    ),
     path("health/", health_check, name="health"),
 ]
 

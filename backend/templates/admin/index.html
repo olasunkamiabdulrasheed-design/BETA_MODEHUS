@@ -1,0 +1,61 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static admin_filters %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static "admin/css/dashboard.css" %}" {% csp_nonce_attr %}>{% endblock %}
+
+{% block coltype %}colMS{% endblock %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block nav-breadcrumbs %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content %}
+<div id="content-main" class="app-list">
+  {% if vault_stats %}
+  <div class="vault-stats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:20px;">
+    {% for label, value in vault_stats %}
+    <div style="background:var(--header-bg,#10142d);border:1px solid var(--link-selected-fg,#d4af37);border-radius:12px;padding:14px 16px;box-shadow:0 2px 8px rgb(0 0 0 / .15);">
+      <div style="font-size:26px;font-weight:700;color:var(--button-bg,#d4af37);line-height:1.1;">{{ value }}</div>
+      <div style="font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--header-color,#f4e6bd);margin-top:4px;">{{ label }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% endif %}
+  {% include "admin/app_list.html" with app_list=app_list show_changelinks=True %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+<div id="content-related">
+    <div class="module" id="recent-actions-module">
+        <h2>{% translate 'Recent actions' %}</h2>
+        <h3>{% translate 'My actions' %}</h3>
+            {% load log %}
+            {% get_admin_log 10 as admin_log for_user user %}
+            {% if not admin_log %}
+            <p>{% translate 'None available' %}</p>
+            {% else %}
+            <ul class="actionlist">
+            {% for entry in admin_log %}
+            <li class="{% if entry.is_addition %}addlink{% endif %}{% if entry.is_change %}changelink{% endif %}{% if entry.is_deletion %}deletelink{% endif %}">
+                <span class="visually-hidden">{% if entry.is_addition %}{% translate 'Added:' %}{% elif entry.is_change %}{% translate 'Changed:' %}{% elif entry.is_deletion %}{% translate 'Deleted:' %}{% endif %}</span>
+                {% if entry.is_deletion or not entry.get_admin_url %}
+                    {{ entry.object_repr|to_object_display_value }}
+                {% else %}
+                    <a href="{{ entry.get_admin_url }}">{{ entry.object_repr|to_object_display_value }}</a>
+                {% endif %}
+                <br>
+                {% if entry.content_type %}
+                    <span class="mini quiet">{% filter capfirst %}{{ entry.content_type.name }}{% endfilter %}</span>
+                {% else %}
+                    <span class="mini quiet">{% translate 'Unknown content' %}</span>
+                {% endif %}
+            </li>
+            {% endfor %}
+            </ul>
+            {% endif %}
+    </div>
+</div>
+{% endblock %}

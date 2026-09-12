@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "django.contrib.postgres",
     # Third party
     "rest_framework",
+    "drf_spectacular",
     "corsheaders",
     "django_filters",
     "cloudinary",
@@ -182,6 +183,22 @@ REST_FRAMEWORK = {
         "anon": env("THROTTLE_ANON", "100/hour"),
         "user": env("THROTTLE_USER", "1000/hour"),
     },
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "BETA_MODEHUS API",
+    "DESCRIPTION": (
+        "For Better Elegance and Luxury. Single-vendor storefront API: "
+        "catalog, cart, orders, OPay payments, reviews, and contact."
+    ),
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    "SCHEMA_PATH_PREFIX": r"/api/v1",
+    "COMPONENT_SPLIT_REQUEST": True,
+    "SWAGGER_UI_DIST": "SIDECAR",
+    "SWAGGER_UI_FAVICON_HREF": "SIDECAR",
+    "REDOC_DIST": "SIDECAR",
 }
 
 from datetime import timedelta  # noqa: E402
