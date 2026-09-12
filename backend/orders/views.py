@@ -2,12 +2,14 @@ from rest_framework import generics, permissions, status, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
+from drf_spectacular.utils import extend_schema
 
 from common.permissions import IsAdminUser
 from .models import Order, OrderItem, ShippingSetting
 from .serializers import CheckoutSerializer, OrderSerializer, ShippingSettingSerializer
 
 
+@extend_schema(tags=["orders"], responses=OrderSerializer)
 class OrderListCreateView(generics.ListCreateAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
@@ -45,6 +47,7 @@ class OrderListCreateView(generics.ListCreateAPIView):
         )
 
 
+@extend_schema(tags=["orders"], responses=OrderSerializer)
 class OrderDetailView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
@@ -56,6 +59,7 @@ class OrderDetailView(generics.RetrieveAPIView):
         return Order.objects.filter(user=self.request.user)
 
 
+@extend_schema(tags=["orders"], responses=ShippingSettingSerializer)
 class ShippingSettingView(generics.RetrieveUpdateAPIView):
     """Customers may read the delivery fee/preview totals; only staff may change it."""
 
@@ -70,6 +74,9 @@ class ShippingSettingView(generics.RetrieveUpdateAPIView):
         return ShippingSetting.get()
 
 
+@extend_schema(
+    tags=["orders"]
+)
 class AdminStatsView(views.APIView):
     """Dashboard numbers for the admin frontend: revenue, order counts,
     pending fulfillment, low-stock items and bestsellers."""
@@ -161,6 +168,7 @@ class AdminStatsView(views.APIView):
         )
 
 
+@extend_schema(tags=["orders/admin"], responses=OrderSerializer)
 class AdminOrderActionView(generics.RetrieveUpdateAPIView):
     """Admin single-order management: view any order and advance its status."""
 
