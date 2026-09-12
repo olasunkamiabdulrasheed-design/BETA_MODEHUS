@@ -16,7 +16,7 @@ from rest_framework.response import Response
 
 from .client import OpayError, PAYMENT_STATUS, verify_callback_signature
 from .models import Payment
-from .services import create_payment_for_order, reconcile_payment
+from .services import create_payment_for_order, create_simulated_payment_for_order, reconcile_payment
 
 logger = logging.getLogger(__name__)
 
@@ -85,6 +85,20 @@ class InitiatePaymentView(views.APIView):
             return Response(
                 {"detail": "This order cannot be paid right now."},
                 status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        opay_configured = bool(settings.OPAY_MERCHANT_ID) and bool(
+            settings.OPAY_PUBLIC_KEY
+        ) and bool(getattr(settings, "OPAY_PRIVATE_KEY", ""))
+        if settings.DEBUG and not opay_configured:
+            payment, simulate_url = create_simulated_payment_for_order(order)
+            return Response(
+                {
+                    "reference": payment.reference,
+                    "order_number": order.number,
+                    "payment_url": request.build_absolute_uri(simulate_url),
+                    "simulated": True,
+                }
             )
 
         try:
