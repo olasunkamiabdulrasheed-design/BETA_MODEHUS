@@ -212,3 +212,72 @@ class AdminCatalogApiTests(TestCase):
         self._auth(self.user)
         res = self.client.get(f"/api/v1/admin/products/{self.product.id}/images/")
         self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_admin_variant_create(self):
+        self._auth(self.staff)
+        res = self.client.post(
+            "/api/v1/admin/variants/",
+            {
+                "product": self.product.id,
+                "size": "L",
+                "color": "Black",
+                "sku": "LG-L-B",
+                "price": "48000",
+                "stock": 5,
+            },
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_201_CREATED, res.data)
+        self.assertEqual(res.data["label"], "L, Black")
+        variant = ProductVariant.objects.get(pk=res.data["id"])
+        self.assertEqual(variant.color, "Black")
+        self.assertEqual(variant.stock, 5)
+
+    def test_admin_variant_create_rejects_duplicate(self):
+        self._auth(self.staff)
+        res = self.client.post(
+            "/api/v1/admin/variants/",
+            {"product": self.product.id, "size": "M", "color": "Gold", "sku": "LG-M-G-2"},
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+        self.assertEqual(ProductVariant.objects.filter(product=self.product).count(), 1)
+
+    def test_admin_variant_create_requires_staff(self):
+        self._auth(self.user)
+        res = self.client.post(
+            "/api/v1/admin/variants/",
+            {"product": self.product.id, "size": "XL", "color": "Blue"},
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_403_FORBIDDEN)
+
+    def test_admin_image_upload_linked_to_variant_colour(self):
+        import tempfile
+        from io import BytesIO
+
+        from django.core.files.uploadedfile import SimpleUploadedFile
+        from django.test import override_settings
+
+        png = BytesIO(b"\x89PNG\r\n\x1a\n" + b"0" * 8 + b"chunk")
+        upload = SimpleUploadedFile("black.png", png.getvalue(), content_type="image/png")
+
+        self._auth(self.staff)
+        with tempfile.TemporaryDirectory() as tmp, override_settings(
+            MEDIA_ROOT=tmp, DEFAULT_FILE_STORAGE="django.core.files.storage.FileSystemStorage"
+        ):
+            res = self.client.post(
+                f"/api/v1/admin/products/{self.product.id}/images/",
+                {"image": upload, "variant_id": str(self.variant.id)},
+                format="multipart",
+            )
+            self.assertEqual(res.status_code, status.HTTP_201_CREATED, res.data)
+            self.assertEqual(res.data["variant_id"], self.variant.id)
+            self.assertEqual(self.product.images.first().variant_id, self.variant.id)
+
+            bad = self.client.post(
+                f"/api/v1/admin/products/{self.product.id}/images/",
+                {"image": upload, "variant_id": "999999"},
+                format="multipart",
+            )
+            self.assertEqual(bad.status_code, status.HTTP_400_BAD_REQUEST)
