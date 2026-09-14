@@ -8,7 +8,7 @@ from .services import mark_payment_success
 
 
 def _only_debug(request):
-    if not settings.DEBUG:
+    if not settings.DEBUG and not getattr(settings, "SIMULATE_PAYMENTS", False):
         raise Http404
 
 
