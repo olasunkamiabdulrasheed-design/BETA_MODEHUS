@@ -967,6 +967,11 @@ function ProductsTab() {
     await load();
   };
 
+  const continueEditing = (created) => {
+    setEditing({ ...created, _new: false });
+    setNotice(`"${created.name}" created — now add its colours and images.`);
+  };
+
   return (
     <div>
       {/* Toolbar */}
@@ -1024,6 +1029,7 @@ function ProductsTab() {
           product={editing}
           onClose={() => setEditing(null)}
           onSaved={afterSave}
+          onCreated={continueEditing}
         />
       )}
 
@@ -1244,7 +1250,7 @@ function ProductsTab() {
    PRODUCT EDITOR
 ========================================================= */
 
-function ProductEditor({ product, onClose, onSaved }) {
+function ProductEditor({ product, onClose, onSaved, onCreated }) {
   const isNew = Boolean(product._new);
   const [cats, setCats] = useState([]);
   const [brands, setBrands] = useState([]);
@@ -1252,6 +1258,8 @@ function ProductEditor({ product, onClose, onSaved }) {
   const [images, setImages] = useState([]);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [newVar, setNewVar] = useState(null);
+  const [savingVar, setSavingVar] = useState(false);
   const [form, setForm] = useState({
     name: product.name || "",
     category_id: product.category_id || "",
@@ -1305,8 +1313,12 @@ function ProductEditor({ product, onClose, onSaved }) {
         payload.brand_id = Number(form.brand_id);
       }
       if (isNew) {
-        await api.post("/admin/products/", payload);
-        onSaved({ message: "Product created." });
+        const res = await api.post("/admin/products/", payload);
+        if (onCreated) {
+          onCreated(res.data);
+        } else {
+          onSaved({ message: "Product created." });
+        }
       } else {
         await api.patch(`/admin/products/${product.id}/`, payload);
         onSaved({ message: "Product updated." });
@@ -1342,12 +1354,15 @@ function ProductEditor({ product, onClose, onSaved }) {
     }
   };
 
-  const uploadImage = async (e) => {
+  const uploadImage = async (e, variantId) => {
     const file = e.target.files?.[0];
     if (!file) return;
     const fd = new FormData();
     fd.append("image", file);
     fd.append("is_primary", String(images.length === 0));
+    if (variantId) {
+      fd.append("variant_id", String(variantId));
+    }
     try {
       const res = await api.post(`/admin/products/${product.id}/images/`, fd);
       setImages((prev) => [...prev, res.data]);
@@ -1355,6 +1370,43 @@ function ProductEditor({ product, onClose, onSaved }) {
       setError("Could not upload image.");
     } finally {
       e.target.value = "";
+    }
+  };
+
+  const addVariant = async (e) => {
+    e.preventDefault();
+    setSavingVar(true);
+    setError("");
+    try {
+      const payload = {
+        product: product.id,
+        size: newVar.size,
+        color: newVar.color,
+        color_hex: newVar.color_hex || "#000000",
+        sku: newVar.sku,
+        stock: Number(newVar.stock) || 0,
+      };
+      if (newVar.price !== "") payload.price = Number(newVar.price);
+      await api.post("/admin/variants/", payload);
+      setNewVar(null);
+      const r = await api.get(`/products/${product.slug}/`);
+      setVariants(r.data.variants || []);
+    } catch (err) {
+      const data = err.response?.data || {};
+      const msg = Object.values(data).flat()[0] || "Could not add variant.";
+      setError(String(msg));
+    } finally {
+      setSavingVar(false);
+    }
+  };
+
+  const deleteVariant = async (v) => {
+    if (!window.confirm(`Delete variant${v.size ? ` ${v.size}` : ""}${v.color ? ` · ${v.color}` : ""}?`)) return;
+    try {
+      await api.delete(`/admin/variants/${v.id}/`);
+      setVariants((prev) => prev.filter((x) => x.id !== v.id));
+    } catch {
+      setError("Could not delete variant.");
     }
   };
 
@@ -1489,39 +1541,53 @@ function ProductEditor({ product, onClose, onSaved }) {
                   Manage the gallery and choose the primary image.
                 </p>
                 <div className="mt-3 sm:mt-4 grid grid-cols-2 gap-2 sm:gap-3">
-                  {images.map((img) => (
-                    <div key={img.id}>
-                      <img
-                        src={img.url}
-                        alt={img.alt_text || "product"}
-                        className={`aspect-square w-full rounded-xl border object-cover ${
-                          img.is_primary
-                            ? "border-gold-500 ring-2 ring-gold-500/30"
-                            : "border-midnight-100"
-                        }`}
-                      />
-                      <div className="mt-1.5 sm:mt-2 flex items-center justify-between gap-1 sm:gap-2">
-                        {img.is_primary ? (
-                          <span className="text-[9px] sm:text-[10px] font-bold uppercase text-gold-700">Primary</span>
-                        ) : (
+                  {images.map((img) => {
+                    const linked = variants.find((x) => x.id === img.variant_id);
+                    return (
+                      <div key={img.id}>
+                        <img
+                          src={img.url}
+                          alt={img.alt_text || "product"}
+                          className={`aspect-square w-full rounded-xl border object-cover ${
+                            img.is_primary
+                              ? "border-gold-500 ring-2 ring-gold-500/30"
+                              : "border-midnight-100"
+                          }`}
+                        />
+                        {linked && (
+                          <p className="mt-1 flex items-center gap-1 text-[9px] sm:text-[10px] font-semibold text-midnight-500">
+                            {linked.color_hex && (
+                              <span
+                                className="inline-block h-2.5 w-2.5 rounded-full border border-midnight-200"
+                                style={{ backgroundColor: linked.color_hex }}
+                              />
+                            )}
+                            {linked.color || linked.size || "Variant"}
+                          </p>
+                        )}
+                        <div className="mt-1.5 sm:mt-2 flex items-center justify-between gap-1 sm:gap-2">
+                          {img.is_primary ? (
+                            <span className="text-[9px] sm:text-[10px] font-bold uppercase text-gold-700">Primary</span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={() => setPrimary(img)}
+                              className="text-[9px] sm:text-[10px] font-semibold text-gold-700 hover:underline"
+                            >
+                              Make primary
+                            </button>
+                          )}
                           <button
                             type="button"
-                            onClick={() => setPrimary(img)}
-                            className="text-[9px] sm:text-[10px] font-semibold text-gold-700 hover:underline"
+                            onClick={() => removeImage(img)}
+                            className="text-[9px] sm:text-[10px] font-semibold text-red-500 hover:underline"
                           >
-                            Make primary
+                            Remove
                           </button>
-                        )}
-                        <button
-                          type="button"
-                          onClick={() => removeImage(img)}
-                          className="text-[9px] sm:text-[10px] font-semibold text-red-500 hover:underline"
-                        >
-                          Remove
-                        </button>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
                 <label className="btn-outline mt-3 sm:mt-4 inline-flex cursor-pointer !px-3 sm:!px-4 !py-1.5 sm:!py-2 text-[10px] sm:text-xs">
                   + Upload image
@@ -1533,28 +1599,44 @@ function ProductEditor({ product, onClose, onSaved }) {
             {/* Variants */}
             {!isNew && (
               <div className="rounded-2xl border border-midnight-100 p-3 sm:p-4">
-                <h3 className="font-display font-bold text-midnight-950 text-sm sm:text-base">Variants & stock</h3>
+                <h3 className="font-display font-bold text-midnight-950 text-sm sm:text-base">Variants — sizes & colours</h3>
                 <p className="mt-1 text-[10px] sm:text-xs leading-5 text-midnight-500">
-                  Edit variant pricing and stock directly.
+                  Add each colour/size, then upload an image to its own colour below.
                 </p>
                 <div className="mt-3 sm:mt-4 space-y-2">
                   {variants.length === 0 && (
                     <p className="rounded-xl bg-midnight-50 p-3 sm:p-4 text-[10px] sm:text-xs text-midnight-500">
-                      No active variants yet.
+                      No variants yet — add the first colour below.
                     </p>
                   )}
                   {variants.map((v) => (
                     <div key={v.id} className="rounded-xl border border-midnight-100 p-2.5 sm:p-3">
                       <div className="flex min-w-0 flex-wrap items-center justify-between gap-2 sm:gap-3">
                         <div className="min-w-0">
-                          <p className="truncate text-xs sm:text-sm font-semibold text-midnight-900">
+                          <p className="flex items-center gap-1.5 truncate text-xs sm:text-sm font-semibold text-midnight-900">
+                            {v.color_hex && (
+                              <span
+                                className="inline-block h-3 w-3 shrink-0 rounded-full border border-midnight-200"
+                                style={{ backgroundColor: v.color_hex }}
+                              />
+                            )}
                             {v.size || "Default"} {v.color ? `· ${v.color}` : ""}
                           </p>
                           <p className="mt-0.5 text-[9px] sm:text-[10px] text-midnight-500">
                             {v.is_in_stock ? "In stock" : "Out of stock"}
                           </p>
                         </div>
-                        <div className="flex gap-1.5 sm:gap-2">
+                        <div className="flex items-center gap-1.5 sm:gap-2">
+                          <label className="btn-outline inline-flex cursor-pointer !px-2.5 !py-1 text-[10px] sm:text-xs">
+                            Upload colour image
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => uploadImage(e, v.id)}
+                              key={v.id}
+                            />
+                          </label>
                           <input
                             type="number"
                             min="0"
@@ -1578,11 +1660,108 @@ function ProductEditor({ product, onClose, onSaved }) {
                               patchVariant(v.id, { stock: Number(e.target.value) })
                             }
                           />
+                          <button
+                            type="button"
+                            onClick={() => deleteVariant(v)}
+                            className="text-[9px] sm:text-[10px] font-semibold text-red-500 hover:underline"
+                          >
+                            Delete
+                          </button>
                         </div>
                       </div>
                     </div>
                   ))}
                 </div>
+
+                {newVar ? (
+                  <form onSubmit={addVariant} className="mt-3 sm:mt-4 space-y-2 rounded-xl border border-gold-200 bg-gold-50/40 p-3">
+                    <p className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-midnight-700">
+                      New variant
+                    </p>
+                    <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+                      <div>
+                        <label className="label-bm">Size</label>
+                        <input
+                          value={newVar.size}
+                          onChange={(e) => setNewVar((s) => ({ ...s, size: e.target.value }))}
+                          placeholder="e.g. M, L, XL"
+                          className="input-bm !py-1.5 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="label-bm">Colour</label>
+                        <input
+                          value={newVar.color}
+                          onChange={(e) => setNewVar((s) => ({ ...s, color: e.target.value }))}
+                          placeholder="e.g. Gold"
+                          className="input-bm !py-1.5 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="label-bm">Colour swatch</label>
+                        <input
+                          type="color"
+                          value={newVar.color_hex}
+                          onChange={(e) => setNewVar((s) => ({ ...s, color_hex: e.target.value }))}
+                          className="h-9 w-full cursor-pointer rounded-lg border border-midnight-100 bg-white p-1"
+                        />
+                      </div>
+                      <div>
+                        <label className="label-bm">SKU</label>
+                        <input
+                          value={newVar.sku}
+                          onChange={(e) => setNewVar((s) => ({ ...s, sku: e.target.value }))}
+                          placeholder="Optional"
+                          className="input-bm !py-1.5 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="label-bm">Price (₦)</label>
+                        <input
+                          type="number"
+                          min="0"
+                          step="any"
+                          value={newVar.price}
+                          onChange={(e) => setNewVar((s) => ({ ...s, price: e.target.value }))}
+                          placeholder="Inherit base"
+                          className="input-bm !py-1.5 text-xs"
+                        />
+                      </div>
+                      <div>
+                        <label className="label-bm">Stock</label>
+                        <input
+                          type="number"
+                          min="0"
+                          value={newVar.stock}
+                          onChange={(e) => setNewVar((s) => ({ ...s, stock: e.target.value }))}
+                          className="input-bm !py-1.5 text-xs"
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 pt-1">
+                      <button type="submit" disabled={savingVar} className="btn-gold !px-3 !py-1.5 text-xs">
+                        {savingVar ? "Adding..." : "Add variant"}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => setNewVar(null)}
+                        className="btn-outline !px-3 !py-1.5 text-xs"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </form>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setNewVar({ size: "", color: "", color_hex: "#000000", sku: "", price: "", stock: 0 })
+                    }
+                    className="btn-outline mt-3 sm:mt-4 text-[10px] sm:text-xs"
+                  >
+                    + Add colour / size
+                  </button>
+                )}
               </div>
             )}
 
