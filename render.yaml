@@ -1,0 +1,79 @@
+services:
+  - type: web
+    name: betamodehus-api
+    runtime: python
+    plan: starter
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 60
+    healthCheckPath: /api/v1/health/
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: config.settings.prod
+      - key: DJANGO_DEBUG
+        value: "false"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_ALLOWED_HOSTS
+        fromService:
+          name: betamodehus-api
+          type: web
+          property: host
+      - key: CORS_ALLOWED_ORIGINS
+        fromService:
+          name: betamodehus-frontend
+          type: web
+          property: url
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: betamodehus-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: betamodehus-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: betamodehus-db
+          property: password
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: betamodehus-db
+          property: host
+      - key: POSTGRES_PORT
+        fromDatabase:
+          name: betamodehus-db
+          property: port
+      - key: EMAIL_HOST_USER
+        sync: false
+      - key: EMAIL_HOST_PASSWORD
+        sync: false
+      - key: CLOUDINARY_URL
+        sync: false
+      - key: OPAY_MERCHANT_ID
+        sync: false
+      - key: OPAY_PUBLIC_KEY
+        sync: false
+      - key: OPAY_PRIVATE_KEY
+        sync: false
+      - key: OPAY_CB_URL
+        sync: false
+        value: https://betamodehus.com/payment/callback
+
+  - type: web
+    name: betamodehus-frontend
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        fromService:
+          name: betamodehus-api
+          type: web
+          property: url
+
+databases:
+  - name: betamodehus-db
+    databaseName: betamodehus
+    plan: basic
