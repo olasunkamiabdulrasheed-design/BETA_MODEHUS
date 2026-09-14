@@ -5,6 +5,7 @@ from .admin_api import (
     AdminProductDetailView,
     AdminProductImagesView,
     AdminProductListView,
+    AdminVariantCreateView,
     AdminVariantPatchView,
 )
 
@@ -28,5 +29,6 @@ urlpatterns = [
     path("admin/products/<int:pk>/", AdminProductDetailView.as_view(), name="admin-product-detail"),
     path("admin/products/<int:pk>/images/", AdminProductImagesView.as_view(), name="admin-product-images"),
     path("admin/products/<int:pk>/images/<int:img_id>/", AdminProductImagesView.as_view(), name="admin-product-image-detail"),
+    path("admin/variants/", AdminVariantCreateView.as_view(), name="admin-variant-create"),
     path("admin/variants/<int:pk>/", AdminVariantPatchView.as_view(), name="admin-variant-detail"),
 ]
