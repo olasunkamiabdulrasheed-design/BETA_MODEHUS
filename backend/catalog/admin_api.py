@@ -1,7 +1,12 @@
 from django.db.models import OuterRef, Subquery, Sum
 from drf_spectacular.utils import OpenApiParameter, extend_schema, inline_serializer
 from rest_framework import serializers, status
-from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import (
+    CreateAPIView,
+    ListAPIView,
+    ListCreateAPIView,
+    RetrieveUpdateDestroyAPIView,
+)
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,10 +17,11 @@ from .models import Brand, Category, Product, ProductImage, ProductVariant
 
 class ProductImageSerializer(serializers.ModelSerializer):
     url = serializers.SerializerMethodField()
+    variant_id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = ProductImage
-        fields = ["id", "url", "alt_text", "is_primary", "sort_order"]
+        fields = ["id", "url", "alt_text", "is_primary", "sort_order", "variant_id"]
 
     def get_url(self, obj):
         return obj.image.url if obj.image else None
@@ -59,7 +65,7 @@ class AdminProductWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = [
-            "id", "name", "short_description", "description", "price", "sku",
+            "id", "name", "slug", "short_description", "description", "price", "sku",
             "category_id", "brand_id", "status", "is_active", "is_featured",
         ]
 
@@ -209,6 +215,50 @@ class AdminVariantPatchView(RetrieveUpdateDestroyAPIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+class AdminVariantSerializer(serializers.ModelSerializer):
+    product = serializers.PrimaryKeyRelatedField(queryset=Product.objects.all())
+    label = serializers.SerializerMethodField()
+
+    class Meta:
+        model = ProductVariant
+        fields = [
+            "id", "product", "size", "color", "color_hex", "sku",
+            "price", "stock", "is_active", "label",
+        ]
+        read_only_fields = ["id"]
+
+    def get_label(self, obj):
+        return ", ".join(filter(None, [obj.size, obj.color]))
+
+    def validate_stock(self, value):
+        if value is not None and value < 0:
+            raise serializers.ValidationError("Stock cannot be negative.")
+        return value
+
+    def validate(self, attrs):
+        product = attrs["product"]
+        size = attrs.get("size", "") or ""
+        color = attrs.get("color", "") or ""
+        sku = attrs.get("sku", "") or ""
+        if ProductVariant.objects.filter(product=product, size=size, color=color).exists():
+            raise serializers.ValidationError(
+                {"detail": "A variant with this size and color already exists for this product."}
+            )
+        if sku and ProductVariant.objects.filter(sku=sku).exclude(pk=self.instance.pk if self.instance else None).exists():
+            raise serializers.ValidationError({"sku": "A variant with this SKU already exists."})
+        return attrs
+
+
+@extend_schema(
+    tags=["catalog/admin"],
+    request=AdminVariantSerializer,
+    responses=AdminVariantSerializer,
+)
+class AdminVariantCreateView(CreateAPIView):
+    permission_classes = [IsAdminUser]
+    serializer_class = AdminVariantSerializer
+
+
 @extend_schema(
     tags=["catalog/admin"],
     request=inline_serializer(
@@ -229,8 +279,18 @@ class AdminProductImagesView(APIView):
         file = request.FILES.get("image")
         if not file:
             return Response({"detail": "No image file provided."}, status=status.HTTP_400_BAD_REQUEST)
+        variant = None
+        variant_id = request.data.get("variant_id")
+        if variant_id:
+            variant = ProductVariant.objects.filter(product=product, pk=variant_id).first()
+            if not variant:
+                return Response(
+                    {"detail": "Variant not found for this product."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
         image_obj = ProductImage.objects.create(
             product=product,
+            variant=variant,
             image=file,
             alt_text=request.data.get("alt_text", ""),
             is_primary=bool(request.data.get("is_primary")),
