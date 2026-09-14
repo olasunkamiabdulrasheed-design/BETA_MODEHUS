@@ -88,5 +88,15 @@ if CLOUDINARY_URL:
 else:
     DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 
-STATICFILES_STORAGE = "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage"
+        if not CLOUDINARY_URL
+        else "cloudinary_storage.storage.MediaCloudinaryStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 STATIC_ROOT = BASE_DIR / "staticfiles"
