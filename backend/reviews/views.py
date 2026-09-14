@@ -1,7 +1,7 @@
-from rest_framework import generics, status
+from rest_framework import generics, serializers, status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
-from drf_spectacular.utils import OpenApiParameter, extend_schema
+from drf_spectacular.utils import OpenApiParameter, extend_schema, inline_serializer
 
 from common.permissions import IsAdminUser
 from .models import Review
