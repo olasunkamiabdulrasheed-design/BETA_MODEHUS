@@ -66,7 +66,14 @@ class ReviewListCreateView(generics.ListCreateAPIView):
         )
 
 
-@extend_schema(tags=["reviews/moderate"], responses=ReviewSerializer)
+@extend_schema(
+    tags=["reviews/moderate"],
+    request=inline_serializer(
+        "ReviewModeration",
+        fields={"status": serializers.ChoiceField(choices=["approved", "rejected"])},
+    ),
+    responses=ReviewSerializer,
+)
 class ReviewModerateView(generics.GenericAPIView):
     permission_classes = [IsAdminUser]
     queryset = Review.objects.all()
