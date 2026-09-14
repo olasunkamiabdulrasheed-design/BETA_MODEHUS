@@ -65,4 +65,4 @@ services:
 databases:
   - name: betamodehus-db
     databaseName: betamodehus
-    plan: basic
+    plan: free
