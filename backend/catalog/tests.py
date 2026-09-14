@@ -5,6 +5,67 @@ from rest_framework.test import APIClient
 from .models import Brand, Category, Product, ProductVariant
 
 
+class PublicCatalogApiTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.category = Category.objects.create(name="Gowns", slug="gowns")
+        self.brand = Brand.objects.create(name="BetaMode", slug="betamode")
+        self.lace = Product.objects.create(
+            name="Lace Gown", category=self.category, brand=self.brand,
+            price=45000, sku="PUB-1", is_featured=True,
+        )
+        ProductVariant.objects.create(
+            product=self.lace, size="M", color="Gold",
+            sku="PUB-1-M-G", price=45000, stock=10,
+        )
+        self.kaftan = Product.objects.create(
+            name="Premium Kaftan", category=self.category, brand=self.brand,
+            price=25000, sku="PUB-2",
+        )
+        ProductVariant.objects.create(
+            product=self.kaftan, size="L", color="Blue",
+            sku="PUB-2-L-B", price=25000, stock=0, is_active=True,
+        )
+        self.hidden = Product.objects.create(
+            name="Cheap Draft", category=self.category, brand=self.brand,
+            price=1000, sku="PUB-3", status=Product.Status.DRAFT,
+        )
+
+    def test_list_only_returns_published_active_products(self):
+        res = self.client.get("/api/v1/products/")
+        self.assertEqual(res.status_code, 200)
+        slugs = {p["slug"] for p in res.data["results"]}
+        self.assertIn(self.lace.slug, slugs)
+        self.assertNotIn(self.hidden.slug, slugs)
+
+    def test_search_matches_name_and_category(self):
+        res = self.client.get("/api/v1/products/?search=lace")
+        self.assertEqual(len(res.data["results"]), 1)
+        self.assertEqual(res.data["results"][0]["name"], "Lace Gown")
+
+    def test_filter_by_category_slug(self):
+        res = self.client.get("/api/v1/products/?category=gowns")
+        self.assertEqual(res.status_code, 200)
+        self.assertGreaterEqual(len(res.data["results"]), 2)
+
+    def test_price_range_filter(self):
+        res = self.client.get("/api/v1/products/?min_price=30000")
+        slugs = {p["slug"] for p in res.data["results"]}
+        self.assertIn(self.lace.slug, slugs)
+        self.assertNotIn(self.kaftan.slug, slugs)
+
+    def test_featured_filter(self):
+        res = self.client.get("/api/v1/products/?is_featured=True")
+        slugs = {p["slug"] for p in res.data["results"]}
+        self.assertEqual(slugs, {self.lace.slug})
+
+    def test_product_detail_exposes_variants(self):
+        res = self.client.get(f"/api/v1/products/{self.lace.slug}/")
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(len(res.data["variants"]), 1)
+        self.assertEqual(res.data["variants"][0]["size"], "M")
+
+
 class AdminCatalogApiTests(TestCase):
     def setUp(self):
         self.client = APIClient()
