@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions, status, views
+from rest_framework import generics, permissions, serializers, status, views
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.db.models import Q
