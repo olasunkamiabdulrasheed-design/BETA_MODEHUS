@@ -102,7 +102,7 @@ class MergeGuestCartView(views.APIView):
 class ClearCartView(views.APIView):
     permission_classes = [IsAuthenticated]
 
-    @extend_schema(responses=CartSerializer)
+    @extend_schema(request=None, responses=CartSerializer)
     def post(self, request):
         cart = get_or_create_cart(request.user)
         cart.clear()
