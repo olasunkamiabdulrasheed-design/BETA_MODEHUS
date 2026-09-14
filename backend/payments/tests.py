@@ -130,3 +130,17 @@ class PaymentFlowTests(TestCase):
         payment, _ = create_simulated_payment_for_order(self.order)
         res = self.client.get(f"/payment/simulate/{payment.reference}/")
         self.assertEqual(res.status_code, 404)
+
+    @override_settings(DEBUG=False, SIMULATE_PAYMENTS=True)
+    def test_simulate_works_via_flag_without_debug(self):
+        client = APIClient()
+        client.force_authenticate(self.user)
+        res = client.post(
+            "/api/v1/payments/initiate/", {"order_number": self.order.number}
+        )
+        self.assertEqual(res.status_code, 200, res.data)
+        self.assertTrue(res.data["simulated"])
+
+        payment, _ = create_simulated_payment_for_order(self.order)
+        page = self.client.get(f"/payment/simulate/{payment.reference}/")
+        self.assertEqual(page.status_code, 200)
