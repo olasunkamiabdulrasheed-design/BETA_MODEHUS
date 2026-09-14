@@ -90,7 +90,10 @@ class InitiatePaymentView(views.APIView):
         opay_configured = bool(settings.OPAY_MERCHANT_ID) and bool(
             settings.OPAY_PUBLIC_KEY
         ) and bool(getattr(settings, "OPAY_PRIVATE_KEY", ""))
-        if settings.DEBUG and not opay_configured:
+        simulate_allowed = settings.DEBUG or getattr(
+            settings, "SIMULATE_PAYMENTS", False
+        )
+        if simulate_allowed and not opay_configured:
             payment, simulate_url = create_simulated_payment_for_order(order)
             return Response(
                 {
