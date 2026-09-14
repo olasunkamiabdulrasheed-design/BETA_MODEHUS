@@ -50,7 +50,11 @@ api.interceptors.response.use(
         axios
           .post(REFRESH_URL, { refresh: tokens.refresh })
           .then((res) => {
-            setTokens({ ...tokens, access: res.data.access });
+            setTokens({
+              ...tokens,
+              access: res.data.access,
+              refresh: res.data.refresh || tokens.refresh,
+            });
             return res;
           })
           .finally(() => {
