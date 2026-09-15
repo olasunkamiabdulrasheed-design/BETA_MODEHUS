@@ -22,6 +22,9 @@ CSRF_TRUSTED_ORIGINS = ["https://beta-modehus.vercel.app"]
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+# Absolute media URLs so images resolve against the API host, not the storefront.
+MEDIA_URL = "https://eddiemich.pythonanywhere.com/media/"
+
 # Email to console (no SMTP credentials needed for demo)
 MAILERS = {
     "default": {
