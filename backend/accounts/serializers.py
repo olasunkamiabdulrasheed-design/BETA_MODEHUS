@@ -62,6 +62,32 @@ class LoginSerializer(TokenObtainPairSerializer):
         return data
 
 
+class ChangePasswordSerializer(serializers.Serializer):
+    current_password = serializers.CharField(write_only=True)
+    new_password = serializers.CharField(
+        write_only=True, validators=[validate_password]
+    )
+    new_password2 = serializers.CharField(write_only=True)
+
+    def validate(self, attrs):
+        user = self.context["request"].user
+        if not user.check_password(attrs["current_password"]):
+            raise serializers.ValidationError(
+                {"current_password": "Your current password is incorrect."}
+            )
+        if attrs["new_password"] != attrs["new_password2"]:
+            raise serializers.ValidationError(
+                {"new_password2": "Passwords do not match."}
+            )
+        return attrs
+
+    def save(self, **kwargs):
+        user = self.context["request"].user
+        user.set_password(self.validated_data["new_password"])
+        user.save(update_fields=["password"])
+        return user
+
+
 class AddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Address
