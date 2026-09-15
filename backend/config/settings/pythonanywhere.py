@@ -10,7 +10,7 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS = ["olasunkami.pythonanywhere.com"]
+ALLOWED_HOSTS = ["eddiemich.pythonanywhere.com"]
 
 CORS_ALLOWED_ORIGINS = [
     "https://betamodehus.vercel.app",
