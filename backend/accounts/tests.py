@@ -86,3 +86,74 @@ class MeTests(TestCase):
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data["email"], "me@example.com")
         self.assertEqual(res.data["full_name"], "Me User")
+
+
+class ChangePasswordTests(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        User.objects.create_user(
+            email="pw@example.com", password=PASSWORD, full_name="Password User"
+        )
+        login = self.client.post(
+            "/api/v1/auth/login/",
+            {"email": "pw@example.com", "password": PASSWORD},
+            format="json",
+        )
+        self.client.credentials(
+            HTTP_AUTHORIZATION=f"Bearer {login.data['access']}"
+        )
+
+    def test_change_password_requires_auth(self):
+        anon = APIClient()
+        res = anon.post(
+            "/api/v1/auth/password/",
+            {
+                "current_password": PASSWORD,
+                "new_password": "NewStr0ngPassword!",
+                "new_password2": "NewStr0ngPassword!",
+            },
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
+    def test_change_password_rejects_wrong_current(self):
+        res = self.client.post(
+            "/api/v1/auth/password/",
+            {
+                "current_password": "WrongCurrent1!",
+                "new_password": "NewStr0ngPassword!",
+                "new_password2": "NewStr0ngPassword!",
+            },
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
+
+    def test_change_password_success_and_new_credentials_work(self):
+        res = self.client.post(
+            "/api/v1/auth/password/",
+            {
+                "current_password": PASSWORD,
+                "new_password": "NewStr0ngPassword!",
+                "new_password2": "NewStr0ngPassword!",
+            },
+            format="json",
+        )
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+
+        fresh = APIClient()
+        old = fresh.post(
+            "/api/v1/auth/login/",
+            {"email": "pw@example.com", "password": PASSWORD},
+            format="json",
+        )
+        self.assertEqual(old.status_code, status.HTTP_401_UNAUTHORIZED)
+
+        new = fresh.post(
+            "/api/v1/auth/login/",
+            {
+                "email": "pw@example.com",
+                "password": "NewStr0ngPassword!",
+            },
+            format="json",
+        )
+        self.assertEqual(new.status_code, status.HTTP_200_OK)
