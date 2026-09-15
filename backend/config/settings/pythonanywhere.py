@@ -12,12 +12,10 @@ DATABASES = {
 
 ALLOWED_HOSTS = ["eddiemich.pythonanywhere.com"]
 
-CORS_ALLOWED_ORIGINS = [
-    "https://betamodehus.vercel.app",
-    "https://betamodehus-git-main.vercel.app",
-]
-
-CSRF_TRUSTED_ORIGINS = CORS_ALLOWED_ORIGINS
+# Accept any betamodehus*.vercel.app origin (production + previews)
+CORS_ALLOWED_ORIGIN_REGEXES = [r"^https://betamodehus[\w-]*\.vercel\.app$"]
+CORS_ALLOWED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = ["https://betamodehus.vercel.app"]
 
 DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
 STATIC_ROOT = BASE_DIR / "staticfiles"
