@@ -1938,6 +1938,31 @@ function SettingsTab() {
   });
   const [busy, setBusy] = useState(false);
   const [notice, setNotice] = useState("");
+  const [pw, setPw] = useState({ current: "", next: "", next2: "" });
+  const [pwNotice, setPwNotice] = useState("");
+  const [pwBusy, setPwBusy] = useState(false);
+  const [showPw, setShowPw] = useState(false);
+
+  const savePassword = async (e) => {
+    e.preventDefault();
+    setPwBusy(true);
+    setPwNotice("");
+    try {
+      await api.post("/auth/password/", {
+        current_password: pw.current,
+        new_password: pw.next,
+        new_password2: pw.next2,
+      });
+      setPw({ current: "", next: "", next2: "" });
+      setPwNotice("Password changed successfully.");
+    } catch (err) {
+      const data = err.response?.data || {};
+      const first = Object.values(data).flat()[0];
+      setPwNotice(first || "Could not change password. Check your input.");
+    } finally {
+      setPwBusy(false);
+    }
+  };
 
   useEffect(() => {
     api
@@ -2056,7 +2081,81 @@ function SettingsTab() {
         <a href="http://127.0.0.1:8000/vault/" className="mt-3 sm:mt-4 inline-flex text-xs sm:text-sm font-semibold text-gold-700 hover:underline">
           Open Django admin →
         </a>
-      </section>   
+      </section>
+
+      <section className="max-w-2xl rounded-2xl border border-midnight-100 bg-white p-4 sm:p-5 lg:p-6 shadow-soft">
+        <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-gold-600">
+          Security
+        </p>
+        <h3 className="font-display mt-1 text-lg font-bold text-midnight-950">
+          Change password
+        </h3>
+        <p className="mt-1 sm:mt-2 text-xs sm:text-sm leading-5 sm:leading-6 text-midnight-600">
+          Update the password you use to log in to the store and this dashboard.
+        </p>
+
+        {pwNotice && (
+          <div
+            className={`mt-3 sm:mt-4 rounded-xl border px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm ${
+              pwNotice.includes("successfully")
+                ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                : "border-red-200 bg-red-50 text-red-700"
+            }`}
+          >
+            {pwNotice}
+          </div>
+        )}
+
+        <form onSubmit={savePassword} className="mt-4 sm:mt-5 space-y-3 sm:space-y-4">
+          <div>
+            <label className="label-bm">Current password</label>
+            <input
+              required
+              type={showPw ? "text" : "password"}
+              value={pw.current}
+              onChange={(e) => setPw((p) => ({ ...p, current: e.target.value }))}
+              className="input-bm text-sm"
+              placeholder="Your current password"
+            />
+          </div>
+          <div className="grid gap-3 sm:gap-4 sm:grid-cols-2">
+            <div>
+              <label className="label-bm">New password</label>
+              <input
+                required
+                type={showPw ? "text" : "password"}
+                value={pw.next}
+                onChange={(e) => setPw((p) => ({ ...p, next: e.target.value }))}
+                className="input-bm text-sm"
+                placeholder="New password"
+              />
+            </div>
+            <div>
+              <label className="label-bm">Confirm new password</label>
+              <input
+                required
+                type={showPw ? "text" : "password"}
+                value={pw.next2}
+                onChange={(e) => setPw((p) => ({ ...p, next2: e.target.value }))}
+                className="input-bm text-sm"
+                placeholder="Repeat new password"
+              />
+            </div>
+          </div>
+          <button
+            type="button"
+            onClick={() => setShowPw((v) => !v)}
+            className="text-[11px] sm:text-xs font-semibold text-midnight-600 hover:text-gold-700"
+          >
+            {showPw ? "Hide" : "Show"} passwords
+          </button>
+          <div className="pt-1">
+            <button type="submit" disabled={pwBusy} className="btn-gold w-full sm:w-auto text-sm">
+              {pwBusy ? "Updating..." : "Update password"}
+            </button>
+          </div>
+        </form>
+      </section>
     </div>
   );
 }
