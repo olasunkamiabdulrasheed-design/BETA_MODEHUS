@@ -4,7 +4,13 @@ from rest_framework.response import Response
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 from .models import Address
-from .serializers import AddressSerializer, LoginSerializer, SignupSerializer, UserSerializer
+from .serializers import (
+    AddressSerializer,
+    ChangePasswordSerializer,
+    LoginSerializer,
+    SignupSerializer,
+    UserSerializer,
+)
 
 User = get_user_model()
 
@@ -42,6 +48,21 @@ class MeView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class ChangePasswordView(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+
+    def post(self, request):
+        serializer = ChangePasswordSerializer(
+            data=request.data, context={"request": request}
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            {"detail": "Password updated successfully."},
+            status=status.HTTP_200_OK,
+        )
 
 
 class AddressListCreateView(generics.ListCreateAPIView):
