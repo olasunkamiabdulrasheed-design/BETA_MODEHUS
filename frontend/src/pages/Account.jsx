@@ -21,6 +21,9 @@ export default function Account() {
   const [orders, setOrders] = useState([]);
   const [form, setForm] = useState(EMPTY);
   const [notice, setNotice] = useState("");
+  const [pw, setPw] = useState({ current: "", next: "", next2: "" });
+  const [pwNotice, setPwNotice] = useState("");
+  const [showPw, setShowPw] = useState(false);
 
   const load = () => {
     api
@@ -87,6 +90,26 @@ export default function Account() {
   const removeAddress = async (id) => {
     await api.delete(`/auth/addresses/${id}/`);
     load();
+  };
+
+  const changePassword = async (e) => {
+    e.preventDefault();
+    setPwNotice("");
+
+    try {
+      await api.post("/auth/password/", {
+        current_password: pw.current,
+        new_password: pw.next,
+        new_password2: pw.next2,
+      });
+
+      setPw({ current: "", next: "", next2: "" });
+      setPwNotice("Password changed successfully.");
+    } catch (err) {
+      const data = err.response?.data || {};
+      const first = Object.values(data).flat()[0];
+      setPwNotice(first || "Could not change password. Check your input.");
+    }
   };
 
   const totalOrders = orders.length;
@@ -575,6 +598,103 @@ export default function Account() {
             </div>
           </section>
         </div>
+
+        {/* CHANGE PASSWORD */}
+        <section className="mt-8 rounded-2xl border border-midnight-100 bg-white shadow-sm">
+          <div className="border-b border-midnight-100 p-6 sm:p-7">
+            <div className="flex items-center justify-between gap-4">
+              <div>
+                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-gold-600">
+                  Security
+                </p>
+
+                <h2 className="font-display mt-1 text-2xl font-bold text-midnight-950">
+                  Change Password
+                </h2>
+              </div>
+
+              <div className="hidden h-10 w-10 items-center justify-center rounded-full border border-midnight-100 sm:flex">
+                <span className="h-3 w-3 rounded-full border-2 border-gold-500" />
+              </div>
+            </div>
+
+            <p className="mt-2 text-xs text-midnight-500">
+              Update the password you use to log in to your account.
+            </p>
+
+            {pwNotice && (
+              <div
+                className={`mt-5 rounded-xl border px-4 py-3 text-sm ${
+                  pwNotice.includes("successfully")
+                    ? "border-emerald-200 bg-emerald-50 text-emerald-700"
+                    : "border-red-200 bg-red-50 text-red-600"
+                }`}
+              >
+                {pwNotice}
+              </div>
+            )}
+          </div>
+
+          <form onSubmit={changePassword} className="p-6 sm:p-7">
+            <div className="grid gap-4 sm:grid-cols-3">
+              <div>
+                <label className="label-bm">Current password</label>
+                <input
+                  required
+                  type={showPw ? "text" : "password"}
+                  value={pw.current}
+                  onChange={(e) =>
+                    setPw((p) => ({ ...p, current: e.target.value }))
+                  }
+                  className="input-bm"
+                  placeholder="Your current password"
+                />
+              </div>
+
+              <div>
+                <label className="label-bm">New password</label>
+                <input
+                  required
+                  type={showPw ? "text" : "password"}
+                  value={pw.next}
+                  onChange={(e) =>
+                    setPw((p) => ({ ...p, next: e.target.value }))
+                  }
+                  className="input-bm"
+                  placeholder="New password"
+                />
+              </div>
+
+              <div>
+                <label className="label-bm">Confirm new password</label>
+                <input
+                  required
+                  type={showPw ? "text" : "password"}
+                  value={pw.next2}
+                  onChange={(e) =>
+                    setPw((p) => ({ ...p, next2: e.target.value }))
+                  }
+                  className="input-bm"
+                  placeholder="Repeat new password"
+                />
+              </div>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setShowPw((v) => !v)}
+              className="mt-3 text-xs font-semibold text-midnight-600 transition hover:text-gold-700"
+            >
+              {showPw ? "Hide" : "Show"} passwords
+            </button>
+
+            <div className="mt-5">
+              <button type="submit" className="btn-gold w-full sm:w-auto">
+                Update Password
+              </button>
+            </div>
+          </form>
+        </section>
       </div>
     </main>
   );
