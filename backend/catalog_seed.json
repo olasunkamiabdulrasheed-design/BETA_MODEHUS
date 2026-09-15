@@ -1,0 +1,2809 @@
+[
+{
+  "model": "catalog.category",
+  "pk": 1,
+  "fields": {
+    "name": "Agbada",
+    "slug": "agbada",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.169Z",
+    "updated_at": "2026-09-04T23:05:26.169Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 2,
+  "fields": {
+    "name": "Senator Wear",
+    "slug": "senator-wear",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.184Z",
+    "updated_at": "2026-09-04T23:05:26.184Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 3,
+  "fields": {
+    "name": "Kaftan",
+    "slug": "kaftan",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.199Z",
+    "updated_at": "2026-09-04T23:05:26.199Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 4,
+  "fields": {
+    "name": "Native Shirts",
+    "slug": "native-shirts",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.234Z",
+    "updated_at": "2026-09-04T23:05:26.234Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 5,
+  "fields": {
+    "name": "Native Trousers",
+    "slug": "native-trousers",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.254Z",
+    "updated_at": "2026-09-04T23:05:26.254Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 6,
+  "fields": {
+    "name": "Traditional Two-Piece",
+    "slug": "traditional-two-piece",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.269Z",
+    "updated_at": "2026-09-04T23:05:26.270Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 7,
+  "fields": {
+    "name": "Ankara Wear",
+    "slug": "ankara-wear",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.283Z",
+    "updated_at": "2026-09-04T23:05:26.283Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 8,
+  "fields": {
+    "name": "Lace Outfits",
+    "slug": "lace-outfits",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.295Z",
+    "updated_at": "2026-09-04T23:05:26.295Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 9,
+  "fields": {
+    "name": "Men's Shirts",
+    "slug": "mens-shirts",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.308Z",
+    "updated_at": "2026-09-04T23:05:26.308Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 11,
+  "fields": {
+    "name": "Dresses",
+    "slug": "dresses",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.333Z",
+    "updated_at": "2026-09-04T23:05:26.333Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 12,
+  "fields": {
+    "name": "Jumpsuits",
+    "slug": "jumpsuits",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.345Z",
+    "updated_at": "2026-09-04T23:05:26.345Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 13,
+  "fields": {
+    "name": "Hoodies",
+    "slug": "hoodies",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.358Z",
+    "updated_at": "2026-09-04T23:05:26.358Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 14,
+  "fields": {
+    "name": "Jackets",
+    "slug": "jackets",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.371Z",
+    "updated_at": "2026-09-04T23:05:26.371Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 15,
+  "fields": {
+    "name": "Shorts",
+    "slug": "shorts",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:26.382Z",
+    "updated_at": "2026-09-04T23:05:26.382Z"
+  }
+},
+{
+  "model": "catalog.category",
+  "pk": 17,
+  "fields": {
+    "name": "AG",
+    "slug": "ag",
+    "description": "",
+    "is_active": true,
+    "sort_order": 0,
+    "created_at": "2026-09-12T22:18:24.673Z",
+    "updated_at": "2026-09-12T22:18:24.673Z"
+  }
+},
+{
+  "model": "catalog.brand",
+  "pk": 1,
+  "fields": {
+    "name": "BETA_MODEHUS",
+    "slug": "beta_modehus",
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.392Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 1,
+  "fields": {
+    "category": 1,
+    "brand": 1,
+    "name": "Classic Embroidered Agbada Set",
+    "slug": "classic-embroidered-agbada-set",
+    "short_description": "A three-piece flowing agbada with subtle embroidered details, tailored for ceremonies and special occasions.",
+    "description": "A three-piece flowing agbada with subtle embroidered details, tailored for ceremonies and special occasions.",
+    "specifications": {},
+    "price": "95000.00",
+    "sku": "BM-AGBADA-7439",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:26.407Z",
+    "updated_at": "2026-09-04T23:05:26.407Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 2,
+  "fields": {
+    "category": 2,
+    "brand": 1,
+    "name": "Premium Senator Wear with Crest",
+    "slug": "premium-senator-wear-with-crest",
+    "short_description": "Two-piece senator wear with a fitted crest detail. A refined choice for a polished contemporary look.",
+    "description": "Two-piece senator wear with a fitted crest detail. A refined choice for a polished contemporary look.",
+    "specifications": {},
+    "price": "55000.00",
+    "sku": "BM-SENATOR-4269",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:26.792Z",
+    "updated_at": "2026-09-04T23:05:26.792Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 3,
+  "fields": {
+    "category": 3,
+    "brand": 1,
+    "name": "Flow Long-Sleeve Kaftan",
+    "slug": "flow-long-sleeve-kaftan",
+    "short_description": "Comfortable long-sleeve kaftan cut for an elegant, relaxed fit.",
+    "description": "Comfortable long-sleeve kaftan cut for an elegant, relaxed fit.",
+    "specifications": {},
+    "price": "45000.00",
+    "sku": "BM-KAFTAN-9869",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:27.108Z",
+    "updated_at": "2026-09-04T23:05:27.108Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 4,
+  "fields": {
+    "category": 4,
+    "brand": 1,
+    "name": "Short-Sleeve Native Shirt",
+    "slug": "short-sleeve-native-shirt",
+    "short_description": "A crisp short-sleeve native shirt suited to smart-casual and everyday wear.",
+    "description": "A crisp short-sleeve native shirt suited to smart-casual and everyday wear.",
+    "specifications": {},
+    "price": "32000.00",
+    "sku": "BM-NATIVE-9444",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:27.315Z",
+    "updated_at": "2026-09-04T23:05:27.315Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 5,
+  "fields": {
+    "category": 5,
+    "brand": 1,
+    "name": "Tailored Native Trousers",
+    "slug": "tailored-native-trousers",
+    "short_description": "Well-cut native trousers that pair with any of our shirts for a complete look.",
+    "description": "Well-cut native trousers that pair with any of our shirts for a complete look.",
+    "specifications": {},
+    "price": "25000.00",
+    "sku": "BM-NATIVE-6787",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:27.741Z",
+    "updated_at": "2026-09-04T23:05:27.741Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 6,
+  "fields": {
+    "category": 6,
+    "brand": 1,
+    "name": "Two-Piece Corporate Native Set",
+    "slug": "two-piece-corporate-native-set",
+    "short_description": "A complete two-piece traditional set styled for the modern professional.",
+    "description": "A complete two-piece traditional set styled for the modern professional.",
+    "specifications": {},
+    "price": "68000.00",
+    "sku": "BM-TRADITIONAL-5463",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:28.009Z",
+    "updated_at": "2026-09-04T23:05:28.010Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 7,
+  "fields": {
+    "category": 7,
+    "brand": 1,
+    "name": "Vibrant Ankara Two-Piece",
+    "slug": "vibrant-ankara-two-piece",
+    "short_description": "Bold ankara prints cut into a modern two-piece. Each piece is unique to its fabric run.",
+    "description": "Bold ankara prints cut into a modern two-piece. Each piece is unique to its fabric run.",
+    "specifications": {},
+    "price": "48000.00",
+    "sku": "BM-ANKARA-1022",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:28.291Z",
+    "updated_at": "2026-09-04T23:05:28.291Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 8,
+  "fields": {
+    "category": 8,
+    "brand": 1,
+    "name": "Elegant Lace Outfit for Occasion",
+    "slug": "elegant-lace-outfit-for-occasion",
+    "short_description": "Luxurious lace outfit tailored for weddings and formal celebrations.",
+    "description": "Luxurious lace outfit tailored for weddings and formal celebrations.",
+    "specifications": {},
+    "price": "72000.00",
+    "sku": "BM-LACE-7627",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:28.448Z",
+    "updated_at": "2026-09-04T23:05:28.448Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 9,
+  "fields": {
+    "category": 9,
+    "brand": 1,
+    "name": "Crisp Classic Button-Down Shirt",
+    "slug": "crisp-classic-button-down-shirt",
+    "short_description": "A well-fitted button-down shirt in breathable cotton for daily wear.",
+    "description": "A well-fitted button-down shirt in breathable cotton for daily wear.",
+    "specifications": {},
+    "price": "28000.00",
+    "sku": "BM-MEN'S-3529",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:28.646Z",
+    "updated_at": "2026-09-04T23:05:28.646Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 10,
+  "fields": {
+    "category": 11,
+    "brand": 1,
+    "name": "Elegant Ankara Maxi Dress",
+    "slug": "elegant-ankara-maxi-dress",
+    "short_description": "Flowing maxi dress cut from premium ankara fabric, made to move.",
+    "description": "Flowing maxi dress cut from premium ankara fabric, made to move.",
+    "specifications": {},
+    "price": "42000.00",
+    "sku": "BM-DRESSES-9553",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:28.897Z",
+    "updated_at": "2026-09-04T23:05:28.897Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 11,
+  "fields": {
+    "category": 12,
+    "brand": 1,
+    "name": "Tailored Jumpsuit",
+    "slug": "tailored-jumpsuit",
+    "short_description": "A sleek tailored jumpsuit offering polish and ease in one piece.",
+    "description": "A sleek tailored jumpsuit offering polish and ease in one piece.",
+    "specifications": {},
+    "price": "46000.00",
+    "sku": "BM-JUMPSUITS-2587",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:29.062Z",
+    "updated_at": "2026-09-04T23:05:29.062Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 12,
+  "fields": {
+    "category": 13,
+    "brand": 1,
+    "name": "Premium Oversized Hoodie",
+    "slug": "premium-oversized-hoodie",
+    "short_description": "Soft heavyweight hoodie with a relaxed oversized fit for everyday comfort.",
+    "description": "Soft heavyweight hoodie with a relaxed oversized fit for everyday comfort.",
+    "specifications": {},
+    "price": "35000.00",
+    "sku": "BM-HOODIES-4832",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:29.228Z",
+    "updated_at": "2026-09-04T23:05:29.228Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 13,
+  "fields": {
+    "category": 14,
+    "brand": 1,
+    "name": "Structured Casual Jacket",
+    "slug": "structured-casual-jacket",
+    "short_description": "A sharp casual jacket that layers effortlessly over shirts and hoodies.",
+    "description": "A sharp casual jacket that layers effortlessly over shirts and hoodies.",
+    "specifications": {},
+    "price": "58000.00",
+    "sku": "BM-JACKETS-1421",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:29.423Z",
+    "updated_at": "2026-09-04T23:05:29.423Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 14,
+  "fields": {
+    "category": 15,
+    "brand": 1,
+    "name": "Comfort Casual Shorts",
+    "slug": "comfort-casual-shorts",
+    "short_description": "Relaxed-fit shorts for warm days, in easy-wearing cotton.",
+    "description": "Relaxed-fit shorts for warm days, in easy-wearing cotton.",
+    "specifications": {},
+    "price": "18000.00",
+    "sku": "BM-SHORTS-5158",
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-04T23:05:29.613Z",
+    "updated_at": "2026-09-04T23:05:29.614Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 16,
+  "fields": {
+    "category": 17,
+    "brand": null,
+    "name": "P",
+    "slug": "p",
+    "short_description": "",
+    "description": "",
+    "specifications": {},
+    "price": "30000.00",
+    "sku": null,
+    "status": "published",
+    "is_active": true,
+    "is_featured": true,
+    "created_at": "2026-09-12T22:18:24.689Z",
+    "updated_at": "2026-09-14T17:13:03.102Z"
+  }
+},
+{
+  "model": "catalog.product",
+  "pk": 18,
+  "fields": {
+    "category": 11,
+    "brand": 1,
+    "name": "Gown",
+    "slug": "gown-2",
+    "short_description": "Mini - skirt",
+    "description": "J_xy!YuKHey9y!5J_xy!YuKHey9y!5J_xy!YuKHey9y!5J_xy!YuKHey9y!5J_xy!YuKHey9y!5J_xy!YuKHey9y!5J_xy!YuKHey9y!5",
+    "specifications": {},
+    "price": "20000.00",
+    "sku": "optional",
+    "status": "published",
+    "is_active": false,
+    "is_featured": true,
+    "created_at": "2026-09-14T21:59:55.337Z",
+    "updated_at": "2026-09-14T22:00:19.580Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 1,
+  "fields": {
+    "product": 1,
+    "size": "M",
+    "color": "Navy",
+    "color_hex": "#1a2a44",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-M-NAVY",
+    "price": null,
+    "stock": 9,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.425Z",
+    "updated_at": "2026-09-04T23:05:26.425Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 2,
+  "fields": {
+    "product": 1,
+    "size": "M",
+    "color": "Wine",
+    "color_hex": "#722f37",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-M-WINE",
+    "price": null,
+    "stock": 32,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.436Z",
+    "updated_at": "2026-09-04T23:05:26.436Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 3,
+  "fields": {
+    "product": 1,
+    "size": "M",
+    "color": "Emerald",
+    "color_hex": "#046307",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-M-EMERALD",
+    "price": null,
+    "stock": 9,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.449Z",
+    "updated_at": "2026-09-04T23:05:26.449Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 4,
+  "fields": {
+    "product": 1,
+    "size": "L",
+    "color": "Navy",
+    "color_hex": "#1a2a44",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-L-NAVY",
+    "price": null,
+    "stock": 31,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.461Z",
+    "updated_at": "2026-09-04T23:05:26.461Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 5,
+  "fields": {
+    "product": 1,
+    "size": "L",
+    "color": "Wine",
+    "color_hex": "#722f37",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-L-WINE",
+    "price": null,
+    "stock": 29,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.473Z",
+    "updated_at": "2026-09-04T23:05:26.473Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 6,
+  "fields": {
+    "product": 1,
+    "size": "L",
+    "color": "Emerald",
+    "color_hex": "#046307",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-L-EMERALD",
+    "price": null,
+    "stock": 10,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.485Z",
+    "updated_at": "2026-09-04T23:05:26.485Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 7,
+  "fields": {
+    "product": 1,
+    "size": "XL",
+    "color": "Navy",
+    "color_hex": "#1a2a44",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-XL-NAVY",
+    "price": null,
+    "stock": 28,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.499Z",
+    "updated_at": "2026-09-04T23:05:26.499Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 8,
+  "fields": {
+    "product": 1,
+    "size": "XL",
+    "color": "Wine",
+    "color_hex": "#722f37",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-XL-WINE",
+    "price": null,
+    "stock": 40,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.527Z",
+    "updated_at": "2026-09-04T23:05:26.527Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 9,
+  "fields": {
+    "product": 1,
+    "size": "XL",
+    "color": "Emerald",
+    "color_hex": "#046307",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-XL-EMERALD",
+    "price": null,
+    "stock": 18,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.541Z",
+    "updated_at": "2026-09-04T23:05:26.541Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 10,
+  "fields": {
+    "product": 1,
+    "size": "XXL",
+    "color": "Navy",
+    "color_hex": "#1a2a44",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-XXL-NAVY",
+    "price": null,
+    "stock": 38,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.556Z",
+    "updated_at": "2026-09-04T23:05:26.556Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 11,
+  "fields": {
+    "product": 1,
+    "size": "XXL",
+    "color": "Wine",
+    "color_hex": "#722f37",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-XXL-WINE",
+    "price": null,
+    "stock": 33,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.572Z",
+    "updated_at": "2026-09-04T23:05:26.572Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 12,
+  "fields": {
+    "product": 1,
+    "size": "XXL",
+    "color": "Emerald",
+    "color_hex": "#046307",
+    "attributes": {},
+    "sku": "BM-AGBADA-7439-XXL-EMERALD",
+    "price": null,
+    "stock": 36,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.583Z",
+    "updated_at": "2026-09-04T23:05:26.583Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 13,
+  "fields": {
+    "product": 2,
+    "size": "S",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-S-BLACK",
+    "price": null,
+    "stock": 14,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.804Z",
+    "updated_at": "2026-09-04T23:05:26.805Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 14,
+  "fields": {
+    "product": 2,
+    "size": "S",
+    "color": "Beige",
+    "color_hex": "#c3a46b",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-S-BEIGE",
+    "price": null,
+    "stock": 27,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.816Z",
+    "updated_at": "2026-09-04T23:05:26.816Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 15,
+  "fields": {
+    "product": 2,
+    "size": "S",
+    "color": "Ash",
+    "color_hex": "#9aa3ad",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-S-ASH",
+    "price": null,
+    "stock": 37,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.828Z",
+    "updated_at": "2026-09-04T23:05:26.828Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 16,
+  "fields": {
+    "product": 2,
+    "size": "M",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-M-BLACK",
+    "price": null,
+    "stock": 19,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.840Z",
+    "updated_at": "2026-09-04T23:05:26.840Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 17,
+  "fields": {
+    "product": 2,
+    "size": "M",
+    "color": "Beige",
+    "color_hex": "#c3a46b",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-M-BEIGE",
+    "price": null,
+    "stock": 31,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.855Z",
+    "updated_at": "2026-09-04T23:05:26.855Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 18,
+  "fields": {
+    "product": 2,
+    "size": "M",
+    "color": "Ash",
+    "color_hex": "#9aa3ad",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-M-ASH",
+    "price": null,
+    "stock": 8,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.880Z",
+    "updated_at": "2026-09-04T23:05:26.880Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 19,
+  "fields": {
+    "product": 2,
+    "size": "L",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-L-BLACK",
+    "price": null,
+    "stock": 22,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.894Z",
+    "updated_at": "2026-09-04T23:05:26.894Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 20,
+  "fields": {
+    "product": 2,
+    "size": "L",
+    "color": "Beige",
+    "color_hex": "#c3a46b",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-L-BEIGE",
+    "price": null,
+    "stock": 12,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.913Z",
+    "updated_at": "2026-09-04T23:05:26.913Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 21,
+  "fields": {
+    "product": 2,
+    "size": "L",
+    "color": "Ash",
+    "color_hex": "#9aa3ad",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-L-ASH",
+    "price": null,
+    "stock": 27,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.928Z",
+    "updated_at": "2026-09-04T23:05:26.928Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 22,
+  "fields": {
+    "product": 2,
+    "size": "XL",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-XL-BLACK",
+    "price": null,
+    "stock": 37,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.940Z",
+    "updated_at": "2026-09-04T23:05:26.940Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 23,
+  "fields": {
+    "product": 2,
+    "size": "XL",
+    "color": "Beige",
+    "color_hex": "#c3a46b",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-XL-BEIGE",
+    "price": null,
+    "stock": 19,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.961Z",
+    "updated_at": "2026-09-04T23:05:26.961Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 24,
+  "fields": {
+    "product": 2,
+    "size": "XL",
+    "color": "Ash",
+    "color_hex": "#9aa3ad",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-XL-ASH",
+    "price": null,
+    "stock": 22,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.979Z",
+    "updated_at": "2026-09-04T23:05:26.979Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 25,
+  "fields": {
+    "product": 2,
+    "size": "XXL",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-XXL-BLACK",
+    "price": null,
+    "stock": 35,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:26.990Z",
+    "updated_at": "2026-09-04T23:05:26.991Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 26,
+  "fields": {
+    "product": 2,
+    "size": "XXL",
+    "color": "Beige",
+    "color_hex": "#c3a46b",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-XXL-BEIGE",
+    "price": null,
+    "stock": 33,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.000Z",
+    "updated_at": "2026-09-04T23:05:27.000Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 27,
+  "fields": {
+    "product": 2,
+    "size": "XXL",
+    "color": "Ash",
+    "color_hex": "#9aa3ad",
+    "attributes": {},
+    "sku": "BM-SENATOR-4269-XXL-ASH",
+    "price": null,
+    "stock": 13,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.010Z",
+    "updated_at": "2026-09-04T23:05:27.010Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 28,
+  "fields": {
+    "product": 3,
+    "size": "M",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-KAFTAN-9869-M-WHITE",
+    "price": null,
+    "stock": 34,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.123Z",
+    "updated_at": "2026-09-04T23:05:27.123Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 29,
+  "fields": {
+    "product": 3,
+    "size": "M",
+    "color": "Royal Blue",
+    "color_hex": "#21409a",
+    "attributes": {},
+    "sku": "BM-KAFTAN-9869-M-ROYAL BLUE",
+    "price": null,
+    "stock": 10,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.141Z",
+    "updated_at": "2026-09-04T23:05:27.141Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 30,
+  "fields": {
+    "product": 3,
+    "size": "L",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-KAFTAN-9869-L-WHITE",
+    "price": null,
+    "stock": 23,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.152Z",
+    "updated_at": "2026-09-04T23:05:27.152Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 31,
+  "fields": {
+    "product": 3,
+    "size": "L",
+    "color": "Royal Blue",
+    "color_hex": "#21409a",
+    "attributes": {},
+    "sku": "BM-KAFTAN-9869-L-ROYAL BLUE",
+    "price": null,
+    "stock": 15,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.165Z",
+    "updated_at": "2026-09-04T23:05:27.165Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 32,
+  "fields": {
+    "product": 3,
+    "size": "XL",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-KAFTAN-9869-XL-WHITE",
+    "price": null,
+    "stock": 29,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.179Z",
+    "updated_at": "2026-09-04T23:05:27.179Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 33,
+  "fields": {
+    "product": 3,
+    "size": "XL",
+    "color": "Royal Blue",
+    "color_hex": "#21409a",
+    "attributes": {},
+    "sku": "BM-KAFTAN-9869-XL-ROYAL BLUE",
+    "price": null,
+    "stock": 40,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.190Z",
+    "updated_at": "2026-09-04T23:05:27.190Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 34,
+  "fields": {
+    "product": 4,
+    "size": "S",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-S-WHITE",
+    "price": null,
+    "stock": 34,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.328Z",
+    "updated_at": "2026-09-04T23:05:27.328Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 35,
+  "fields": {
+    "product": 4,
+    "size": "S",
+    "color": "Slate",
+    "color_hex": "#55606b",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-S-SLATE",
+    "price": null,
+    "stock": 10,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.340Z",
+    "updated_at": "2026-09-04T23:05:27.340Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 36,
+  "fields": {
+    "product": 4,
+    "size": "S",
+    "color": "Champagne",
+    "color_hex": "#d9c9a3",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-S-CHAMPAGNE",
+    "price": null,
+    "stock": 27,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.351Z",
+    "updated_at": "2026-09-04T23:05:27.351Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 37,
+  "fields": {
+    "product": 4,
+    "size": "M",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-M-WHITE",
+    "price": null,
+    "stock": 22,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.398Z",
+    "updated_at": "2026-09-04T23:05:27.398Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 38,
+  "fields": {
+    "product": 4,
+    "size": "M",
+    "color": "Slate",
+    "color_hex": "#55606b",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-M-SLATE",
+    "price": null,
+    "stock": 24,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.411Z",
+    "updated_at": "2026-09-04T23:05:27.411Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 39,
+  "fields": {
+    "product": 4,
+    "size": "M",
+    "color": "Champagne",
+    "color_hex": "#d9c9a3",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-M-CHAMPAGNE",
+    "price": null,
+    "stock": 19,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.424Z",
+    "updated_at": "2026-09-04T23:05:27.424Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 40,
+  "fields": {
+    "product": 4,
+    "size": "L",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-L-WHITE",
+    "price": null,
+    "stock": 19,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.436Z",
+    "updated_at": "2026-09-04T23:05:27.439Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 41,
+  "fields": {
+    "product": 4,
+    "size": "L",
+    "color": "Slate",
+    "color_hex": "#55606b",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-L-SLATE",
+    "price": null,
+    "stock": 12,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.452Z",
+    "updated_at": "2026-09-04T23:05:27.452Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 42,
+  "fields": {
+    "product": 4,
+    "size": "L",
+    "color": "Champagne",
+    "color_hex": "#d9c9a3",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-L-CHAMPAGNE",
+    "price": null,
+    "stock": 26,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.468Z",
+    "updated_at": "2026-09-04T23:05:27.468Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 43,
+  "fields": {
+    "product": 4,
+    "size": "XL",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XL-WHITE",
+    "price": null,
+    "stock": 9,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.481Z",
+    "updated_at": "2026-09-04T23:05:27.481Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 44,
+  "fields": {
+    "product": 4,
+    "size": "XL",
+    "color": "Slate",
+    "color_hex": "#55606b",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XL-SLATE",
+    "price": null,
+    "stock": 19,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.493Z",
+    "updated_at": "2026-09-04T23:05:27.493Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 45,
+  "fields": {
+    "product": 4,
+    "size": "XL",
+    "color": "Champagne",
+    "color_hex": "#d9c9a3",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XL-CHAMPAGNE",
+    "price": null,
+    "stock": 34,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.506Z",
+    "updated_at": "2026-09-04T23:05:27.506Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 46,
+  "fields": {
+    "product": 4,
+    "size": "XXL",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XXL-WHITE",
+    "price": null,
+    "stock": 12,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.517Z",
+    "updated_at": "2026-09-04T23:05:27.517Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 47,
+  "fields": {
+    "product": 4,
+    "size": "XXL",
+    "color": "Slate",
+    "color_hex": "#55606b",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XXL-SLATE",
+    "price": null,
+    "stock": 39,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.531Z",
+    "updated_at": "2026-09-04T23:05:27.531Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 48,
+  "fields": {
+    "product": 4,
+    "size": "XXL",
+    "color": "Champagne",
+    "color_hex": "#d9c9a3",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XXL-CHAMPAGNE",
+    "price": null,
+    "stock": 35,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.565Z",
+    "updated_at": "2026-09-04T23:05:27.566Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 49,
+  "fields": {
+    "product": 4,
+    "size": "XXXL",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XXXL-WHITE",
+    "price": null,
+    "stock": 11,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.580Z",
+    "updated_at": "2026-09-04T23:05:27.580Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 50,
+  "fields": {
+    "product": 4,
+    "size": "XXXL",
+    "color": "Slate",
+    "color_hex": "#55606b",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XXXL-SLATE",
+    "price": null,
+    "stock": 35,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.591Z",
+    "updated_at": "2026-09-04T23:05:27.592Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 51,
+  "fields": {
+    "product": 4,
+    "size": "XXXL",
+    "color": "Champagne",
+    "color_hex": "#d9c9a3",
+    "attributes": {},
+    "sku": "BM-NATIVE-9444-XXXL-CHAMPAGNE",
+    "price": null,
+    "stock": 38,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.603Z",
+    "updated_at": "2026-09-04T23:05:27.603Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 52,
+  "fields": {
+    "product": 5,
+    "size": "30",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-30-BLACK",
+    "price": null,
+    "stock": 28,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.757Z",
+    "updated_at": "2026-09-04T23:05:27.757Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 53,
+  "fields": {
+    "product": 5,
+    "size": "30",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-30-GREY",
+    "price": null,
+    "stock": 34,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.769Z",
+    "updated_at": "2026-09-04T23:05:27.769Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 54,
+  "fields": {
+    "product": 5,
+    "size": "32",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-32-BLACK",
+    "price": null,
+    "stock": 21,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.782Z",
+    "updated_at": "2026-09-04T23:05:27.782Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 55,
+  "fields": {
+    "product": 5,
+    "size": "32",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-32-GREY",
+    "price": null,
+    "stock": 31,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.797Z",
+    "updated_at": "2026-09-04T23:05:27.797Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 56,
+  "fields": {
+    "product": 5,
+    "size": "34",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-34-BLACK",
+    "price": null,
+    "stock": 9,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.813Z",
+    "updated_at": "2026-09-04T23:05:27.813Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 57,
+  "fields": {
+    "product": 5,
+    "size": "34",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-34-GREY",
+    "price": null,
+    "stock": 17,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.825Z",
+    "updated_at": "2026-09-04T23:05:27.825Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 58,
+  "fields": {
+    "product": 5,
+    "size": "36",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-36-BLACK",
+    "price": null,
+    "stock": 32,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.838Z",
+    "updated_at": "2026-09-04T23:05:27.838Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 59,
+  "fields": {
+    "product": 5,
+    "size": "36",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-36-GREY",
+    "price": null,
+    "stock": 16,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.850Z",
+    "updated_at": "2026-09-04T23:05:27.850Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 60,
+  "fields": {
+    "product": 5,
+    "size": "38",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-38-BLACK",
+    "price": null,
+    "stock": 20,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.863Z",
+    "updated_at": "2026-09-04T23:05:27.863Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 61,
+  "fields": {
+    "product": 5,
+    "size": "38",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-38-GREY",
+    "price": null,
+    "stock": 23,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.878Z",
+    "updated_at": "2026-09-04T23:05:27.878Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 62,
+  "fields": {
+    "product": 5,
+    "size": "40",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-40-BLACK",
+    "price": null,
+    "stock": 38,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.893Z",
+    "updated_at": "2026-09-04T23:05:27.893Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 63,
+  "fields": {
+    "product": 5,
+    "size": "40",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-NATIVE-6787-40-GREY",
+    "price": null,
+    "stock": 15,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:27.907Z",
+    "updated_at": "2026-09-04T23:05:27.907Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 64,
+  "fields": {
+    "product": 6,
+    "size": "M",
+    "color": "Burgundy",
+    "color_hex": "#6e1f2b",
+    "attributes": {},
+    "sku": "BM-TRADITIONAL-5463-M-BURGUNDY",
+    "price": null,
+    "stock": 39,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.022Z",
+    "updated_at": "2026-09-04T23:05:28.022Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 65,
+  "fields": {
+    "product": 6,
+    "size": "M",
+    "color": "Brown",
+    "color_hex": "#5b3a29",
+    "attributes": {},
+    "sku": "BM-TRADITIONAL-5463-M-BROWN",
+    "price": null,
+    "stock": 26,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.032Z",
+    "updated_at": "2026-09-04T23:05:28.032Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 66,
+  "fields": {
+    "product": 6,
+    "size": "L",
+    "color": "Burgundy",
+    "color_hex": "#6e1f2b",
+    "attributes": {},
+    "sku": "BM-TRADITIONAL-5463-L-BURGUNDY",
+    "price": null,
+    "stock": 15,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.047Z",
+    "updated_at": "2026-09-04T23:05:28.047Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 67,
+  "fields": {
+    "product": 6,
+    "size": "L",
+    "color": "Brown",
+    "color_hex": "#5b3a29",
+    "attributes": {},
+    "sku": "BM-TRADITIONAL-5463-L-BROWN",
+    "price": null,
+    "stock": 30,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.059Z",
+    "updated_at": "2026-09-04T23:05:28.059Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 68,
+  "fields": {
+    "product": 6,
+    "size": "XL",
+    "color": "Burgundy",
+    "color_hex": "#6e1f2b",
+    "attributes": {},
+    "sku": "BM-TRADITIONAL-5463-XL-BURGUNDY",
+    "price": null,
+    "stock": 11,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.076Z",
+    "updated_at": "2026-09-04T23:05:28.076Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 69,
+  "fields": {
+    "product": 6,
+    "size": "XL",
+    "color": "Brown",
+    "color_hex": "#5b3a29",
+    "attributes": {},
+    "sku": "BM-TRADITIONAL-5463-XL-BROWN",
+    "price": null,
+    "stock": 12,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.089Z",
+    "updated_at": "2026-09-04T23:05:28.089Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 70,
+  "fields": {
+    "product": 7,
+    "size": "S",
+    "color": "Multicolour",
+    "color_hex": "#d17a22",
+    "attributes": {},
+    "sku": "BM-ANKARA-1022-S-MULTICOLOUR",
+    "price": null,
+    "stock": 20,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.301Z",
+    "updated_at": "2026-09-04T23:05:28.301Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 71,
+  "fields": {
+    "product": 7,
+    "size": "M",
+    "color": "Multicolour",
+    "color_hex": "#d17a22",
+    "attributes": {},
+    "sku": "BM-ANKARA-1022-M-MULTICOLOUR",
+    "price": null,
+    "stock": 36,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.313Z",
+    "updated_at": "2026-09-04T23:05:28.313Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 72,
+  "fields": {
+    "product": 7,
+    "size": "L",
+    "color": "Multicolour",
+    "color_hex": "#d17a22",
+    "attributes": {},
+    "sku": "BM-ANKARA-1022-L-MULTICOLOUR",
+    "price": null,
+    "stock": 17,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.324Z",
+    "updated_at": "2026-09-04T23:05:28.324Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 73,
+  "fields": {
+    "product": 7,
+    "size": "XL",
+    "color": "Multicolour",
+    "color_hex": "#d17a22",
+    "attributes": {},
+    "sku": "BM-ANKARA-1022-XL-MULTICOLOUR",
+    "price": null,
+    "stock": 24,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.335Z",
+    "updated_at": "2026-09-04T23:05:28.335Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 74,
+  "fields": {
+    "product": 8,
+    "size": "M",
+    "color": "Ivory",
+    "color_hex": "#f5efdf",
+    "attributes": {},
+    "sku": "BM-LACE-7627-M-IVORY",
+    "price": null,
+    "stock": 40,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.461Z",
+    "updated_at": "2026-09-04T23:05:28.461Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 75,
+  "fields": {
+    "product": 8,
+    "size": "M",
+    "color": "Gold",
+    "color_hex": "#b7952f",
+    "attributes": {},
+    "sku": "BM-LACE-7627-M-GOLD",
+    "price": null,
+    "stock": 29,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.474Z",
+    "updated_at": "2026-09-04T23:05:28.474Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 76,
+  "fields": {
+    "product": 8,
+    "size": "L",
+    "color": "Ivory",
+    "color_hex": "#f5efdf",
+    "attributes": {},
+    "sku": "BM-LACE-7627-L-IVORY",
+    "price": null,
+    "stock": 38,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.492Z",
+    "updated_at": "2026-09-04T23:05:28.492Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 77,
+  "fields": {
+    "product": 8,
+    "size": "L",
+    "color": "Gold",
+    "color_hex": "#b7952f",
+    "attributes": {},
+    "sku": "BM-LACE-7627-L-GOLD",
+    "price": null,
+    "stock": 14,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.506Z",
+    "updated_at": "2026-09-04T23:05:28.506Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 78,
+  "fields": {
+    "product": 8,
+    "size": "XL",
+    "color": "Ivory",
+    "color_hex": "#f5efdf",
+    "attributes": {},
+    "sku": "BM-LACE-7627-XL-IVORY",
+    "price": null,
+    "stock": 20,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.523Z",
+    "updated_at": "2026-09-04T23:05:28.523Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 79,
+  "fields": {
+    "product": 8,
+    "size": "XL",
+    "color": "Gold",
+    "color_hex": "#b7952f",
+    "attributes": {},
+    "sku": "BM-LACE-7627-XL-GOLD",
+    "price": null,
+    "stock": 28,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.534Z",
+    "updated_at": "2026-09-04T23:05:28.534Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 80,
+  "fields": {
+    "product": 9,
+    "size": "S",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-S-WHITE",
+    "price": null,
+    "stock": 31,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.662Z",
+    "updated_at": "2026-09-04T23:05:28.662Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 81,
+  "fields": {
+    "product": 9,
+    "size": "S",
+    "color": "Sky",
+    "color_hex": "#a9c6e6",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-S-SKY",
+    "price": null,
+    "stock": 32,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.683Z",
+    "updated_at": "2026-09-04T23:05:28.683Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 82,
+  "fields": {
+    "product": 9,
+    "size": "M",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-M-WHITE",
+    "price": null,
+    "stock": 25,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.700Z",
+    "updated_at": "2026-09-04T23:05:28.700Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 83,
+  "fields": {
+    "product": 9,
+    "size": "M",
+    "color": "Sky",
+    "color_hex": "#a9c6e6",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-M-SKY",
+    "price": null,
+    "stock": 27,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.713Z",
+    "updated_at": "2026-09-04T23:05:28.713Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 84,
+  "fields": {
+    "product": 9,
+    "size": "L",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-L-WHITE",
+    "price": null,
+    "stock": 26,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.724Z",
+    "updated_at": "2026-09-04T23:05:28.724Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 85,
+  "fields": {
+    "product": 9,
+    "size": "L",
+    "color": "Sky",
+    "color_hex": "#a9c6e6",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-L-SKY",
+    "price": null,
+    "stock": 9,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.739Z",
+    "updated_at": "2026-09-04T23:05:28.739Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 86,
+  "fields": {
+    "product": 9,
+    "size": "XL",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-XL-WHITE",
+    "price": null,
+    "stock": 39,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.750Z",
+    "updated_at": "2026-09-04T23:05:28.750Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 87,
+  "fields": {
+    "product": 9,
+    "size": "XL",
+    "color": "Sky",
+    "color_hex": "#a9c6e6",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-XL-SKY",
+    "price": null,
+    "stock": 30,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.763Z",
+    "updated_at": "2026-09-04T23:05:28.763Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 88,
+  "fields": {
+    "product": 9,
+    "size": "XXL",
+    "color": "White",
+    "color_hex": "#f4f4f4",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-XXL-WHITE",
+    "price": null,
+    "stock": 27,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.780Z",
+    "updated_at": "2026-09-04T23:05:28.780Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 89,
+  "fields": {
+    "product": 9,
+    "size": "XXL",
+    "color": "Sky",
+    "color_hex": "#a9c6e6",
+    "attributes": {},
+    "sku": "BM-MEN'S-3529-XXL-SKY",
+    "price": null,
+    "stock": 34,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.796Z",
+    "updated_at": "2026-09-04T23:05:28.797Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 90,
+  "fields": {
+    "product": 10,
+    "size": "S",
+    "color": "Multicolour",
+    "color_hex": "#8a2b8f",
+    "attributes": {},
+    "sku": "BM-DRESSES-9553-S-MULTICOLOUR",
+    "price": null,
+    "stock": 9,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.915Z",
+    "updated_at": "2026-09-04T23:05:28.915Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 91,
+  "fields": {
+    "product": 10,
+    "size": "M",
+    "color": "Multicolour",
+    "color_hex": "#8a2b8f",
+    "attributes": {},
+    "sku": "BM-DRESSES-9553-M-MULTICOLOUR",
+    "price": null,
+    "stock": 22,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.930Z",
+    "updated_at": "2026-09-04T23:05:28.930Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 92,
+  "fields": {
+    "product": 10,
+    "size": "L",
+    "color": "Multicolour",
+    "color_hex": "#8a2b8f",
+    "attributes": {},
+    "sku": "BM-DRESSES-9553-L-MULTICOLOUR",
+    "price": null,
+    "stock": 29,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.943Z",
+    "updated_at": "2026-09-04T23:05:28.943Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 93,
+  "fields": {
+    "product": 10,
+    "size": "XL",
+    "color": "Multicolour",
+    "color_hex": "#8a2b8f",
+    "attributes": {},
+    "sku": "BM-DRESSES-9553-XL-MULTICOLOUR",
+    "price": null,
+    "stock": 18,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:28.959Z",
+    "updated_at": "2026-09-04T23:05:28.959Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 94,
+  "fields": {
+    "product": 11,
+    "size": "S",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-JUMPSUITS-2587-S-BLACK",
+    "price": null,
+    "stock": 22,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.073Z",
+    "updated_at": "2026-09-04T23:05:29.073Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 95,
+  "fields": {
+    "product": 11,
+    "size": "S",
+    "color": "Forest",
+    "color_hex": "#1f3d2b",
+    "attributes": {},
+    "sku": "BM-JUMPSUITS-2587-S-FOREST",
+    "price": null,
+    "stock": 13,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.088Z",
+    "updated_at": "2026-09-04T23:05:29.089Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 96,
+  "fields": {
+    "product": 11,
+    "size": "M",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-JUMPSUITS-2587-M-BLACK",
+    "price": null,
+    "stock": 9,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.101Z",
+    "updated_at": "2026-09-04T23:05:29.101Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 97,
+  "fields": {
+    "product": 11,
+    "size": "M",
+    "color": "Forest",
+    "color_hex": "#1f3d2b",
+    "attributes": {},
+    "sku": "BM-JUMPSUITS-2587-M-FOREST",
+    "price": null,
+    "stock": 16,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.113Z",
+    "updated_at": "2026-09-04T23:05:29.113Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 98,
+  "fields": {
+    "product": 11,
+    "size": "L",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-JUMPSUITS-2587-L-BLACK",
+    "price": null,
+    "stock": 17,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.125Z",
+    "updated_at": "2026-09-04T23:05:29.125Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 99,
+  "fields": {
+    "product": 11,
+    "size": "L",
+    "color": "Forest",
+    "color_hex": "#1f3d2b",
+    "attributes": {},
+    "sku": "BM-JUMPSUITS-2587-L-FOREST",
+    "price": null,
+    "stock": 20,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.134Z",
+    "updated_at": "2026-09-04T23:05:29.134Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 100,
+  "fields": {
+    "product": 12,
+    "size": "M",
+    "color": "Charcoal",
+    "color_hex": "#353b40",
+    "attributes": {},
+    "sku": "BM-HOODIES-4832-M-CHARCOAL",
+    "price": null,
+    "stock": 20,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.240Z",
+    "updated_at": "2026-09-04T23:05:29.240Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 101,
+  "fields": {
+    "product": 12,
+    "size": "M",
+    "color": "Navy",
+    "color_hex": "#1a2a44",
+    "attributes": {},
+    "sku": "BM-HOODIES-4832-M-NAVY",
+    "price": null,
+    "stock": 20,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.250Z",
+    "updated_at": "2026-09-04T23:05:29.250Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 102,
+  "fields": {
+    "product": 12,
+    "size": "L",
+    "color": "Charcoal",
+    "color_hex": "#353b40",
+    "attributes": {},
+    "sku": "BM-HOODIES-4832-L-CHARCOAL",
+    "price": null,
+    "stock": 37,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.262Z",
+    "updated_at": "2026-09-04T23:05:29.263Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 103,
+  "fields": {
+    "product": 12,
+    "size": "L",
+    "color": "Navy",
+    "color_hex": "#1a2a44",
+    "attributes": {},
+    "sku": "BM-HOODIES-4832-L-NAVY",
+    "price": null,
+    "stock": 27,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.277Z",
+    "updated_at": "2026-09-04T23:05:29.277Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 104,
+  "fields": {
+    "product": 12,
+    "size": "XL",
+    "color": "Charcoal",
+    "color_hex": "#353b40",
+    "attributes": {},
+    "sku": "BM-HOODIES-4832-XL-CHARCOAL",
+    "price": null,
+    "stock": 10,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.293Z",
+    "updated_at": "2026-09-04T23:05:29.293Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 105,
+  "fields": {
+    "product": 12,
+    "size": "XL",
+    "color": "Navy",
+    "color_hex": "#1a2a44",
+    "attributes": {},
+    "sku": "BM-HOODIES-4832-XL-NAVY",
+    "price": null,
+    "stock": 17,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.305Z",
+    "updated_at": "2026-09-04T23:05:29.305Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 106,
+  "fields": {
+    "product": 12,
+    "size": "XXL",
+    "color": "Charcoal",
+    "color_hex": "#353b40",
+    "attributes": {},
+    "sku": "BM-HOODIES-4832-XXL-CHARCOAL",
+    "price": null,
+    "stock": 32,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.317Z",
+    "updated_at": "2026-09-04T23:05:29.317Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 107,
+  "fields": {
+    "product": 12,
+    "size": "XXL",
+    "color": "Navy",
+    "color_hex": "#1a2a44",
+    "attributes": {},
+    "sku": "BM-HOODIES-4832-XXL-NAVY",
+    "price": null,
+    "stock": 27,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.330Z",
+    "updated_at": "2026-09-04T23:05:29.330Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 108,
+  "fields": {
+    "product": 13,
+    "size": "M",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-JACKETS-1421-M-BLACK",
+    "price": null,
+    "stock": 36,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.443Z",
+    "updated_at": "2026-09-04T23:05:29.443Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 109,
+  "fields": {
+    "product": 13,
+    "size": "M",
+    "color": "Taupe",
+    "color_hex": "#8f7761",
+    "attributes": {},
+    "sku": "BM-JACKETS-1421-M-TAUPE",
+    "price": null,
+    "stock": 28,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.457Z",
+    "updated_at": "2026-09-04T23:05:29.457Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 110,
+  "fields": {
+    "product": 13,
+    "size": "L",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-JACKETS-1421-L-BLACK",
+    "price": null,
+    "stock": 35,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.468Z",
+    "updated_at": "2026-09-04T23:05:29.468Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 111,
+  "fields": {
+    "product": 13,
+    "size": "L",
+    "color": "Taupe",
+    "color_hex": "#8f7761",
+    "attributes": {},
+    "sku": "BM-JACKETS-1421-L-TAUPE",
+    "price": null,
+    "stock": 36,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.480Z",
+    "updated_at": "2026-09-04T23:05:29.480Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 112,
+  "fields": {
+    "product": 13,
+    "size": "XL",
+    "color": "Black",
+    "color_hex": "#111111",
+    "attributes": {},
+    "sku": "BM-JACKETS-1421-XL-BLACK",
+    "price": null,
+    "stock": 25,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.493Z",
+    "updated_at": "2026-09-04T23:05:29.493Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 113,
+  "fields": {
+    "product": 13,
+    "size": "XL",
+    "color": "Taupe",
+    "color_hex": "#8f7761",
+    "attributes": {},
+    "sku": "BM-JACKETS-1421-XL-TAUPE",
+    "price": null,
+    "stock": 28,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.504Z",
+    "updated_at": "2026-09-04T23:05:29.505Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 114,
+  "fields": {
+    "product": 14,
+    "size": "S",
+    "color": "Olive",
+    "color_hex": "#556b2f",
+    "attributes": {},
+    "sku": "BM-SHORTS-5158-S-OLIVE",
+    "price": null,
+    "stock": 20,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.628Z",
+    "updated_at": "2026-09-04T23:05:29.628Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 115,
+  "fields": {
+    "product": 14,
+    "size": "S",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-SHORTS-5158-S-GREY",
+    "price": null,
+    "stock": 31,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.642Z",
+    "updated_at": "2026-09-04T23:05:29.642Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 116,
+  "fields": {
+    "product": 14,
+    "size": "M",
+    "color": "Olive",
+    "color_hex": "#556b2f",
+    "attributes": {},
+    "sku": "BM-SHORTS-5158-M-OLIVE",
+    "price": null,
+    "stock": 24,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.654Z",
+    "updated_at": "2026-09-04T23:05:29.654Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 117,
+  "fields": {
+    "product": 14,
+    "size": "M",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-SHORTS-5158-M-GREY",
+    "price": null,
+    "stock": 8,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.666Z",
+    "updated_at": "2026-09-04T23:05:29.666Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 118,
+  "fields": {
+    "product": 14,
+    "size": "L",
+    "color": "Olive",
+    "color_hex": "#556b2f",
+    "attributes": {},
+    "sku": "BM-SHORTS-5158-L-OLIVE",
+    "price": null,
+    "stock": 15,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.678Z",
+    "updated_at": "2026-09-04T23:05:29.678Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 119,
+  "fields": {
+    "product": 14,
+    "size": "L",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-SHORTS-5158-L-GREY",
+    "price": null,
+    "stock": 8,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.690Z",
+    "updated_at": "2026-09-04T23:05:29.690Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 120,
+  "fields": {
+    "product": 14,
+    "size": "XL",
+    "color": "Olive",
+    "color_hex": "#556b2f",
+    "attributes": {},
+    "sku": "BM-SHORTS-5158-XL-OLIVE",
+    "price": null,
+    "stock": 37,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.711Z",
+    "updated_at": "2026-09-04T23:05:29.711Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 121,
+  "fields": {
+    "product": 14,
+    "size": "XL",
+    "color": "Grey",
+    "color_hex": "#6b6f74",
+    "attributes": {},
+    "sku": "BM-SHORTS-5158-XL-GREY",
+    "price": null,
+    "stock": 27,
+    "is_active": true,
+    "created_at": "2026-09-04T23:05:29.723Z",
+    "updated_at": "2026-09-04T23:05:29.723Z"
+  }
+},
+{
+  "model": "catalog.productvariant",
+  "pk": 123,
+  "fields": {
+    "product": 16,
+    "size": "L",
+    "color": "G",
+    "color_hex": "",
+    "attributes": {},
+    "sku": "S",
+    "price": "30000.00",
+    "stock": 8,
+    "is_active": true,
+    "created_at": "2026-09-12T22:18:24.710Z",
+    "updated_at": "2026-09-12T22:33:44.576Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 2,
+  "fields": {
+    "product": 2,
+    "variant": null,
+    "image": "products/2/2ead1500b84249e6942dc60b78910fd4.png",
+    "alt_text": "Demo image for Premium Senator Wear with Crest — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:27.094Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 4,
+  "fields": {
+    "product": 4,
+    "variant": null,
+    "image": "products/4/598344af60ad403ab4183825e3e4d4ce.png",
+    "alt_text": "Demo image for Short-Sleeve Native Shirt — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:27.721Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 5,
+  "fields": {
+    "product": 5,
+    "variant": null,
+    "image": "products/5/79a3c5ee87f946e8816b461d0e6b97eb.png",
+    "alt_text": "Demo image for Tailored Native Trousers — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:27.996Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 6,
+  "fields": {
+    "product": 6,
+    "variant": null,
+    "image": "products/6/1630abaa45b74a76b7de3b8d891da4f9.png",
+    "alt_text": "Demo image for Two-Piece Corporate Native Set — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:28.277Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 7,
+  "fields": {
+    "product": 7,
+    "variant": null,
+    "image": "products/7/92e9583109d04d58809d0b21d543a60e.png",
+    "alt_text": "Demo image for Vibrant Ankara Two-Piece — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:28.434Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 8,
+  "fields": {
+    "product": 8,
+    "variant": null,
+    "image": "products/8/25acde8e6b2747b3873dd9bf1d3a6faf.png",
+    "alt_text": "Demo image for Elegant Lace Outfit for Occasion — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:28.624Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 9,
+  "fields": {
+    "product": 9,
+    "variant": null,
+    "image": "products/9/7c4d321268d04d2a9d92985200702823.png",
+    "alt_text": "Demo image for Crisp Classic Button-Down Shirt — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:28.877Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 10,
+  "fields": {
+    "product": 10,
+    "variant": null,
+    "image": "products/10/db51690be7f047b0a7ddc05482e5fb05.png",
+    "alt_text": "Demo image for Elegant Ankara Maxi Dress — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:29.048Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 11,
+  "fields": {
+    "product": 11,
+    "variant": null,
+    "image": "products/11/23739d1c05de4ef49d7be0a0cabf73b5.png",
+    "alt_text": "Demo image for Tailored Jumpsuit — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:29.215Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 12,
+  "fields": {
+    "product": 12,
+    "variant": null,
+    "image": "products/12/d221491a17614258a9afb81ee43f5f8e.png",
+    "alt_text": "Demo image for Premium Oversized Hoodie — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:29.400Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 13,
+  "fields": {
+    "product": 13,
+    "variant": null,
+    "image": "products/13/23553e5ac50b45cb9a0a7400708a9272.png",
+    "alt_text": "Demo image for Structured Casual Jacket — replace with the real product photo from the admin dashboard.",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-04T23:05:29.595Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 19,
+  "fields": {
+    "product": 1,
+    "variant": null,
+    "image": "products/1/52200d525d294ea3954c2bdbd12e74d0.jpg",
+    "alt_text": "Classic Embroidered Agbada Set",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-11T21:34:40.093Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 20,
+  "fields": {
+    "product": 3,
+    "variant": null,
+    "image": "products/3/835d5b5ee20a455885e92c3ef13abc9f.jpg",
+    "alt_text": "Flow Long-Sleeve Kaftan",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-11T21:34:40.735Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 21,
+  "fields": {
+    "product": 3,
+    "variant": null,
+    "image": "products/3/2308298c84744a4ca251dada333ccf6b.jpg",
+    "alt_text": "Flow Long-Sleeve Kaftan",
+    "is_primary": false,
+    "sort_order": 0,
+    "created_at": "2026-09-11T21:34:41.391Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 22,
+  "fields": {
+    "product": 14,
+    "variant": null,
+    "image": "products/14/23d0c903843b45fd896b7795ed872c6c.jpg",
+    "alt_text": "Comfort Casual Shorts",
+    "is_primary": true,
+    "sort_order": 0,
+    "created_at": "2026-09-11T21:34:41.856Z"
+  }
+},
+{
+  "model": "catalog.productimage",
+  "pk": 23,
+  "fields": {
+    "product": 3,
+    "variant": null,
+    "image": "products/3/7ecb0f5c51024c97b9be541f43ee2a35.jpg",
+    "alt_text": "",
+    "is_primary": false,
+    "sort_order": 1,
+    "created_at": "2026-09-12T21:50:44.180Z"
+  }
+}
+]
