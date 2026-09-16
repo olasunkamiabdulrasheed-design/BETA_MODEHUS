@@ -68,6 +68,12 @@ class PublicCatalogApiTests(TestCase):
         self.assertEqual(len(res.data["variants"]), 1)
         self.assertEqual(res.data["variants"][0]["size"], "M")
 
+    def test_list_exposes_total_stock(self):
+        res = self.client.get("/api/v1/products/")
+        by_slug = {p["slug"]: p for p in res.data["results"]}
+        self.assertEqual(by_slug[self.lace.slug]["total_stock"], 10)
+        self.assertEqual(by_slug[self.kaftan.slug]["total_stock"], 0)
+
 
 class AdminCatalogApiTests(TestCase):
     def setUp(self):

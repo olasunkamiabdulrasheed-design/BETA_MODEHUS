@@ -42,6 +42,7 @@ class ProductListSerializer(serializers.ModelSerializer):
     primary_image = serializers.SerializerMethodField()
     min_price = serializers.SerializerMethodField()
     is_available = serializers.SerializerMethodField()
+    total_stock = serializers.SerializerMethodField()
     rating = serializers.SerializerMethodField()
 
     class Meta:
@@ -49,7 +50,7 @@ class ProductListSerializer(serializers.ModelSerializer):
         fields = [
             "id", "name", "slug", "category", "brand", "price",
             "min_price", "primary_image", "rating", "is_available",
-            "is_featured", "short_description", "created_at",
+            "total_stock", "is_featured", "short_description", "created_at",
         ]
 
     def _variants(self, obj):
@@ -72,6 +73,9 @@ class ProductListSerializer(serializers.ModelSerializer):
 
     def get_is_available(self, obj):
         return bool(self._variants(obj))
+
+    def get_total_stock(self, obj):
+        return sum(v.stock for v in self._variants(obj))
 
     def get_rating(self, obj):
         count = getattr(obj, "rating_count", 0) or 0
