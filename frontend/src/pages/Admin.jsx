@@ -1996,6 +1996,14 @@ function SettingsTab() {
     }
   };
 
+  const vaultUrl = (() => {
+    try {
+      return new URL(api.defaults.baseURL).origin + "/vault/";
+    } catch {
+      return "http://127.0.0.1:8000/vault/";
+    }
+  })();
+
   return (
     <div className="space-y-4 sm:space-y-5">
       <section className="max-w-2xl overflow-hidden rounded-2xl border border-midnight-100 bg-white shadow-soft">
@@ -2078,7 +2086,7 @@ function SettingsTab() {
         <p className="mt-1 sm:mt-2 text-xs sm:text-sm leading-5 sm:leading-6 text-midnight-600">
           Use the existing Django administration area for deeper catalogue and system management.
         </p>
-        <a href="http://127.0.0.1:8000/vault/" className="mt-3 sm:mt-4 inline-flex text-xs sm:text-sm font-semibold text-gold-700 hover:underline">
+        <a href={vaultUrl} className="mt-3 sm:mt-4 inline-flex text-xs sm:text-sm font-semibold text-gold-700 hover:underline">
           Open Django admin →
         </a>
       </section>
