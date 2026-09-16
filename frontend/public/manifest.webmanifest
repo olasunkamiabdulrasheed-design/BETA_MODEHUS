@@ -1,0 +1,21 @@
+{
+  "name": "BETA_MODEHUS",
+  "short_name": "BETA_MODEHUS",
+  "description": "For Better Elegance and Luxury — premium Nigerian fashion delivered nationwide.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b1a33",
+  "theme_color": "#0b1a33",
+  "icons": [
+    {
+      "src": "/img/logo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/img/logo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
