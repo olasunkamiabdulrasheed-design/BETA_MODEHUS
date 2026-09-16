@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { currency } from "../api/client.js";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
+import EmptyState from "../components/EmptyState.jsx";
 
 export default function Cart() {
   const { items, itemCount, subtotal, updateQty, remove, loading } = useCart();
@@ -21,12 +22,12 @@ export default function Cart() {
       </h1>
 
       {items.length === 0 ? (
-        <div className="mt-10 text-center">
-          <p className="text-midnight-700">Your cart is empty.</p>
-          <Link to="/products" className="btn-gold mt-4">
-            Start shopping
-          </Link>
-        </div>
+        <EmptyState
+          title="Your cart is empty"
+          description="Browse the collection and add pieces you love."
+          actionLabel="Start shopping"
+          actionTo="/products"
+        />
       ) : (
         <div className="mt-8 grid gap-8 lg:grid-cols-3">
           <div className="space-y-4 lg:col-span-2">
@@ -61,7 +62,11 @@ export default function Cart() {
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
-                      <button onClick={() => updateQty(item.id, item.quantity - 1)} className="btn-outline !px-2.5 !py-1">
+                      <button
+                        onClick={() => updateQty(item.id, item.quantity - 1)}
+                        aria-label={`Decrease quantity of ${item.product_name}`}
+                        className="btn-outline !px-2.5 !py-1"
+                      >
                         −
                       </button>
                       <input
@@ -71,7 +76,11 @@ export default function Cart() {
                         onChange={(e) => updateQty(item.id, Number(e.target.value) || 1)}
                         className="input-bm w-16 text-center"
                       />
-                      <button onClick={() => updateQty(item.id, item.quantity + 1)} className="btn-outline !px-2.5 !py-1">
+                      <button
+                        onClick={() => updateQty(item.id, item.quantity + 1)}
+                        aria-label={`Increase quantity of ${item.product_name}`}
+                        className="btn-outline !px-2.5 !py-1"
+                      >
                         +
                       </button>
                     </div>
