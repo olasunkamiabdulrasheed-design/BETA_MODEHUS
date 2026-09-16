@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
+import useDocumentTitle from "../hooks/useDocumentTitle.js";
 
 export default function Signup() {
+  useDocumentTitle("Create account");
   const { signup } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({

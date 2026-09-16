@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { api } from "../api/client.js";
 import ProductCard from "../components/ProductCard.jsx";
 import ContactSection from "../components/ContactSection.jsx";
+import useDocumentTitle from "../hooks/useDocumentTitle.js";
 
 const CATEGORY_FEEDS = [
   { key: "agbada", tag: "Grand occasion", title: "Agbada & Grand Occasion" },
@@ -49,6 +50,7 @@ const TESTIMONIALS = [
 ];
 
 export default function Home() {
+  useDocumentTitle("Home");
   const [featured, setFeatured] = useState([]);
   const [categoryPreview, setCategoryPreview] = useState({});
   const [error, setError] = useState("");

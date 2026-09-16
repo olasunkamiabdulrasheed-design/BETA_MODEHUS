@@ -1,4 +1,5 @@
 import ContactSection from "../components/ContactSection.jsx";
+import useDocumentTitle from "../hooks/useDocumentTitle.js";
 
 const FAQ = [
   [
@@ -16,6 +17,7 @@ const FAQ = [
 ];
 
 export default function Contact() {
+  useDocumentTitle("Contact");
   return (
     <div>
       {/* HERO */}

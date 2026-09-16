@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { api } from "../api/client.js";
+import useDocumentTitle from "../hooks/useDocumentTitle.js";
 import ProductCard from "../components/ProductCard.jsx";
 
 const SORT_OPTIONS = [
@@ -11,6 +12,7 @@ const SORT_OPTIONS = [
 ];
 
 export default function Catalog() {
+  useDocumentTitle("Shop");
   const [params, setParams] = useSearchParams();
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);

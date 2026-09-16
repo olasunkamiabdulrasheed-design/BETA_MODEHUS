@@ -1,4 +1,5 @@
 ﻿import { Link } from "react-router-dom";
+import useDocumentTitle from "../hooks/useDocumentTitle.js";
 
 const VALUES = [
   {
@@ -49,6 +50,7 @@ const STEPS = [
 ];
 
 export default function About() {
+  useDocumentTitle("About us");
   return (
     <main className="overflow-hidden bg-white">
       {/* HERO */}
