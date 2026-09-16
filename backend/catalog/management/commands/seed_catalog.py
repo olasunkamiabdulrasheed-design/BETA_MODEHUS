@@ -131,6 +131,38 @@ PRODUCTS = [
         "sizes": ["S", "M", "L", "XL"],
         "colors": [("Olive", "#556b2f"), ("Grey", "#6b6f74")],
     },
+    {
+        "category": "Men's Shirts",
+        "name": "Weekend Linen Button-Down Shirt",
+        "price": "22000",
+        "desc": "Lightweight linen button-down, perfect for casual Fridays.",
+        "sizes": ["S", "M", "L", "XL", "XXL"],
+        "colors": [("White", "#f4f4f4"), ("Sky", "#a9c6e6")],
+    },
+    {
+        "category": "Senator Wear",
+        "name": "Royal Blue Senator Two-Piece",
+        "price": "45000",
+        "desc": "Premium senator wear with a matching cap-ready finish.",
+        "sizes": ["S", "M", "L", "XL", "XXL"],
+        "colors": [("Royal Blue", "#21409a"), ("Black", "#111111")],
+    },
+    {
+        "category": "Jackets",
+        "name": "Danfo Club Denim Jacket",
+        "price": "38000",
+        "desc": "Structured denim jacket with a bold street finish.",
+        "sizes": ["M", "L", "XL"],
+        "colors": [("Denim", "#4f6d8f"), ("Black", "#111111")],
+    },
+    {
+        "category": "Ankara Wear",
+        "name": "Ankara Crop Top & Wrap Skirt",
+        "price": "32000",
+        "desc": "Vibrant ankara two-piece for a head-turning look.",
+        "sizes": ["S", "M", "L", "XL"],
+        "colors": [("Multicolour", "#d17a22")],
+    },
 ]
 
 
