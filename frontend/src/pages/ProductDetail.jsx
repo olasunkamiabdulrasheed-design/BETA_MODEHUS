@@ -3,6 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { api, currency } from "../api/client.js";
 import { useCart } from "../context/CartContext.jsx";
 import { useAuth } from "../context/AuthContext.jsx";
+import ProductCard from "../components/ProductCard.jsx";
 
 export default function ProductDetail() {
   const { slug } = useParams();
@@ -14,6 +15,7 @@ export default function ProductDetail() {
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [reviews, setReviews] = useState([]);
+  const [related, setRelated] = useState([]);
 
   useEffect(() => {
     setLoading(true);
@@ -29,6 +31,16 @@ export default function ProductDetail() {
         setProduct(p.data);
         setSelected(p.data.variants?.[0] || null);
         setReviews(r?.data?.results || []);
+        api
+          .get(`/products/?search=${encodeURIComponent(p.data.category)}&page_size=6`)
+          .then((rel) =>
+            setRelated(
+              (rel.data.results || [])
+                .filter((item) => item.slug !== slug)
+                .slice(0, 4)
+            )
+          )
+          .catch(() => setRelated([]));
       })
       .catch(() => setError("Could not load product."))
       .finally(() => setLoading(false));
@@ -273,6 +285,19 @@ export default function ProductDetail() {
           </div>
         )}
       </section>
+
+      {related.length > 0 && (
+        <section className="mt-12">
+          <h2 className="font-display text-xl font-bold text-midnight-900">
+            You may also like
+          </h2>
+          <div className="mt-5 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4">
+            {related.map((item) => (
+              <ProductCard key={item.slug} product={item} />
+            ))}
+          </div>
+        </section>
+      )}
     </div>
   );
 }
