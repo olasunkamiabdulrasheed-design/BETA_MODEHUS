@@ -112,6 +112,49 @@ To use a different Vercel URL, edit `pythonanywhere.py` and **Reload** the web a
 
 ---
 
+## 6. Media & static files on PythonAnywhere
+
+Product images live in `backend/media/` and are served by a static mapping, not by
+Django (`DEBUG=False`). In the **Web** tab add:
+
+| URL | Directory |
+|-----|-----------|
+| `/static/` | `/home/<user>/BETA_MODEHUS/backend/staticfiles` |
+| `/media/`  | `/home/<user>/BETA_MODEHUS/backend/media` |
+
+Seed a fresh database with the checked-in fixture (fast, no image generation):
+
+```bash
+cd ~/BETA_MODEHUS/backend
+venv/bin/python manage.py migrate --settings=config.settings.pythonanywhere
+venv/bin/python manage.py loaddata ./catalog_seed.json --settings=config.settings.pythonanywhere
+unzip -o media_seed.zip -d .        # restores backend/media
+```
+
+Or generate the whole catalogue from scratch (creates placeholder images):
+
+```bash
+venv/bin/python manage.py seed_catalog --settings=config.settings.pythonanywhere
+```
+
+---
+
+## 7. Troubleshooting
+
+- **Images 404 / broken** — confirm the `/media/` static mapping above and that
+  `MEDIA_URL` in `pythonanywhere.py` is absolute
+  (`https://<user>.pythonanywhere.com/media/`).
+- **CORS errors in the browser** — the frontend origin must match
+  `CORS_ALLOWED_ORIGIN_REGEXES` in `pythonanywhere.py`, then **Reload**.
+- **`loaddata` says file not found** — pass an explicit path (`./catalog_seed.json`);
+  management commands don't search the current directory.
+- **Vercel still points at the old API** — redeploy the *newest* deployment;
+  `VITE_API_URL` is baked into the bundle at build time.
+- **Health check** — both `GET /health/` and `GET /api/v1/health/` return
+  `{"status": "ok", "service": "betamodehus-api"}`.
+
+---
+
 ## When he gives you the credentials
 
 No code changes needed on the frontend. On PythonAnywhere, either add them to
