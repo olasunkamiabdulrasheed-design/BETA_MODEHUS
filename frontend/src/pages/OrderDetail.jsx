@@ -19,6 +19,7 @@ export default function OrderDetail() {
   const [busy, setBusy] = useState(true);
   const [paying, setPaying] = useState(false);
   const [notice, setNotice] = useState("");
+  const [copied, setCopied] = useState(false);
 
   const load = useCallback(() => {
     api.get(`/orders/${number}/`)
@@ -86,10 +87,29 @@ export default function OrderDetail() {
   const canPay = order.payment_status !== "SUCCESS" &&
     (order.status === "PENDING_PAYMENT" || order.status === "FAILED");
 
+  const copyNumber = async () => {
+    try {
+      await navigator.clipboard.writeText(order.number);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
+  };
+
   return (
     <div className="container-bm py-12 sm:py-16">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h1 className="font-display text-4xl font-bold text-midnight-950 sm:text-5xl">Order #{order.number}</h1>
+        <div className="flex flex-wrap items-center gap-3">
+          <h1 className="font-display text-4xl font-bold text-midnight-950 sm:text-5xl">Order #{order.number}</h1>
+          <button
+            type="button"
+            onClick={copyNumber}
+            className="rounded-full border border-midnight-200 px-3 py-1 text-xs font-medium text-midnight-700 transition hover:border-gold-400 hover:text-gold-700"
+          >
+            {copied ? "Copied ✓" : "Copy #"}
+          </button>
+        </div>
         <span className={`rounded-full px-3 py-1 text-xs font-semibold ${STATUS_COLORS[order.status] || "bg-midnight-100 text-midnight-700"}`}>
           {order.status_display}
         </span>
