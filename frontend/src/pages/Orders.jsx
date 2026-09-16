@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, currency } from "../api/client.js";
 import { useAuth } from "../context/AuthContext.jsx";
+import EmptyState from "../components/EmptyState.jsx";
+import { formatDateTime } from "../utils/formatDate.js";
 
 const STATUS_COLORS = {
   PENDING_PAYMENT: "bg-amber-100 text-amber-800",
@@ -42,10 +44,12 @@ export default function Orders() {
       {busy ? (
         <p className="mt-6 text-midnight-700">Loading your orders…</p>
       ) : orders.length === 0 ? (
-        <div className="mt-6 text-center">
-          <p className="text-midnight-700">You have no orders yet.</p>
-          <Link to="/products" className="btn-gold mt-4">Start shopping</Link>
-        </div>
+        <EmptyState
+          title="No orders yet"
+          description="When you place your first order it will appear here with live status."
+          actionLabel="Start shopping"
+          actionTo="/products"
+        />
       ) : (
         <div className="mt-6 space-y-4">
           {orders.map((o) => (
@@ -58,7 +62,7 @@ export default function Orders() {
                 <div>
                   <div className="font-semibold text-midnight-900">Order #{o.number}</div>
                   <div className="text-xs text-midnight-700">
-                    {new Date(o.created_at).toLocaleString("en-NG", { dateStyle: "medium", timeStyle: "short" })}
+                    {formatDateTime(o.created_at)}
                   </div>
                 </div>
                 <div className="text-right">
