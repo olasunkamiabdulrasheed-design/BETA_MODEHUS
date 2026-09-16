@@ -93,6 +93,12 @@ export default function Layout() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <a
+        href="#main"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-midnight-950 focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-white"
+      >
+        Skip to content
+      </a>
       <header className="sticky top-0 z-40 bg-midnight-950/95 shadow-lg backdrop-blur-md">
         <div className="bg-gold-500 py-1.5 text-center text-xs font-semibold text-midnight-950">
           For Better Elegance and Luxury — Nationwide delivery across Nigeria
@@ -178,7 +184,7 @@ export default function Layout() {
         )}
       </header>
 
-      <main className="flex-1">
+        <main id="main" className="flex-1">
         <Outlet />
       </main>
 
