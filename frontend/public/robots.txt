@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /backstage
+Disallow: /account
+Disallow: /checkout
+
+Sitemap: https://beta-modehus.vercel.app/sitemap.xml
