@@ -49,6 +49,11 @@ export default function ProductCard({ product }) {
             Featured
           </span>
         )}
+        {product.total_stock > 0 && product.total_stock <= 5 && (
+          <span className="absolute bottom-2.5 left-2.5 rounded-full bg-amber-50/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-amber-700 shadow-sm">
+            Only {product.total_stock} left
+          </span>
+        )}
       </div>
       <div className="p-4">
         <div className="text-[10px] font-semibold uppercase tracking-[0.15em] text-gold-600">
