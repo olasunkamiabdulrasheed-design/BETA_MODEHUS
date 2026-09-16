@@ -47,6 +47,7 @@ urlpatterns = [
         name="redoc",
     ),
     path("health/", health_check, name="health"),
+    path("api/v1/health/", health_check, name="api-health"),
 ]
 
 # Development only: serve uploaded media + collected static.
