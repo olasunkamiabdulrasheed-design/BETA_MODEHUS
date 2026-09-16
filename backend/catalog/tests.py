@@ -292,6 +292,18 @@ class AdminCatalogApiTests(TestCase):
             self.assertEqual(bad.status_code, status.HTTP_400_BAD_REQUEST)
 
 
+class HealthEndpointTests(TestCase):
+    def test_root_health_endpoint(self):
+        res = self.client.get("/health/")
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.json()["status"], "ok")
+
+    def test_versioned_health_endpoint(self):
+        res = self.client.get("/api/v1/health/")
+        self.assertEqual(res.status_code, 200)
+        self.assertEqual(res.json()["service"], "betamodehus-api")
+
+
 class SeedCatalogCommandTests(TestCase):
     def test_seed_creates_catalogue_without_errors(self):
         with tempfile.TemporaryDirectory() as media_root:
