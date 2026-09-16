@@ -1,8 +1,11 @@
-﻿from django.test import TestCase
+﻿import tempfile
+
+from django.core.management import call_command
+from django.test import TestCase, override_settings
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from .models import Brand, Category, Product, ProductVariant
+from .models import Brand, Category, Product, ProductImage, ProductVariant
 
 
 class PublicCatalogApiTests(TestCase):
@@ -281,3 +284,24 @@ class AdminCatalogApiTests(TestCase):
                 format="multipart",
             )
             self.assertEqual(bad.status_code, status.HTTP_400_BAD_REQUEST)
+
+
+class SeedCatalogCommandTests(TestCase):
+    def test_seed_creates_catalogue_without_errors(self):
+        with tempfile.TemporaryDirectory() as media_root:
+            with override_settings(MEDIA_ROOT=media_root):
+                call_command("seed_catalog", verbosity=0)
+
+        self.assertGreaterEqual(Category.objects.count(), 15)
+        self.assertGreaterEqual(Product.objects.count(), 18)
+        self.assertTrue(ProductVariant.objects.exists())
+        self.assertTrue(ProductImage.objects.exists())
+
+    def test_seed_is_idempotent(self):
+        with tempfile.TemporaryDirectory() as media_root:
+            with override_settings(MEDIA_ROOT=media_root):
+                call_command("seed_catalog", verbosity=0)
+                first = Product.objects.count()
+                call_command("seed_catalog", verbosity=0)
+
+        self.assertEqual(Product.objects.count(), first)
