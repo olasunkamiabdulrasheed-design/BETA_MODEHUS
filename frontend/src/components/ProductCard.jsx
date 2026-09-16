@@ -1,7 +1,14 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { currency } from "../api/client.js";
 
 export default function ProductCard({ product }) {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setLoaded(false);
+  }, [product.primary_image]);
+
   return (
     <Link
       to={`/products/${product.slug}`}
@@ -9,12 +16,20 @@ export default function ProductCard({ product }) {
     >
       <div className="relative aspect-[4/5] w-full overflow-hidden bg-midnight-50">
         {product.primary_image ? (
-          <img
-            src={product.primary_image}
-            alt={product.name}
-            loading="lazy"
-            className="h-full w-full object-cover transition duration-500 group-hover:scale-110"
-          />
+          <div className="relative h-full w-full">
+            {!loaded && (
+              <div className="absolute inset-0 animate-pulse bg-midnight-200" />
+            )}
+            <img
+              src={product.primary_image}
+              alt={product.name}
+              loading="lazy"
+              onLoad={() => setLoaded(true)}
+              className={`h-full w-full object-cover transition duration-500 group-hover:scale-110 ${
+                loaded ? "opacity-100" : "opacity-0"
+              }`}
+            />
+          </div>
         ) : (
           <div className="flex h-full items-center justify-center text-4xl">
             <span className="text-midnight-300">✦</span>
