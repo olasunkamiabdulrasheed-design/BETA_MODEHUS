@@ -3,8 +3,10 @@ import random
 from decimal import Decimal
 from pathlib import Path
 
+from django.conf import settings
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
+from django.utils.crypto import get_random_string
 from PIL import Image, ImageDraw, ImageFont
 
 from accounts.models import User
@@ -175,9 +177,7 @@ class Command(BaseCommand):
             admin_password = os.environ.get("SEED_ADMIN_PASSWORD", "")
             if not User.objects.filter(email=admin_email).exists():
                 if not admin_password:
-                    admin_password = User.objects.make_random_password(
-                        length=20
-                    )
+                    admin_password = get_random_string(20)
                 User.objects.create_superuser(admin_email, admin_password)
                 self.stdout.write(
                     self.style.WARNING(
@@ -196,7 +196,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"Categories ready ({created_cat} created)."))
 
         brand, _ = Brand.objects.get_or_create(name="BETA_MODEHUS")
-        media_dir = BASE_DIR / "media"
+        media_dir = Path(settings.MEDIA_ROOT)
         media_dir.mkdir(parents=True, exist_ok=True)
         placeholder_cache = {}
 
