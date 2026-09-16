@@ -1,5 +1,5 @@
-﻿import { useState } from "react";
-import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
+﻿import { useEffect, useState } from "react";
+import { Link, NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext.jsx";
 import { useCart } from "../context/CartContext.jsx";
 import BackToTop from "./BackToTop.jsx";
@@ -13,7 +13,12 @@ export default function Layout() {
   const { user, logout } = useAuth();
   const { itemCount } = useCart();
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const handleLogout = () => {
     logout();
