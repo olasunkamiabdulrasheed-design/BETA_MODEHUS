@@ -148,3 +148,20 @@ BETA_MODEHUS/
 |-- CHANGELOG.md
 `-- README.md                (this file)
 ```
+## 5. Storefront features
+
+- **Home** — hero, featured products, category feeds, contact section.
+- **Catalog** — search, category / brand / size / colour / price / rating /
+  availability / featured filters, pagination.
+- **Product page** — image gallery, size & colour variant picker, stock-aware
+  quantity, add to cart, WhatsApp order shortcut, reviews, related products.
+- **Cart** — server-side cart, quantity controls, live totals, guest cart merge
+  on login.
+- **Checkout** — saved addresses, delivery details, shipping fee, order
+  creation, then payment.
+- **Payment** — OPay checkout in production; a gold "simulated checkout" page in
+  the demo.
+- **Orders** — order history and a detail page with status, tracking number and
+  a "Pay now" retry for unpaid orders.
+- **Account** — profile, addresses, change password.
+- **Contact** — message form saved to the API and emailed to the owner.
