@@ -658,3 +658,31 @@ transactional emails for order events — order placed, payment received and
 status changes — using Django's mail framework and the templates in
 `backend/templates/`. In the demo, email is optional: if no password is set,
 orders still work and the owner watches `/backstage` instead.
+## 33. Command cheat sheet
+
+```powershell
+# Backend
+cd backend
+.\.venv\Scripts\python.exe manage.py runserver 8000
+.\.venv\Scripts\python.exe manage.py migrate
+.\.venv\Scripts\python.exe manage.py makemigrations
+.\.venv\Scripts\python.exe manage.py test
+.\.venv\Scripts\python.exe manage.py seed_catalog
+.\.venv\Scripts\python.exe manage.py createsuperuser
+
+# Frontend
+cd frontend
+npm.cmd install
+npm.cmd run dev
+npm.cmd run build
+npm.cmd run preview
+
+# Git
+git status
+git add <files>
+git commit -m "type(scope): summary"
+git push
+```
+
+On PythonAnywhere the same manage.py commands use
+`--settings=config.settings.pythonanywhere` and the venv's `python`.
