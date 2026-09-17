@@ -457,3 +457,18 @@ Products set to **draft** never appear on the storefront.
    customer can retry payment from their order page.
 5. Order totals are frozen at checkout: later price changes do not alter past
    orders.
+## 23. Customer workflow
+
+1. **Browse** the home page and catalog; filter and search.
+2. **Open a product**, choose size and colour, then add to cart (or tap
+   "WhatsApp order").
+3. **Review the cart** and proceed to checkout (guests are asked to log in;
+   their cart is merged into the account).
+4. **Enter delivery details** or pick a saved address; the shipping fee is
+   applied.
+5. **Place the order** — an order number is generated and the status is
+   Pending Payment.
+6. **Pay** — redirected to OPay (or the simulated checkout in the demo).
+7. **Track** the order from the orders page: Processing, Shipped, Delivered,
+   with a tracking number when the owner adds one.
+8. **Review** the product after a paid order.
