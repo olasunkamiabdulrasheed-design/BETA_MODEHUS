@@ -731,3 +731,20 @@ Cloudinary, or the checked-in `catalog_seed.json` / `media_seed.zip`.
 - [ ] CORS allows the live frontend origin.
 - [ ] `manage.py test` green and `npm run build` clean.
 - [ ] Real OPay/Gmail credentials handed over or documented.
+## 38. Performance notes
+
+- Product lists return everything a card needs (`primary_image`, `min_price`,
+  `rating`, `is_available`, `total_stock`) so the grid needs only one request.
+- Images are `loading="lazy"` with a lightweight fade-in skeleton.
+- The catalog, cart and checkout are separate pages, so the first paint stays
+  small.
+- Server-side totals avoid recomputation and double-spending.
+- If traffic grows, move SQLite to Postgres (already supported) and turn on
+  Cloudinary for media.
+
+## 39. Accessibility notes
+
+- Skip-to-content link, labelled quantity controls, and semantic headings.
+- Colour is never the only signal (stock state has text, not just colour).
+- Focus styles on interactive elements; keyboard-operable controls.
+- Alt text on product images; `aria-hidden` on purely decorative spinners.
