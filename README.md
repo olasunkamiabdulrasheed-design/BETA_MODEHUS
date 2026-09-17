@@ -58,3 +58,93 @@ once real payment credentials exist.
 
 The storefront and the API are two separate services on two hosts, so the
 frontend is built with `VITE_API_URL` pointing at the PythonAnywhere API.
+## 2. Technology stack
+
+**Backend**
+
+| Concern | Technology |
+|---------|------------|
+| Framework | Django 6.1 + Django REST Framework |
+| Auth | JWT (djangorestframework-simplejwt) |
+| Filtering | django-filter |
+| Ports/storage | PostgreSQL (prod) or SQLite (dev/staging) via `DATABASE_URL`-style settings |
+| Media | Local file storage, or Cloudinary when `CLOUDINARY_URL` is set |
+| Email | Gmail SMTP for transactional order emails |
+| API docs | drf-spectacular (OpenAPI schema + Swagger/ReDoc) |
+| Serving | gunicorn + WhiteNoise (PythonAnywhere), Docker/nginx optional |
+
+**Frontend**
+
+| Concern | Technology |
+|---------|------------|
+| UI | React 18 + Vite |
+| Styling | Tailwind CSS v4 |
+| Routing | React Router v6 |
+| HTTP | axios with JWT interceptor |
+| Icons | lucide-react |
+
+## 3. Architecture
+
+The API is the single source of truth. The React app never talks to the
+database directly; it only calls `/api/v1/...`. Payment is asynchronous: the
+API creates a payment, the customer pays, and either the provider webhook or the
+simulated checkout page flips the order to paid.
+
+```text
+        Browser (React + Tailwind)
+                 |
+                 |  HTTPS + JWT (Authorization: Bearer ...)
+                 v
+   +-------------------------------------------+
+   |        Django REST API  /api/v1/          |
+   |  accounts cart catalog orders payments     |
+   |  reviews common notifications reports      |
+   +-------------------------------------------+
+        |                |                 |
+        v                v                 v
+   PostgreSQL      media storage      OPay Checkout
+   / SQLite        (local/Cloudinary) (or simulator)
+                 ^
+                 |  webhook / callback
+      Browser (callback) or OPay -> payment status
+```
+
+Two admin surfaces sit on top of the same API:
+
+- **Owner console** at `/backstage` in the React app (staff-only), for
+  day-to-day product, stock and order work.
+- **Django admin** at `/vault/`, the low-level content admin.
+
+## 4. Repository structure
+
+```text
+BETA_MODEHUS/
+|-- backend/                 Django project
+|   |-- accounts/            users, addresses, JWT auth, change password
+|   |-- catalog/             categories, brands, products, variants, images
+|   |-- cart/                server-side cart and guest-cart merge
+|   |-- orders/              orders, order items, shipping settings, stats
+|   |-- payments/            OPay integration + payment simulator
+|   |-- reviews/             product reviews with purchase verification
+|   |-- common/              contact messages
+|   |-- notifications/       order email helpers
+|   |-- reports/             reporting helpers
+|   |-- config/              settings (base/dev/prod/pythonanywhere), urls, wsgi
+|   |-- catalog_seed.json    checked-in demo fixture (products + media refs)
+|   |-- media_seed.zip       checked-in demo images
+|   |-- manage.py
+|-- frontend/                React storefront + owner console
+|   |-- src/
+|   |   |-- api/             axios client, currency helper
+|   |   |-- context/         Auth + Cart providers
+|   |   |-- components/      Layout, ProductCard, EmptyState, Spinner, ...
+|   |   |-- hooks/           useDocumentTitle
+|   |   |-- pages/           Home, Catalog, ProductDetail, Cart, Checkout, ...
+|   |   `-- utils/           formatting helpers
+|   |-- public/              logo, hero images, robots.txt, sitemap.xml
+|   `-- index.html
+|-- docs/                    deeper reference material
+|-- DEPLOY.md                step-by-step hosting notes
+|-- CHANGELOG.md
+`-- README.md                (this file)
+```
