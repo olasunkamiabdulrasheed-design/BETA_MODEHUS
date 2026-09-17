@@ -349,3 +349,51 @@ copy .env.example .env            # then edit .env
 The API is now at `http://127.0.0.1:8000/api/v1/`. Settings module defaults to
 `config.settings.dev`; switch to `config.settings.prod` or
 `config.settings.pythonanywhere` with `--settings=` when needed.
+## 17. Local setup — frontend
+
+Requires Node 20+ (see `.nvmrc`).
+
+```powershell
+cd frontend
+npm.cmd install
+copy .env.example .env.local     # set VITE_API_URL if needed
+npm.cmd run dev
+```
+
+Open **http://localhost:5173** (use `localhost`, not `127.0.0.1`). In development
+the Vite proxy forwards `/api` to the local Django server, so leaving
+`VITE_API_URL` unset works out of the box. For a deployed frontend point it at
+the full API URL, e.g.
+`VITE_API_URL=https://eddiemich.pythonanywhere.com/api/v1`.
+
+Production build:
+
+```powershell
+npm.cmd run build     # outputs frontend/dist
+```
+
+## 18. Environment variables
+
+**Backend (`backend/.env`)** — see `backend/.env.example`:
+
+| Variable | Meaning |
+|----------|---------|
+| `DJANGO_SECRET_KEY` | Django signing key |
+| `DJANGO_DEBUG` | `True` locally, `False` in production |
+| `DJANGO_ALLOWED_HOSTS` | Comma-separated hostnames |
+| `CORS_ALLOWED_ORIGINS` | Frontend origins allowed to call the API |
+| `DATABASE_URL` | Postgres in production; SQLite otherwise |
+| `DEFAULT_SHIPPING_FEE` | Fallback flat delivery fee |
+| `SIMULATE_PAYMENTS` | `True` = local checkout, `False` = real OPay |
+| `OPAY_MERCHANT_ID` / `OPAY_PUBLIC_KEY` / `OPAY_PRIVATE_KEY` | OPay keys |
+| `EMAIL_HOST_PASSWORD` | Gmail app password for order emails |
+| `CLOUDINARY_URL` | Enables Cloudinary media storage when set |
+
+**Frontend (`frontend/.env.local`)**:
+
+| Variable | Meaning |
+|----------|---------|
+| `VITE_API_URL` | Absolute API base including `/api/v1` |
+
+`VITE_*` values are baked in at build time, so changing one requires a rebuild.
+Never commit real `.env` files.
