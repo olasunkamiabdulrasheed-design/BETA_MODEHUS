@@ -40,6 +40,19 @@ and deploy it. Every section below can be read on its own.
 27. [Troubleshooting and FAQ](#27-troubleshooting-and-faq)
 28. [Security and data handling](#28-security-and-data-handling)
 29. [Roadmap, credentials and licence](#29-roadmap-credentials-and-licence)
+30. [API conventions and pagination](#30-api-conventions-and-pagination)
+31. [Order and payment lifecycle](#31-order-and-payment-lifecycle)
+32. [Email notifications](#32-email-notifications)
+33. [Command cheat sheet](#33-command-cheat-sheet)
+34. [Local data reset](#34-local-data-reset)
+35. [Glossary](#35-glossary)
+36. [Support and contacts](#36-support-and-contacts)
+37. [Handover checklist](#37-handover-checklist)
+38. [Performance notes](#38-performance-notes)
+39. [Accessibility notes](#39-accessibility-notes)
+40. [Extended FAQ](#40-extended-faq)
+41. [Project history](#41-project-history)
+42. [Credits](#42-credits)
 
 ---
 
@@ -594,3 +607,18 @@ needs `is_staff = true`.
 invoice PDFs, richer analytics, frontend unit tests.
 
 **Licence**: MIT — see `LICENSE`. Built for BETA_MODEHUS.
+## 30. API conventions and pagination
+
+- Base path: `/api/v1/`. All requests and responses are JSON (file uploads use
+  `multipart/form-data`).
+- Auth header: `Authorization: Bearer <access_token>`. A `401` means the token
+  is missing or expired — the client refreshes and retries.
+- List endpoints are paginated and return `{ count, next, previous, results }`.
+  Pass `?page=2` to move through pages; `page_size` may be supported per view.
+- Filter query parameters follow the field names, e.g.
+  `/products/?category=agbada&min_price=20000&is_featured=True`.
+- Success codes: `200` read/update, `201` create, `204` delete.
+- Error codes: `400` invalid input (field errors), `401` unauthenticated,
+  `403` not allowed, `404` missing, `409`/`400` business-rule conflicts such as
+  insufficient stock.
+- Money is returned as decimal strings (e.g. `"45000.00"`); format it in the UI.
