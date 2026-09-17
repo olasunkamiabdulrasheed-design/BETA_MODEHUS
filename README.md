@@ -686,3 +686,29 @@ git push
 
 On PythonAnywhere the same manage.py commands use
 `--settings=config.settings.pythonanywhere` and the venv's `python`.
+## 34. Local data reset
+
+To wipe local state and start clean (SQLite + media):
+
+```powershell
+cd backend
+Remove-Item db.sqlite3 -ErrorAction SilentlyContinue
+Remove-Item -Recurse -Force media\products -ErrorAction SilentlyContinue
+.\.venv\Scripts\python.exe manage.py migrate
+.\.venv\Scripts\python.exe manage.py seed_catalog
+```
+
+This deletes local orders, users and products only. It never touches production,
+Cloudinary, or the checked-in `catalog_seed.json` / `media_seed.zip`.
+
+## 35. Glossary
+
+| Term | Meaning |
+|------|---------|
+| **Variant** | A specific size/colour of a product, with its own SKU, price and stock |
+| **Vault** | The Django admin at `/vault/` |
+| **Backstage** | The custom owner dashboard at `/backstage` |
+| **Simulated payment** | A local stand-in for OPay used when `SIMULATE_PAYMENTS = True` |
+| **Verified purchase** | A review by someone with a paid order for that product |
+| **ISR / demo seed** | The generated demo catalog created by `seed_catalog` |
+| **PA** | PythonAnywhere, the backend host |
