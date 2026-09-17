@@ -651,3 +651,10 @@ Rules:
 - An order can only be paid while its status is Pending Payment or Failed.
 - Only the owner sets Shipped/Delivered and the tracking number.
 - Reviews are only attached to a paid order containing the product.
+## 32. Email notifications
+
+When email is configured (`EMAIL_HOST_PASSWORD` etc.), the backend sends
+transactional emails for order events — order placed, payment received and
+status changes — using Django's mail framework and the templates in
+`backend/templates/`. In the demo, email is optional: if no password is set,
+orders still work and the owner watches `/backstage` instead.
