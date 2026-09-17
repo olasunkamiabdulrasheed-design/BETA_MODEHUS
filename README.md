@@ -748,3 +748,24 @@ Cloudinary, or the checked-in `catalog_seed.json` / `media_seed.zip`.
 - Colour is never the only signal (stock state has text, not just colour).
 - Focus styles on interactive elements; keyboard-operable controls.
 - Alt text on product images; `aria-hidden` on purely decorative spinners.
+## 40. Extended FAQ
+
+**Can I run this without a credit card?**
+Yes — Vercel and PythonAnywhere free tiers, SQLite, local media, and simulated
+payments. Total cost: $0.
+
+**Do I need Cloudinary?**
+No. Media works from local storage; Cloudinary is optional for a CDN.
+
+**Can the owner use a phone?**
+Yes; the storefront and owner console are responsive. Day-to-day work (orders,
+stock) is doable on mobile.
+
+**What happens when the free PythonAnywhere app sleeps?**
+The first request after a while is slow while it wakes. Upgrading removes this.
+
+**How do I add a new category?**
+Create it in the owner/admin and assign products to it.
+
+**Are guest carts supported?**
+Yes, and they merge into the account cart on login.
