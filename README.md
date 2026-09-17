@@ -833,3 +833,15 @@ Release notes worth knowing:
 
 **common** — `ContactMessage`: `name`, `email`, `phone`, `subject`, `message`,
 `is_handled`.
+## 44. Settings modules
+
+| Module | Use |
+|--------|-----|
+| `config.settings.base` | Shared settings and env loading |
+| `config.settings.dev` | Local development (`DEBUG=True`, SQLite, Vite CORS) |
+| `config.settings.prod` | Hardened production defaults |
+| `config.settings.pythonanywhere` | The live demo: `DEBUG=False`, `SIMULATE_PAYMENTS=True`, allowed hosts, CORS/CSRF for the Vercel frontend, absolute `MEDIA_URL` |
+
+Select one with `--settings=config.settings.<name>` (or
+`DJANGO_SETTINGS_MODULE`). Only `pythonanywhere.py` is tuned for the free demo
+host; `prod.py` is the starting point for a real server.
