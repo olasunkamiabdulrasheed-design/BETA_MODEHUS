@@ -472,3 +472,35 @@ Products set to **draft** never appear on the storefront.
 7. **Track** the order from the orders page: Processing, Shipped, Delivered,
    with a tracking number when the owner adds one.
 8. **Review** the product after a paid order.
+## 24. Deployment — backend on PythonAnywhere
+
+Free tier, no card. Full detail is in `DEPLOY.md`; the short version:
+
+```bash
+# Bash console on PythonAnywhere
+git clone https://github.com/<user>/BETA_MODEHUS.git
+cd BETA_MODEHUS/backend
+mkvirtualenv --python=/usr/bin/python3.12 betamodehus
+pip install -r requirements.txt
+python manage.py migrate --settings=config.settings.pythonanywhere
+python manage.py collectstatic --settings=config.settings.pythonanywhere --noinput
+python manage.py loaddata ./catalog_seed.json --settings=config.settings.pythonanywhere
+unzip -o media_seed.zip -d .        # restore demo images
+```
+
+Then in the **Web** tab: set the source/working directory to
+`.../BETA_MODEHUS/backend`, point the virtualenv at `betamodehus`, set the WSGI
+file to `config/wsgi_pythonanywhere.py`, and add static mappings:
+
+| URL | Directory |
+|-----|-----------|
+| `/static/` | `.../backend/staticfiles` |
+| `/media/` | `.../backend/media` |
+
+To ship backend changes after a push:
+
+```bash
+cd ~/BETA_MODEHUS/backend && git pull
+```
+
+then click **Reload** in the Web tab. PythonAnywhere does **not** auto-deploy.
