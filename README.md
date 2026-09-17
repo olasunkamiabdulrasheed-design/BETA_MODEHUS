@@ -712,3 +712,22 @@ Cloudinary, or the checked-in `catalog_seed.json` / `media_seed.zip`.
 | **Verified purchase** | A review by someone with a paid order for that product |
 | **ISR / demo seed** | The generated demo catalog created by `seed_catalog` |
 | **PA** | PythonAnywhere, the backend host |
+## 36. Support and contacts
+
+- **Store WhatsApp / phone**: see the floating WhatsApp button and the contact
+  section in the storefront.
+- **Technical owner**: repository maintainer
+  (`olasunkamiabdulrasheed@gmail.com`).
+- **Security reports**: email rather than opening a public issue.
+
+## 37. Handover checklist
+
+- [ ] Backend reachable: `GET /health/` returns `{"status": "ok"}`.
+- [ ] Frontend loads and lists products.
+- [ ] Logos and product images render (media mapping correct).
+- [ ] Owner can log in at `/backstage`; regular signup works.
+- [ ] Add to cart, checkout, pay (simulated) and see the order in `/backstage`.
+- [ ] Images load over HTTPS (no mixed-content warnings).
+- [ ] CORS allows the live frontend origin.
+- [ ] `manage.py test` green and `npm run build` clean.
+- [ ] Real OPay/Gmail credentials handed over or documented.
