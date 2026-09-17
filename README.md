@@ -522,3 +522,17 @@ Backend CORS must allow the frontend origin. In
 `beta-modehus`/`betamodehus` Vercel URLs via
 `CORS_ALLOWED_ORIGIN_REGEXES`, plus `CSRF_TRUSTED_ORIGINS` and
 `STORE_BASE_URL` for redirects.
+## 26. CI/CD and release process
+
+- **Source of truth** is the `main` branch on GitHub.
+- **Backend** is pulled manually on PythonAnywhere and reloaded. There is a
+  GitHub Actions workflow (`.github/workflows/ci.yml`) that installs
+  requirements and runs the test suite on push, so a red build should block a
+  release.
+- **Frontend** auto-builds on Vercel from `main`.
+- **Commit style**: `type(scope): summary` (e.g. `fix(cart): clamp quantity`).
+  Keep commits small and focused.
+- Before pushing: `manage.py test` green and `npm run build` clean.
+
+Suggested release flow: branch -> commit -> PR -> CI green -> merge to `main`
+-> Vercel deploys -> `git pull` + Reload on PythonAnywhere.
