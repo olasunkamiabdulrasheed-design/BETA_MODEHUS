@@ -1,76 +1,44 @@
 # BETA_MODEHUS
 
-> For Better Elegance and Luxury — a complete Nigerian fashion e-commerce platform.
+> **For Better Elegance and Luxury** — a complete Nigerian fashion e-commerce
+> platform: a customer storefront, a full REST API, and an owner dashboard.
 
-Full-stack single-vendor store for BETA_MODEHUS (Ibadan South-East, Oyo State).
-Customers browse, order and pay online (OPay Checkout); the owner runs the whole
-store from a custom admin dashboard plus Django's content admin.
+This is the single document to read if you want to understand what the project
+is, how it is put together, how money and orders flow through it, and how to run
+and deploy it. Every section below can be read on its own.
 
-## Tech stack
+---
 
-| Layer    | Technology |
-| -------- | ---------- |
-| Backend  | Django 6.1 · Django REST Framework · SimpleJWT (JWT auth) · django-filter |
-| Database | PostgreSQL (production) / SQLite (local development) |
-| Payments | OPay Checkout (international Cashier API; live + test modes) |
-| Media    | Cloudinary (production) / local `media/` (development) |
-| Email    | Gmail SMTP via Django 6.1 `MAILERS` (transactional order emails) |
-| Frontend | React 18 · Vite · Tailwind CSS v4 · React Router v6 · axios |
-| Serving  | gunicorn + nginx (see `deploy/`) |
+## Contents
 
-## Quickstart (development)
+1. [Live deployment](#1-live-deployment)
+2. [Technology stack](#2-technology-stack)
+3. [Architecture](#3-architecture)
+4. [Repository structure](#4-repository-structure)
+5. [Storefront features](#5-storefront-features)
+6. [Owner console features](#6-owner-console-features)
+7. [Backend applications](#7-backend-applications)
+8. [Data model](#8-data-model)
+9. [Authentication and roles](#9-authentication-and-roles)
+10. [API reference — catalog](#10-api-reference--catalog)
+11. [API reference — cart](#11-api-reference--cart)
+12. [API reference — orders](#12-api-reference--orders)
+13. [API reference — payments](#13-api-reference--payments)
+14. [API reference — reviews and contact](#14-api-reference--reviews-and-contact)
+15. [API reference — owner/admin endpoints](#15-api-reference--owneradmin-endpoints)
+16. [Local setup — backend](#16-local-setup--backend)
+17. [Local setup — frontend](#17-local-setup--frontend)
+18. [Environment variables](#18-environment-variables)
+19. [Seeding and demo data](#19-seeding-and-demo-data)
+20. [Testing](#20-testing)
+21. [Owner workflow — products and inventory](#21-owner-workflow--products-and-inventory)
+22. [Owner workflow — orders and fulfilment](#22-owner-workflow--orders-and-fulfilment)
+23. [Customer workflow](#23-customer-workflow)
+24. [Deployment — backend on PythonAnywhere](#24-deployment--backend-on-pythonanywhere)
+25. [Deployment — frontend on Vercel](#25-deployment--frontend-on-vercel)
+26. [CI/CD and release process](#26-cicd-and-release-process)
+27. [Troubleshooting and FAQ](#27-troubleshooting-and-faq)
+28. [Security and data handling](#28-security-and-data-handling)
+29. [Roadmap, credentials and licence](#29-roadmap-credentials-and-licence)
 
-Two terminals, from the repo root.
-
-**Terminal 1 — backend** (PowerShell):
-
-```powershell
-cd backend
-.\.venv\Scripts\activate.bat
-python manage.py migrate
-python manage.py seed_catalog      # optional demo catalog + admin user
-python manage.py runserver 8000
-```
-
-**Terminal 2 — frontend**:
-
-```powershell
-cd frontend
-npm.cmd install
-npm.cmd run dev
-```
-
-Open **http://localhost:5173** (use `localhost`, not `127.0.0.1` — Vite binds `::1`).
-The API lives at `http://127.0.0.1:8000/api/v1/`.
-
-## Documentation
-
-Start with [`docs/START_HERE.md`](docs/START_HERE.md), then:
-
-- **Project structure** — [`docs/PROJECT_STRUCTURE.md`](docs/PROJECT_STRUCTURE.md)
-- **How features work** — [`docs/HOW_IT_WORKS.md`](docs/HOW_IT_WORKS.md)
-- **Feature list** — [`docs/FEATURES.md`](docs/FEATURES.md)
-- **API reference** — [`docs/API_REFERENCE.md`](docs/API_REFERENCE.md)
-- **Database models** — [`docs/DB_MODELS.md`](docs/DB_MODELS.md)
-- **Owner's guide** — [`docs/OWNER_GUIDE.md`](docs/OWNER_GUIDE.md)
-- **FAQ** — [`docs/FAQ.md`](docs/FAQ.md)
-- **Security model** — [`docs/SECURITY.md`](docs/SECURITY.md)
-- **Go-live runbook** — [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md)
-- **Verification checklist** — [`docs/CHECKS.md`](docs/CHECKS.md)
-- **Roadmap & backlog** — [`docs/ROADMAP.md`](docs/ROADMAP.md)
-- **Changelog** — [`docs/PROJECT_NOTES.md`](docs/PROJECT_NOTES.md)
-
-## Tests
-
-```powershell
-cd backend
-.\.venv\Scripts\python.exe manage.py test
-```
-
-18 automated tests cover cart, checkout, payments, reviews and admin actions.
-
-## Secrets (never commit these)
-
-All configuration lives in environment variables — copy `backend/.env.example`
-to `backend/.env` and fill in: OPay merchant/public/private keys, Gmail SMTP app
-password, `DJANGO_SECRET_KEY`, and Cloudinary URL. Never push the `.env` file.
+---
