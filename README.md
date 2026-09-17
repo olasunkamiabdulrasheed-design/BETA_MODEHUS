@@ -563,3 +563,34 @@ another size/colour.
 **Where is the owner login?**
 `/backstage` in the storefront, or `/vault/` for the Django admin. The account
 needs `is_staff = true`.
+## 28. Security and data handling
+
+- **JWT auth** with short-lived access tokens and refresh tokens; the client
+  refreshes automatically and clears tokens on logout.
+- **Server-side pricing**: totals, shipping and stock are computed on the
+  server, so the client cannot change what it owes.
+- **Staff-only surfaces**: `/backstage`, `/vault/` and the admin API require
+  `is_staff`.
+- **Secrets** live in environment variables and are never committed. The repo
+  ships `.env.example` templates only. See `SECURITY.md` for the reporting
+  policy.
+- **Payments** are verified against the provider (signature/webhook) or the
+  simulator; an order is only marked paid on a successful verification.
+- **Media** is uploaded to the configured storage (local in the demo,
+  Cloudinary when configured).
+
+## 29. Roadmap, credentials and licence
+
+**Still needed to go fully live**
+
+| Item | What it unlocks |
+|------|-----------------|
+| OPay merchant/public/private keys | Real card & transfer payments |
+| Gmail app password | Real order emails |
+| Cloudinary URL (optional) | Cloud media storage + CDN |
+| Paid PythonAnywhere tier (optional) | Always-on API (free tier sleeps) |
+
+**Nice-to-haves**: wishlist, discount codes, SMS/WhatsApp notifications,
+invoice PDFs, richer analytics, frontend unit tests.
+
+**Licence**: MIT — see `LICENSE`. Built for BETA_MODEHUS.
