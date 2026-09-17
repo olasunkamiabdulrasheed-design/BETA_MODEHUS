@@ -53,6 +53,10 @@ and deploy it. Every section below can be read on its own.
 40. [Extended FAQ](#40-extended-faq)
 41. [Project history](#41-project-history)
 42. [Credits](#42-credits)
+43. [Data dictionary](#43-data-dictionary)
+44. [Settings modules](#44-settings-modules)
+45. [Known limitations and future work](#45-known-limitations-and-future-work)
+46. [Maintaining this document](#46-maintaining-this-document)
 
 ---
 
@@ -790,3 +794,42 @@ Release notes worth knowing:
 - **Client**: BETA_MODEHUS — For Better Elegance and Luxury (Ibadan, Oyo State).
 - **Built with**: Django & Django REST Framework, React, Vite, Tailwind CSS.
 - **Licence**: MIT (see `LICENSE`).
+## 43. Data dictionary
+
+**accounts**
+- `User`: `email` (login), `full_name`, `phone`, `whatsapp`, plus Django's
+  `is_staff` / `is_active` / password hash.
+- `Address`: delivery details (`house_number`, `street`, `area`, `city`,
+  `state`, `country`, `landmark`, `delivery_instructions`), `is_default`.
+
+**catalog**
+- `Category`: `name`, `slug`, `description`, `is_active`, `sort_order`.
+- `Brand`: `name`, `slug`, `is_active`.
+- `Product`: `name`, `slug`, `category`, `brand`, `short_description`,
+  `description`, `specifications` (JSON), `price`, `sku`, `status`, `is_active`,
+  `is_featured`.
+- `ProductVariant`: `size`, `color`, `color_hex`, `attributes` (JSON), `sku`,
+  `price`, `stock`, `is_active`.
+- `ProductImage`: `image`, `alt_text`, `is_primary`, `sort_order`, optional
+  `variant`.
+
+**cart**
+- `Cart`: one per user.
+- `CartItem`: `cart`, `variant`, `quantity`.
+
+**orders**
+- `Order`: address snapshot, `subtotal`, `shipping_fee`, `total`, `status`,
+  `payment_status`, `tracking_number`.
+- `OrderItem`: `product_name`, `variant_label`, `sku`, `unit_price`, `quantity`,
+  `line_total`.
+- `ShippingSetting`: `delivery_fee`, `free_shipping_threshold`,
+  `low_stock_threshold`.
+
+**payments** — `Payment`: `reference`, `provider_reference`, `amount`,
+`currency`, `status`, `raw_response`.
+
+**reviews** — `Review`: `user`, `product`, optional `order`, `rating`,
+`comment`, `status`.
+
+**common** — `ContactMessage`: `name`, `email`, `phone`, `subject`, `message`,
+`is_handled`.
