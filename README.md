@@ -769,3 +769,24 @@ Create it in the owner/admin and assign products to it.
 
 **Are guest carts supported?**
 Yes, and they merge into the account cart on login.
+## 41. Project history
+
+Built as a full-stack replacement for a manual Instagram/WhatsApp ordering flow.
+The work happened in layers: data models and APIs first, then the storefront,
+then the owner console, then payment integration and finally deployment and
+hardening (CORS, media, seeding, tests). See `CHANGELOG.md` and
+`git log` for the detailed sequence.
+
+Release notes worth knowing:
+
+- Catalog, cart, checkout and orders work end-to-end with simulated payments.
+- The owner console covers products, stock, images, orders and reviews.
+- The storefront ships with SEO tags, a web manifest, `robots.txt` and a
+  sitemap.
+- The backend suite covers 60 tests; the frontend builds clean.
+
+## 42. Credits
+
+- **Client**: BETA_MODEHUS — For Better Elegance and Luxury (Ibadan, Oyo State).
+- **Built with**: Django & Django REST Framework, React, Vite, Tailwind CSS.
+- **Licence**: MIT (see `LICENSE`).
