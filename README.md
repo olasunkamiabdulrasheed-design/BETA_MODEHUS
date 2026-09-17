@@ -332,3 +332,20 @@ All require a staff account.
 | GET | `/admin/catalog/...` | See catalog app |
 | GET | `/orders/admin/stats/` | Dashboard statistics |
 | POST | `/orders/admin/<number>/` | Update order status / tracking |
+## 16. Local setup — backend
+
+Requirements: Python 3.12+, and a virtualenv.
+
+```powershell
+cd backend
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+copy .env.example .env            # then edit .env
+.\.venv\Scripts\python.exe manage.py migrate
+.\.venv\Scripts\python.exe manage.py seed_catalog   # optional demo data
+.\.venv\Scripts\python.exe manage.py runserver 8000
+```
+
+The API is now at `http://127.0.0.1:8000/api/v1/`. Settings module defaults to
+`config.settings.dev`; switch to `config.settings.prod` or
+`config.settings.pythonanywhere` with `--settings=` when needed.
