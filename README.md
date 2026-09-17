@@ -243,3 +243,22 @@ calculates what it owes.
   Django admin. The storefront hides shopping links from staff accounts and
   shows the dashboard link instead.
 - Tokens are stored client-side and cleared on logout.
+## 10. API reference — catalog
+
+Public, no auth required (`/api/v1/`).
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/categories/` | List active categories |
+| GET | `/categories/<slug>/` | Category detail |
+| GET | `/brands/` | List active brands |
+| GET | `/products/` | List published products |
+| GET | `/products/<slug>/` | Product detail with variants and images |
+
+`/products/` supports: `search`, `category`, `brand`, `size`, `color`,
+`min_price`, `max_price`, `min_rating`, `availability`, `is_featured`, plus
+ordering and pagination.
+
+Each product in a list also carries `min_price`, `primary_image`, `rating`,
+`is_available` and `total_stock` (sum of variant stock), so cards can render
+without extra requests.
