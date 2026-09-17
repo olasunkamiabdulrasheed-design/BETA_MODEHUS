@@ -19,10 +19,12 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
 CORS_ALLOWED_ORIGINS = []
 CSRF_TRUSTED_ORIGINS = ["https://beta-modehus.vercel.app"]
 
-DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+# Media storage is chosen in base.py: Cloudinary when CLOUDINARY_URL is set
+# (put it in backend/.env — gitignored), otherwise the local filesystem.
+# Do not override DEFAULT_FILE_STORAGE here or Cloudinary would be ignored.
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Absolute media URLs so images resolve against the API host, not the storefront.
+# Fallback media URL used only when Cloudinary is not configured.
 MEDIA_URL = "https://eddiemich.pythonanywhere.com/media/"
 
 # Email to console (no SMTP credentials needed for demo)
