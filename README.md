@@ -397,3 +397,63 @@ npm.cmd run build     # outputs frontend/dist
 
 `VITE_*` values are baked in at build time, so changing one requires a rebuild.
 Never commit real `.env` files.
+## 19. Seeding and demo data
+
+Two ways to fill the store:
+
+**From the checked-in fixture (fast, no image generation):**
+
+```bash
+cd backend
+python manage.py loaddata ./catalog_seed.json --settings=config.settings.pythonanywhere
+unzip -o media_seed.zip -d .        # restores backend/media
+```
+
+**Generate everything from scratch (creates placeholder images):**
+
+```powershell
+.\.venv\Scripts\python.exe manage.py seed_catalog
+```
+
+`seed_catalog` is idempotent: it creates the 15 categories, a brand, ~18
+products with variants and placeholder images, plus an admin user if none
+exists. Set `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` to control the password
+(otherwise a random one is generated and printed).
+
+## 20. Testing
+
+Backend:
+
+```powershell
+cd backend
+.\.venv\Scripts\python.exe manage.py test
+```
+
+The suite covers the public catalog API and filters, admin product/image APIs,
+cart, checkout, payments, reviews and the seed command (60 tests, all green).
+Frontend has no unit tests yet; verify changes with `npm.cmd run build`.
+
+## 21. Owner workflow — products and inventory
+
+1. Log in at `/backstage` with a staff account.
+2. **Products** — create a product: name, category, brand, price, SKU, optional
+   description and specifications, published/draft status, featured flag.
+3. **Variants** — add one row per size/colour combination with its own price and
+   stock. A product with no variants shows "Sold out".
+4. **Images** — upload images and mark one as the cover; optionally attach an
+   image to a variant so it swaps when the customer picks that variant.
+5. **Stock** — edit variant stock at any time; low-stock items appear on the
+   dashboard once they fall under the shipping setting's threshold.
+
+Products set to **draft** never appear on the storefront.
+
+## 22. Owner workflow — orders and fulfilment
+
+1. A new order arrives as **Pending Payment** / payment **pending**.
+2. When payment succeeds, the order becomes paid and moves to **Processing**.
+3. From `/backstage` orders (or `/vault/`), the owner moves the order through
+   **Processing -> Shipped -> Delivered**, adding a tracking number.
+4. If an order is not paid, the owner can leave it pending or cancel it. The
+   customer can retry payment from their order page.
+5. Order totals are frozen at checkout: later price changes do not alter past
+   orders.
