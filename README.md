@@ -504,3 +504,21 @@ cd ~/BETA_MODEHUS/backend && git pull
 ```
 
 then click **Reload** in the Web tab. PythonAnywhere does **not** auto-deploy.
+## 25. Deployment — frontend on Vercel
+
+1. Import the GitHub repo at vercel.com, set **Root Directory** to `frontend`.
+2. Framework preset: Vite (auto-detected).
+3. Add environment variable `VITE_API_URL=https://eddiemich.pythonanywhere.com/api/v1`
+   (Production).
+4. Deploy.
+
+Vercel rebuilds automatically on every push to `main`. Because `VITE_API_URL`
+is baked in at build time, changing it requires a redeploy. Redeploy the
+**newest** deployment — redeploying a superseded one fails with a "more recent
+Production Deployment" error.
+
+Backend CORS must allow the frontend origin. In
+`config/settings/pythonanywhere.py` the allowed origins are the
+`beta-modehus`/`betamodehus` Vercel URLs via
+`CORS_ALLOWED_ORIGIN_REGEXES`, plus `CSRF_TRUSTED_ORIGINS` and
+`STORE_BASE_URL` for redirects.
