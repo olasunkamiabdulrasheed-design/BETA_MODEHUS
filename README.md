@@ -57,6 +57,7 @@ and deploy it. Every section below can be read on its own.
 44. [Settings modules](#44-settings-modules)
 45. [Known limitations and future work](#45-known-limitations-and-future-work)
 46. [Maintaining this document](#46-maintaining-this-document)
+47. [One-page summary](#47-one-page-summary)
 
 ---
 
@@ -867,3 +868,12 @@ Keep this README in sync when you change behaviour:
 - Any user-visible change -> add a `CHANGELOG.md` entry.
 
 When in doubt, prefer a short accurate section over a long stale one.
+## 47. One-page summary
+
+BETA_MODEHUS is a free-to-host, full-stack fashion store. The React storefront
+talks only to a Django REST API; the API owns pricing, stock, orders and
+payments; the owner runs everything from `/backstage` (or the Django admin at
+`/vault/`). In the demo, payment is simulated so the whole order lifecycle works
+with no keys and no card. Shipping a change means: commit and push, let Vercel
+rebuild the frontend, and on PythonAnywhere `git pull` then Reload. Deeper
+detail lives in `docs/`, but this file is the complete, self-contained guide.
