@@ -536,3 +536,30 @@ Backend CORS must allow the frontend origin. In
 
 Suggested release flow: branch -> commit -> PR -> CI green -> merge to `main`
 -> Vercel deploys -> `git pull` + Reload on PythonAnywhere.
+## 27. Troubleshooting and FAQ
+
+**Images are broken on the storefront.**
+Check the `/media/` static mapping on PythonAnywhere and confirm `MEDIA_URL` in
+`pythonanywhere.py` is absolute (`https://<user>.pythonanywhere.com/media/`).
+
+**CORS error in the browser console.**
+The frontend origin is not allowed. Add it to `CORS_ALLOWED_ORIGIN_REGEXES`
+(or `CORS_ALLOWED_ORIGINS`) in `pythonanywhere.py`, then Reload.
+
+**Products do not load / empty catalog.**
+The database is empty. Seed it (`loaddata` or `seed_catalog`). Note that
+`loaddata` needs the explicit path `./catalog_seed.json`.
+
+**Vercel still calls the old API.**
+`VITE_API_URL` changed after the last build. Redeploy the newest deployment.
+
+**Payment page is the gold demo page.**
+`SIMULATE_PAYMENTS = True`. Set it to `False` once OPay keys are present.
+
+**Checkout says the item is out of stock.**
+A variant's stock is zero; the owner must add stock, or the customer must pick
+another size/colour.
+
+**Where is the owner login?**
+`/backstage` in the storefront, or `/vault/` for the Django admin. The account
+needs `is_staff = true`.
