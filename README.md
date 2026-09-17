@@ -42,3 +42,19 @@ and deploy it. Every section below can be read on its own.
 29. [Roadmap, credentials and licence](#29-roadmap-credentials-and-licence)
 
 ---
+
+## 1. Live deployment
+
+| Piece | URL | Host | Cost |
+|-------|-----|------|------|
+| Storefront | https://beta-modehus.vercel.app | Vercel | free |
+| REST API | https://eddiemich.pythonanywhere.com/api/v1/ | PythonAnywhere | free |
+| Django admin ("vault") | https://eddiemich.pythonanywhere.com/vault/ | PythonAnywhere | free |
+| Health check | .../health/ and .../api/v1/health/ | PythonAnywhere | free |
+
+The hosted demo runs with **`SIMULATE_PAYMENTS = True`**, so checkout completes
+end-to-end without real OPay keys and **no card is ever charged**. Switch it off
+once real payment credentials exist.
+
+The storefront and the API are two separate services on two hosts, so the
+frontend is built with `VITE_API_URL` pointing at the PythonAnywhere API.
