@@ -262,3 +262,73 @@ ordering and pagination.
 Each product in a list also carries `min_price`, `primary_image`, `rating`,
 `is_available` and `total_stock` (sum of variant stock), so cards can render
 without extra requests.
+## 11. API reference — cart
+
+Authenticated (`Authorization: Bearer ...`). One server-side cart per user.
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/cart/` | Current cart with items and totals |
+| PATCH/DELETE | `/cart/items/<id>/` | Change quantity / remove an item |
+| POST | `/cart/items/<id>/remove/` | Remove an item |
+| POST | `/cart/merge/` | Merge a guest cart into the user cart on login |
+| POST | `/cart/clear/` | Empty the cart |
+
+Stock and price are always re-read from the database, never trusted from the
+client.
+
+## 12. API reference — orders
+
+Authenticated. Customers see only their own orders; staff see everything.
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET/POST | `/orders/` | List my orders / create an order from the cart |
+| GET | `/orders/<number>/` | Order detail |
+| GET | `/orders/shipping-setting/` | Current delivery fee and thresholds |
+| GET | `/orders/admin/stats/` | Owner dashboard stats (staff) |
+| POST | `/orders/admin/<number>/` | Change status / set tracking (staff) |
+
+Creating an order snapshots the delivery address and the line items, then
+reserves nothing until payment: stock is reduced when the order is placed and
+released/adjusted as the owner processes it.
+
+## 13. API reference — payments
+
+| Method | Path | Auth | Purpose |
+|--------|------|------|---------|
+| POST | `/payments/initiate/` | user | Create a payment and get a checkout URL |
+| GET | `/payments/status/` | user | Poll a payment's status |
+| POST | `/payments/webhook/opay/` | provider | OPay callback that marks an order paid |
+
+In the demo, `SIMULATE_PAYMENTS = True` serves a local gold checkout page
+instead of calling OPay; confirming it triggers the same code path as a real
+webhook.
+
+## 14. API reference — reviews and contact
+
+| Method | Path | Auth | Purpose |
+|--------|------|------|---------|
+| GET | `/reviews/?product=<slug>` | public | List approved reviews |
+| POST | `/reviews/` | user | Post a review |
+| POST | `/reviews/<id>/moderate/` | staff | Approve / hide a review |
+| POST | `/contact/` | public | Send a contact message |
+
+A review is marked **verified purchase** when the reviewer has a paid order
+containing that product.
+
+## 15. API reference — owner/admin endpoints
+
+All require a staff account.
+
+| Method | Path | Purpose |
+|--------|------|---------|
+| GET | `/admin/products/` | List products including drafts |
+| GET/POST/PATCH/DELETE | `/admin/products/<id>/` | Manage a product |
+| POST | `/admin/products/<id>/images/` | Upload an image; set cover/variant |
+| DELETE | `/admin/products/<id>/images/<img_id>/` | Remove an image |
+| POST | `/admin/variants/` | Create a variant |
+| PATCH | `/admin/variants/<id>/` | Edit a variant (price, stock, active) |
+| GET | `/admin/catalog/...` | See catalog app |
+| GET | `/orders/admin/stats/` | Dashboard statistics |
+| POST | `/orders/admin/<number>/` | Update order status / tracking |
