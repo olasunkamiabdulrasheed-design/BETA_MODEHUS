@@ -1,6 +1,7 @@
 ﻿import tempfile
 
 from django.core.management import call_command
+from django.core.management.base import CommandError
 from django.test import TestCase, override_settings
 from rest_framework import status
 from rest_framework.test import APIClient
@@ -302,6 +303,12 @@ class HealthEndpointTests(TestCase):
         res = self.client.get("/api/v1/health/")
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.json()["service"], "betamodehus-api")
+
+
+class PushMediaToCloudinaryTests(TestCase):
+    def test_command_requires_cloudinary_storage(self):
+        with self.assertRaises(CommandError):
+            call_command("push_media_to_cloudinary")
 
 
 class SeedCatalogCommandTests(TestCase):
