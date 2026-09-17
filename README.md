@@ -184,3 +184,62 @@ The owner console lives at `/backstage` and is only reachable by staff users
 
 The Django admin at `/vault/` shows the same data plus the raw tables and a
 Vault dashboard summary.
+## 7. Backend applications
+
+| App | Responsibility |
+|-----|----------------|
+| `accounts` | Custom email-based user, addresses, signup/login/refresh, profile, change password |
+| `catalog` | Categories, brands, products, variants, images, public + admin APIs |
+| `cart` | One cart per user, cart items, guest-cart merge, clear |
+| `orders` | Orders, order items, shipping settings, owner stats, status changes |
+| `payments` | Initiate/verify payments, OPay webhook, simulated checkout |
+| `reviews` | Reviews tied to verified purchases, moderation |
+| `common` | Contact messages |
+| `notifications` | Order/status email helpers |
+| `reports` | Aggregation helpers used by dashboards |
+
+## 8. Data model
+
+Key relationships:
+
+```text
+User 1---* Address
+User 1---1 Cart 1---* CartItem *---1 ProductVariant
+Category 1---* Product *---1 Brand
+Product 1---* ProductVariant
+Product 1---* ProductImage (optionally *---1 ProductVariant)
+User 1---* Order 1---* OrderItem
+Order 1---* Payment
+Product 1---* Review *---1 User (optional Order for verified badge)
+ShippingSetting (singleton-ish row of fees/thresholds)
+ContactMessage
+```
+
+Notable fields:
+
+- `Product`: `name`, `slug`, `category`, `brand`, `price`, `sku`, `status`
+  (`draft` / `published`), `is_active`, `is_featured`, `specifications` (JSON).
+- `ProductVariant`: `size`, `color`, `color_hex`, `sku`, `price`, `stock`,
+  `is_active`.
+- `Order`: `number`, address snapshot, `subtotal`, `shipping_fee`, `total`,
+  `status`, `payment_status`, `tracking_number`.
+- `OrderItem`: product/variant snapshot (`product_name`, `variant_label`, `sku`),
+  `unit_price`, `quantity`, `line_total`.
+- `Payment`: `reference`, `provider_reference`, `amount`, `status`,
+  `raw_response`.
+- `Review`: `rating`, `comment`, `status`, verified-purchase flag derived from a
+  paid order.
+
+Quantities, prices and totals are stored on the server; the client never
+calculates what it owes.
+
+## 9. Authentication and roles
+
+- Auth is **JWT**: `POST /auth/login/` returns access + refresh tokens; the
+  axios client sends `Authorization: Bearer <access>` and refreshes on 401.
+- **Anonymous** visitors can browse, search and use a guest cart.
+- **Customer** — a normal account: cart, checkout, orders, reviews, addresses.
+- **Staff / owner** (`is_staff`) — everything above, plus `/backstage` and the
+  Django admin. The storefront hides shopping links from staff accounts and
+  shows the dashboard link instead.
+- Tokens are stored client-side and cleared on logout.
