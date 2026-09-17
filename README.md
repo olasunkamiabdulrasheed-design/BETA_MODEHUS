@@ -622,3 +622,32 @@ invoice PDFs, richer analytics, frontend unit tests.
   `403` not allowed, `404` missing, `409`/`400` business-rule conflicts such as
   insufficient stock.
 - Money is returned as decimal strings (e.g. `"45000.00"`); format it in the UI.
+## 31. Order and payment lifecycle
+
+```text
+Cart -> Place order
+  status = pending_payment, payment = pending
+        |
+        |  pay (OPay checkout or simulator)
+        v
+  payment = success  ->  status = processing
+        |
+        |  owner ships
+        v
+  status = shipped  (tracking number set)
+        |
+        |  delivered
+        v
+  status = delivered
+
+Alternatives: payment = failed (customer can retry from the order page),
+status = cancelled, status = refunded.
+```
+
+Rules:
+
+- Stock is decremented when the order is placed; a failed/cancelled order
+  releases it back.
+- An order can only be paid while its status is Pending Payment or Failed.
+- Only the owner sets Shipped/Delivered and the tracking number.
+- Reviews are only attached to a paid order containing the product.
