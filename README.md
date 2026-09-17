@@ -845,3 +845,25 @@ Release notes worth knowing:
 Select one with `--settings=config.settings.<name>` (or
 `DJANGO_SETTINGS_MODULE`). Only `pythonanywhere.py` is tuned for the free demo
 host; `prod.py` is the starting point for a real server.
+## 45. Known limitations and future work
+
+- PythonAnywhere free tier sleeps when idle; the first request wakes it.
+- SQLite in the demo — fine for a showcase, move to Postgres for real traffic.
+- No discount codes, wishlists or gift cards yet.
+- Emails are sent from a Gmail account; a transactional provider would be more
+  reliable at scale.
+- The frontend has no automated tests yet.
+- Payment is single-provider (OPay); the interface is small enough to add
+  others.
+
+## 46. Maintaining this document
+
+Keep this README in sync when you change behaviour:
+
+- New endpoint -> add it to the relevant API section.
+- New model/field -> update the data dictionary.
+- New env var -> add it to the environment variables table.
+- New host or URL -> update Live deployment.
+- Any user-visible change -> add a `CHANGELOG.md` entry.
+
+When in doubt, prefer a short accurate section over a long stale one.
