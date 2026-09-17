@@ -165,3 +165,22 @@ BETA_MODEHUS/
   a "Pay now" retry for unpaid orders.
 - **Account** — profile, addresses, change password.
 - **Contact** — message form saved to the API and emailed to the owner.
+## 6. Owner console features
+
+The owner console lives at `/backstage` and is only reachable by staff users
+(`is_staff = true`).
+
+- **Dashboard** — revenue and order stats, low-stock list, recent orders.
+- **Products** — create/edit/publish products, set price, category, brand,
+  description, specifications and featured flag.
+- **Variants** — sizes, colours, per-variant price and stock (colour has an
+  optional hex swatch).
+- **Images** — upload product images and mark a cover image; images can be tied
+  to a specific variant.
+- **Orders** — view all orders, change status, set a tracking number.
+- **Reviews** — approve or hide customer reviews.
+- **Shipping** — set the flat delivery fee, free-shipping threshold and
+  low-stock threshold.
+
+The Django admin at `/vault/` shows the same data plus the raw tables and a
+Vault dashboard summary.
