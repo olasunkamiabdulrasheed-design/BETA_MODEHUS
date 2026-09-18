@@ -139,7 +139,7 @@ Two admin surfaces sit on top of the same API:
 BETA_MODEHUS/
 |-- backend/                 Django project
 |   |-- accounts/            users, addresses, JWT auth, change password
-|   |-- catalog/             categories, brands, products, variants, images
+|   |-- catalog/             categories, brands, products, variants, images; media migration (`push_media_to_cloudinary`)
 |   |-- cart/                server-side cart and guest-cart merge
 |   |-- orders/              orders, order items, shipping settings, stats
 |   |-- payments/            OPay integration + payment simulator
@@ -453,7 +453,9 @@ cd backend
 
 The suite covers the public catalog API and filters, admin product/image APIs,
 cart, checkout, payments, reviews and the seed command (60 tests, all green).
-Frontend has no unit tests yet; verify changes with `npm.cmd run build`.
+Cloudinary-specific behaviour (the media push command refusing non-Cloudinary
+storage) is covered too. Frontend has no unit tests yet; verify changes with
+`npm.cmd run build`.
 
 ## 21. Owner workflow — products and inventory
 
@@ -659,7 +661,8 @@ needs `is_staff = true`.
 |------|-----------------|
 | OPay merchant/public/private keys | Real card & transfer payments |
 | Gmail app password | Real order emails |
-| Cloudinary URL (optional) | Cloud media storage + CDN |
+**Cloudinary URL (optional)** — now fully wired (see section 24.1): set the URL,
+run `push_media_to_cloudinary`, Reload. | Cloud media storage + CDN |
 | Paid PythonAnywhere tier (optional) | Always-on API (free tier sleeps) |
 
 **Nice-to-haves**: wishlist, discount codes, SMS/WhatsApp notifications,
@@ -910,7 +913,7 @@ Release notes worth knowing:
 
 | Module | Use |
 |--------|-----|
-| `config.settings.base` | Shared settings and env loading |
+| `config.settings.base` | Shared settings and env loading; selects Cloudinary vs local media via `STORAGES["default"]` |
 | `config.settings.dev` | Local development (`DEBUG=True`, SQLite, Vite CORS) |
 | `config.settings.prod` | Hardened production defaults |
 | `config.settings.pythonanywhere` | The live demo: `DEBUG=False`, `SIMULATE_PAYMENTS=True`, allowed hosts, CORS/CSRF for the Vercel frontend, absolute `MEDIA_URL` |
@@ -938,6 +941,7 @@ Keep this README in sync when you change behaviour:
 - New endpoint -> add it to the relevant API section.
 - New model/field -> update the data dictionary.
 - New env var -> add it to the environment variables table.
+- New management command -> mention it in the cheat sheet and repo structure.
 - New host or URL -> update Live deployment.
 - Any user-visible change -> add a `CHANGELOG.md` entry.
 
