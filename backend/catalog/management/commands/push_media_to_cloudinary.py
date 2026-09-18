@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from urllib.parse import urlparse
 
 import cloudinary
 from django.conf import settings
@@ -32,6 +33,19 @@ class Command(BaseCommand):
         )
 
     def handle(self, *args, **options):
+        # Configure Cloudinary explicitly from the settings URL: the global
+        # cloudinary.config() may have been built before .env was loaded, so
+        # don't rely on it having picked up the credentials.
+        url = settings.CLOUDINARY_URL or os.environ.get("CLOUDINARY_URL")
+        if url:
+            parsed = urlparse(url)
+            creds = {
+                "cloud_name": parsed.hostname,
+                "api_key": parsed.username,
+                "api_secret": parsed.password,
+            }
+            cloudinary.config(**{k: v for k, v in creds.items() if v})
+
         proxy = options["proxy"] or os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
         if proxy:
             cloudinary.config(api_proxy=proxy)
