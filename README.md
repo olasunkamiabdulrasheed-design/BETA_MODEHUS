@@ -814,6 +814,17 @@ payments. Total cost: $0.
 **Do I need Cloudinary?**
 No. Media works from local storage; Cloudinary is optional for a CDN.
 
+**How does Cloudinary work in this project?**
+Set `CLOUDINARY_URL` in `backend/.env` and Django switches the media backend to
+Cloudinary (via `STORAGES`). Existing local files are migrated with
+`push_media_to_cloudinary`, which uploads each `ProductImage` and writes the
+Cloudinary public id back to the database. On PythonAnywhere the console needs
+its `HTTPS_PROXY` proxy for the upload; the command applies it automatically.
+
+**Will enabling Cloudinary break my existing images?**
+Only until the migration runs. Local filenames would resolve to wrong Cloudinary
+URLs, so run `push_media_to_cloudinary` right after turning it on.
+
 **Can the owner use a phone?**
 Yes; the storefront and owner console are responsive. Day-to-day work (orders,
 stock) is doable on mobile.
