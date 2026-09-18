@@ -724,6 +724,8 @@ cd backend
 .\.venv\Scripts\python.exe manage.py test
 .\.venv\Scripts\python.exe manage.py seed_catalog
 .\.venv\Scripts\python.exe manage.py createsuperuser
+.\.venv\Scripts\python.exe manage.py push_media_to_cloudinary --dry-run   # preview media migration
+.\.venv\Scripts\python.exe manage.py push_media_to_cloudinary --settings=config.settings.pythonanywhere
 
 # Frontend
 cd frontend
