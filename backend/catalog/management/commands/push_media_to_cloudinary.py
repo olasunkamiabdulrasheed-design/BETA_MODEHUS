@@ -35,6 +35,14 @@ class Command(BaseCommand):
         proxy = options["proxy"] or os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
         if proxy:
             cloudinary.config(api_proxy=proxy)
+            # uploader._http is built once, at cloudinary.uploader import time
+            # (which happens during django setup), so a plain config() is too
+            # late. Rebuild it as a proxy manager while we still can.
+            from cloudinary import uploader as cloudinary_uploader
+
+            cloudinary_uploader._http = cloudinary.utils.get_http_connector(
+                cloudinary.config(), cloudinary.CERT_KWARGS
+            )
 
         storage = default_storage
         if storage.__class__.__name__ != "MediaCloudinaryStorage":
