@@ -223,9 +223,21 @@ SIMPLE_JWT = {
 CLOUDINARY_URL = env("CLOUDINARY_URL", "")
 if CLOUDINARY_URL:
     INSTALLED_APPS += ["cloudinary_storage"]  # noqa: F405
-    DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
-else:
-    DEFAULT_FILE_STORAGE = "django.core.files.storage.FileSystemStorage"
+
+# Django 6+ selects the media backend via STORAGES["default"], not
+# DEFAULT_FILE_STORAGE (removed in 6.0).
+STORAGES = {
+    "default": {
+        "BACKEND": (
+            "cloudinary_storage.storage.MediaCloudinaryStorage"
+            if CLOUDINARY_URL
+            else "django.core.files.storage.FileSystemStorage"
+        )
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"
+    },
+}
 
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": env("CLOUDINARY_CLOUD_NAME"),

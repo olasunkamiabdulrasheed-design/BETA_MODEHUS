@@ -21,7 +21,7 @@ CSRF_TRUSTED_ORIGINS = ["https://beta-modehus.vercel.app"]
 
 # Media storage is chosen in base.py: Cloudinary when CLOUDINARY_URL is set
 # (put it in backend/.env — gitignored), otherwise the local filesystem.
-# Do not override DEFAULT_FILE_STORAGE here or Cloudinary would be ignored.
+# Do not override STORAGES here or the Cloudinary backend would be ignored.
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Fallback media URL used only when Cloudinary is not configured.
