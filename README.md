@@ -522,6 +522,43 @@ cd ~/BETA_MODEHUS/backend && git pull
 ```
 
 then click **Reload** in the Web tab. PythonAnywhere does **not** auto-deploy.
+
+### 24.1 Cloudinary media on PythonAnywhere
+
+Media can live on Cloudinary (CDN) instead of the local `/media/` folder. Only
+`CLOUDINARY_URL` is required — the app derives the cloud name, API key and API
+secret from it automatically.
+
+```bash
+cd ~/BETA_MODEHUS/backend
+git pull
+nano .env          # add one line:
+# CLOUDINARY_URL=cloudinary://API_KEY:API_SECRET@cloud_name
+```
+
+Then upload the already-shipped local files and repoint the database in one
+command:
+
+```bash
+python manage.py push_media_to_cloudinary --dry-run --settings=config.settings.pythonanywhere
+python manage.py push_media_to_cloudinary --settings=config.settings.pythonanywhere
+```
+
+`--dry-run` lists what would upload (no changes); the real run uploads each
+`ProductImage` file and stores the Cloudinary public id back into the database.
+After it finishes, **Reload** the web app and confirm product images load from
+`res.cloudinary.com`.
+
+Two PythonAnywhere-specific gotchas that required code fixes:
+
+- **Django 6 removed `DEFAULT_FILE_STORAGE`** — the media backend is now chosen
+  via `STORAGES["default"]` in `config/settings/base.py`.
+- **The PA console has no direct internet** — outbound HTTPS goes through the
+  `proxy.server:3128` proxy that `curl` uses automatically. The pure-python
+  Cloudinary client does not, and it builds its connection pool once at import
+  time, so the push command configures the proxy (from `HTTPS_PROXY`) and swaps
+  the pool for a proxy manager itself. Running the same command on a machine
+  with normal internet needs nothing special.
 ## 25. Deployment — frontend on Vercel
 
 1. Import the GitHub repo at vercel.com, set **Root Directory** to `frontend`.
