@@ -438,6 +438,10 @@ products with variants and placeholder images, plus an admin user if none
 exists. Set `SEED_ADMIN_EMAIL` / `SEED_ADMIN_PASSWORD` to control the password
 (otherwise a random one is generated and printed).
 
+If you re-import `catalog_seed.json` on a Cloudinary setup, the fixture
+references local media paths again, so run `push_media_to_cloudinary` once more
+afterwards to re-upload and repoint them.
+
 ## 20. Testing
 
 Backend:
@@ -645,7 +649,7 @@ needs `is_staff = true`.
 - **Payments** are verified against the provider (signature/webhook) or the
   simulator; an order is only marked paid on a successful verification.
 - **Media** is uploaded to the configured storage (local in the demo,
-  Cloudinary when configured).
+  Cloudinary when configured — see section 24.1 for the migration command).
 
 ## 29. Roadmap, credentials and licence
 
@@ -852,6 +856,9 @@ Release notes worth knowing:
 - The owner console covers products, stock, images, orders and reviews.
 - The storefront ships with SEO tags, a web manifest, `robots.txt` and a
   sitemap.
+- Cloudinary media was enabled: `STORAGES`-based backend selection, a
+  `push_media_to_cloudinary` migration command, and automatic proxy handling
+  for PythonAnywhere's restricted console network.
 - The backend suite covers 60 tests; the frontend builds clean.
 
 ## 42. Credits
@@ -875,7 +882,8 @@ Release notes worth knowing:
   `is_featured`.
 - `ProductVariant`: `size`, `color`, `color_hex`, `attributes` (JSON), `sku`,
   `price`, `stock`, `is_active`.
-- `ProductImage`: `image`, `alt_text`, `is_primary`, `sort_order`, optional
+- `ProductImage`: `image` (a Cloudinary public id when Cloudinary is on, or a
+  local path otherwise), `alt_text`, `is_primary`, `sort_order`, optional
   `variant`.
 
 **cart**
@@ -920,6 +928,8 @@ host; `prod.py` is the starting point for a real server.
 - The frontend has no automated tests yet.
 - Payment is single-provider (OPay); the interface is small enough to add
   others.
+- On PythonAnywhere, uploading to Cloudinary requires the console's `HTTPS_PROXY`
+  proxy (handled by `push_media_to_cloudinary`); other hosts need nothing.
 
 ## 46. Maintaining this document
 
@@ -938,6 +948,8 @@ BETA_MODEHUS is a free-to-host, full-stack fashion store. The React storefront
 talks only to a Django REST API; the API owns pricing, stock, orders and
 payments; the owner runs everything from `/backstage` (or the Django admin at
 `/vault/`). In the demo, payment is simulated so the whole order lifecycle works
-with no keys and no card. Shipping a change means: commit and push, let Vercel
-rebuild the frontend, and on PythonAnywhere `git pull` then Reload. Deeper
-detail lives in `docs/`, but this file is the complete, self-contained guide.
+with no keys and no card. Media can live locally or on Cloudinary (enabled with
+`CLOUDINARY_URL` and migrated with `push_media_to_cloudinary`). Shipping a
+change means: commit and push, let Vercel rebuild the frontend, and on
+PythonAnywhere `git pull` then Reload. Deeper detail lives in `docs/`, but this
+file is the complete, self-contained guide.
