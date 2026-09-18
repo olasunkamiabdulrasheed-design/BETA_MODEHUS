@@ -661,8 +661,7 @@ needs `is_staff = true`.
 |------|-----------------|
 | OPay merchant/public/private keys | Real card & transfer payments |
 | Gmail app password | Real order emails |
-**Cloudinary URL (optional)** — now fully wired (see section 24.1): set the URL,
-run `push_media_to_cloudinary`, Reload. | Cloud media storage + CDN |
+| Cloudinary URL (optional) | Now fully wired — see section 24.1 (set the URL, run `push_media_to_cloudinary`, Reload) |
 | Paid PythonAnywhere tier (optional) | Always-on API (free tier sleeps) |
 
 **Nice-to-haves**: wishlist, discount codes, SMS/WhatsApp notifications,
