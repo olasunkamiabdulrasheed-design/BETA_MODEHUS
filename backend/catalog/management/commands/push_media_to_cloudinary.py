@@ -1,5 +1,7 @@
+import os
 from pathlib import Path
 
+import cloudinary
 from django.conf import settings
 from django.core.files.base import File
 from django.core.files.storage import default_storage
@@ -20,8 +22,20 @@ class Command(BaseCommand):
             action="store_true",
             help="List what would be uploaded without changing anything.",
         )
+        parser.add_argument(
+            "--proxy",
+            default=None,
+            help=(
+                "HTTP(S) proxy for Cloudinary uploads. Defaults to the "
+                "HTTPS_PROXY / https_proxy environment variable."
+            ),
+        )
 
     def handle(self, *args, **options):
+        proxy = options["proxy"] or os.environ.get("HTTPS_PROXY") or os.environ.get("https_proxy")
+        if proxy:
+            cloudinary.config(api_proxy=proxy)
+
         storage = default_storage
         if storage.__class__.__name__ != "MediaCloudinaryStorage":
             raise CommandError(
