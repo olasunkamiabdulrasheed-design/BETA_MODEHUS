@@ -784,6 +784,7 @@ Cloudinary, or the checked-in `catalog_seed.json` / `media_seed.zip`.
 - [ ] Logos and product images render (media mapping correct).
 - [ ] Owner can log in at `/backstage`; regular signup works.
 - [ ] Add to cart, checkout, pay (simulated) and see the order in `/backstage`.
+- [ ] If Cloudinary is on: product images load from `res.cloudinary.com`.
 - [ ] Images load over HTTPS (no mixed-content warnings).
 - [ ] CORS allows the live frontend origin.
 - [ ] `manage.py test` green and `npm run build` clean.
