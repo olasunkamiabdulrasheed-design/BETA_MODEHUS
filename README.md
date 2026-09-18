@@ -405,7 +405,7 @@ npm.cmd run build     # outputs frontend/dist
 | `SIMULATE_PAYMENTS` | `True` = local checkout, `False` = real OPay |
 | `OPAY_MERCHANT_ID` / `OPAY_PUBLIC_KEY` / `OPAY_PRIVATE_KEY` | OPay keys |
 | `EMAIL_HOST_PASSWORD` | Gmail app password for order emails |
-| `CLOUDINARY_URL` | Enables Cloudinary media storage when set |
+| `CLOUDINARY_URL` | Enables Cloudinary media storage when set (e.g. `cloudinary://API_KEY:API_SECRET@cloud_name`) |
 
 **Frontend (`frontend/.env.local`)**:
 
