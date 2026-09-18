@@ -2,6 +2,7 @@ import json
 import os
 import sys
 from pathlib import Path
+from urllib.parse import urlparse
 
 from dotenv import load_dotenv
 
@@ -244,6 +245,14 @@ CLOUDINARY_STORAGE = {
     "API_KEY": env("CLOUDINARY_API_KEY"),
     "API_SECRET": env("CLOUDINARY_API_SECRET"),
 }
+# django-cloudinary-storage calls cloudinary.config() with these values, which
+# would wipe the credentials loaded from CLOUDINARY_URL if they were None.
+# Fill any gaps from the URL so the SDK config always has real credentials.
+if CLOUDINARY_URL and not all(CLOUDINARY_STORAGE.values()):
+    parsed = urlparse(CLOUDINARY_URL)
+    CLOUDINARY_STORAGE["CLOUD_NAME"] = CLOUDINARY_STORAGE["CLOUD_NAME"] or parsed.hostname
+    CLOUDINARY_STORAGE["API_KEY"] = CLOUDINARY_STORAGE["API_KEY"] or parsed.username
+    CLOUDINARY_STORAGE["API_SECRET"] = CLOUDINARY_STORAGE["API_SECRET"] or parsed.password
 
 # ---------------------------------------------------------------------------
 # OPay
