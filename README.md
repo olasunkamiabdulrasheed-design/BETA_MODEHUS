@@ -596,6 +596,19 @@ Suggested release flow: branch -> commit -> PR -> CI green -> merge to `main`
 **Images are broken on the storefront.**
 Check the `/media/` static mapping on PythonAnywhere and confirm `MEDIA_URL` in
 `pythonanywhere.py` is absolute (`https://<user>.pythonanywhere.com/media/`).
+If the app already switched to Cloudinary, old local filenames will 404 — run
+`push_media_to_cloudinary` to upload them and repoint the database.
+
+**Cloudinary upload fails with `Must supply api_key`.**
+The credentials were wiped before signing. This comes from
+`django-cloudinary-storage` calling `cloudinary.config()` with empty values when
+`CLOUDINARY_STORAGE` has no real keys. The fix is committed: `base.py` now
+derives `CLOUDINARY_STORAGE` from `CLOUDINARY_URL`. `git pull` and Reload.
+
+**`Connection refused` / `Max retries exceeded ... api.cloudinary.com` on PA.**
+The PythonAnywhere console blocks direct outbound connections — only the
+`proxy.server:3128` proxy works. The push command routes uploads through it
+automatically (from `HTTPS_PROXY`); you do not need to do anything.
 
 **CORS error in the browser console.**
 The frontend origin is not allowed. Add it to `CORS_ALLOWED_ORIGIN_REGEXES`
