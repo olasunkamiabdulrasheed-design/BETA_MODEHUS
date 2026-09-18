@@ -86,7 +86,7 @@ frontend is built with `VITE_API_URL` pointing at the PythonAnywhere API.
 | Auth | JWT (djangorestframework-simplejwt) |
 | Filtering | django-filter |
 | Ports/storage | PostgreSQL (prod) or SQLite (dev/staging) via `DATABASE_URL`-style settings |
-| Media | Local file storage, or Cloudinary when `CLOUDINARY_URL` is set |
+| Media | Local file storage, or Cloudinary when `CLOUDINARY_URL` is set; existing files migrate via `push_media_to_cloudinary` |
 | Email | Gmail SMTP for transactional order emails |
 | API docs | drf-spectacular (OpenAPI schema + Swagger/ReDoc) |
 | Serving | gunicorn + WhiteNoise (PythonAnywhere), Docker/nginx optional |
