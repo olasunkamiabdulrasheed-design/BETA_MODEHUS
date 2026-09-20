@@ -31,6 +31,14 @@ class Command(BaseCommand):
                 "HTTPS_PROXY / https_proxy environment variable."
             ),
         )
+        parser.add_argument(
+            "--fix-urls",
+            action="store_true",
+            help=(
+                "Strip the MEDIA_URL prefix from rows that already point at "
+                "Cloudinary (no upload happens, database only)."
+            ),
+        )
 
     def handle(self, *args, **options):
         # Configure Cloudinary explicitly from the settings URL: the global
@@ -57,6 +65,10 @@ class Command(BaseCommand):
             cloudinary_uploader._http = cloudinary.utils.get_http_connector(
                 cloudinary.config(), cloudinary.CERT_KWARGS
             )
+
+        if options["fix_urls"]:
+            self._fix_url_prefixes(options)
+            return
 
         storage = default_storage
         if storage.__class__.__name__ != "MediaCloudinaryStorage":
@@ -101,4 +113,40 @@ class Command(BaseCommand):
             self.style.SUCCESS(
                 f"{action} {uploaded}, skipped {skipped}, missing {missing}."
             )
+        )
+
+    def _fix_url_prefixes(self, options):
+        """Repoint rows whose image is stored as an absolute /media/ URL."""
+        media_url = (settings.MEDIA_URL or "").rstrip("/")
+        dry_run = options["dry_run"]
+        fixed = unchanged = 0
+
+        for image in ProductImage.objects.all().iterator():
+            name = image.image.name or ""
+            if not name:
+                unchanged += 1
+                continue
+
+            relative = name
+            if name.startswith(media_url):
+                relative = name[len(media_url) :]
+            elif "/media/" in name:
+                relative = name.split("/media/", 1)[1]
+            relative = relative.lstrip("/")
+
+            if relative == name:
+                unchanged += 1
+                continue
+
+            if dry_run:
+                self.stdout.write(f"would fix: {name} -> {relative}")
+            else:
+                image.image.name = relative
+                image.save(update_fields=["image"])
+                self.stdout.write(self.style.SUCCESS(f"fixed: {name} -> {relative}"))
+            fixed += 1
+
+        action = "Would fix" if dry_run else "Fixed"
+        self.stdout.write(
+            self.style.SUCCESS(f"{action} {fixed}, unchanged {unchanged}.")
         )
