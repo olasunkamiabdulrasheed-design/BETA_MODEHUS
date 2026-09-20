@@ -244,6 +244,11 @@ CLOUDINARY_STORAGE = {
     "CLOUD_NAME": env("CLOUDINARY_CLOUD_NAME"),
     "API_KEY": env("CLOUDINARY_API_KEY"),
     "API_SECRET": env("CLOUDINARY_API_SECRET"),
+    # django-cloudinary-storage prepends PREFIX (defaults to MEDIA_URL) to every
+    # stored name/public id. On PythonAnywhere MEDIA_URL is absolute, which
+    # pollutes public ids with "https://host/media/..." and breaks url().
+    # Keep ids relative so res.cloudinary.com URLs are clean.
+    "PREFIX": "",
 }
 # django-cloudinary-storage calls cloudinary.config() with these values, which
 # would wipe the credentials loaded from CLOUDINARY_URL if they were None.
