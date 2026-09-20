@@ -114,6 +114,15 @@ class Command(BaseCommand):
             with local.open("rb") as handle:
                 new_name = storage.save(name, File(handle))
 
+            # Defense-in-depth: even if CLOUDINARY_STORAGE["PREFIX"] is an
+            # absolute MEDIA_URL, keep stored names relative so url() yields
+            # clean res.cloudinary.com links.
+            media_url = (settings.MEDIA_URL or "").rstrip("/")
+            if new_name.startswith(media_url):
+                new_name = new_name[len(media_url) :].lstrip("/")
+            elif "/media/" in new_name:
+                new_name = new_name.split("/media/", 1)[1].lstrip("/")
+
             if new_name != name:
                 image.image.name = new_name
                 image.save(update_fields=["image"])
